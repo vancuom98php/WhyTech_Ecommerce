@@ -8,12 +8,21 @@
             <h2>Đăng nhập</h2>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <input id="admin_email" type="email" class="ggg @error('admin_email') is-invalid @enderror"
-                    name="admin_email" value="{{ old('admin_email') }}" required autocomplete="email" autofocus
-                    placeholder="Email">
-
-                <input id="admin_password" type="password" class="ggg" name="password" required
-                    autocomplete="current-password" placeholder="Password">
+                <div class="input-box @error('admin_email') is-invalid @enderror">
+                    <i class="input-icon fas fa-envelope"></i>
+                    <input id="admin_email" type="email" class="ggg @error('admin_email') is-invalid @enderror"
+                        name="admin_email" value="{{ old('admin_email') }}" required autocomplete="email" autofocus
+                        placeholder="Email">
+                </div>
+                <div class="input-box @error('admin_email') is-invalid @enderror">
+                    <i class="input-icon fas fa-lock"></i>
+                    <input id="admin_password" type="password" class="ggg" name="password" required
+                        autocomplete="current-password" placeholder="Password">
+                    <span class="eye" style="margin-top: 5px;" onclick="myFunction()">
+                        <i id="hide1" class="input-icon far fa-eye"></i>
+                        <i id="hide2" class="input-icon far fa-eye-slash"></i>
+                    </span>
+                </div>
                 @error('admin_email')
                     <div class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -45,14 +54,15 @@
                     <div class="col-md-6">
                         <a href="{{ route('admin.google') }}" class="btn btn-danger" style="height: 40px;">
                             <i style="line-height: 25px;"><img class="btn__google-logo"
-                                    src="{{ asset('public/backend/images/google-logo.png') }}" style="width:18px;"
+                                    src="{{ asset('backend/images/google-logo.png') }}" style="width:18px;"
                                     alt=""></i>
                             Đăng nhập với Google
                         </a>
                     </div>
                 </div>
             </form>
-            <p style="text-align: left;">Bạn chưa có tài khoản?<a href="{{ route('register') }}" class="link">Đăng ký ngay.</a></p>
+            <p style="text-align: left;">Bạn chưa có tài khoản?<a href="{{ route('register') }}" class="link">Đăng ký
+                    ngay.</a></p>
         </div>
     </div>
 @endsection

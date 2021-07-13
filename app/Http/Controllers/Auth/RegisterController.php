@@ -51,8 +51,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'admin_email' => ['required', 'string', 'email', 'max:255', 'unique:admin'],
-            'phone' => 'required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9',
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'admin_phone' => 'required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9|unique:admin',
+            'password' => ['required', 'string', 'min:8'],
+            'password_confirmation' => 'required_with:password|same:password|min:8'
         ]);
     }
 
@@ -67,8 +68,8 @@ class RegisterController extends Controller
         return Admin::create([
             'admin_name' => $data['name'],
             'admin_email' => $data['admin_email'],
-            'admin_phone' => $data['phone'],
-            'admin_avatar' => 'public/backend/images/default_avatar.png',
+            'admin_phone' => $data['admin_phone'],
+            'admin_avatar' => 'backend/images/default_avatar.png',
             'admin_password' => Hash::make($data['password']),
         ]);
     }

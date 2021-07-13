@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Admin - Login'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -6,7 +8,16 @@
             <h2>Đăng nhập</h2>
             <form method="POST" action="<?php echo e(route('login')); ?>">
                 <?php echo csrf_field(); ?>
-                <input id="admin_email" type="email" class="ggg <?php $__errorArgs = ['admin_email'];
+                <div class="input-box <?php $__errorArgs = ['admin_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-envelope"></i>
+                    <input id="admin_email" type="email" class="ggg <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -14,11 +25,25 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                    name="admin_email" value="<?php echo e(old('admin_email')); ?>" required autocomplete="email" autofocus
-                    placeholder="Email">
-
-                <input id="admin_password" type="password" class="ggg" name="password" required
-                    autocomplete="current-password" placeholder="Password">
+                        name="admin_email" value="<?php echo e(old('admin_email')); ?>" required autocomplete="email" autofocus
+                        placeholder="Email">
+                </div>
+                <div class="input-box <?php $__errorArgs = ['admin_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-lock"></i>
+                    <input id="admin_password" type="password" class="ggg" name="password" required
+                        autocomplete="current-password" placeholder="Password">
+                    <span class="eye" style="margin-top: 5px;" onclick="myFunction()">
+                        <i id="hide1" class="input-icon far fa-eye"></i>
+                        <i id="hide2" class="input-icon far fa-eye-slash"></i>
+                    </span>
+                </div>
                 <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -59,14 +84,15 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-6">
                         <a href="<?php echo e(route('admin.google')); ?>" class="btn btn-danger" style="height: 40px;">
                             <i style="line-height: 25px;"><img class="btn__google-logo"
-                                    src="<?php echo e(asset('public/backend/images/google-logo.png')); ?>" style="width:18px;"
+                                    src="<?php echo e(asset('backend/images/google-logo.png')); ?>" style="width:18px;"
                                     alt=""></i>
                             Đăng nhập với Google
                         </a>
                     </div>
                 </div>
             </form>
-            <p style="text-align: left;">Bạn chưa có tài khoản?<a href="<?php echo e(route('register')); ?>" class="link">Đăng ký ngay.</a></p>
+            <p style="text-align: left;">Bạn chưa có tài khoản?<a href="<?php echo e(route('register')); ?>" class="link">Đăng ký
+                    ngay.</a></p>
         </div>
     </div>
 <?php $__env->stopSection(); ?>

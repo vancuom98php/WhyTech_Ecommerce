@@ -36,11 +36,10 @@
       19 => 'Illuminate\\Translation\\TranslationServiceProvider',
       20 => 'Illuminate\\Validation\\ValidationServiceProvider',
       21 => 'Illuminate\\View\\ViewServiceProvider',
-      22 => 'Laravel\\Passport\\PassportServiceProvider',
-      23 => 'App\\Providers\\AppServiceProvider',
-      24 => 'App\\Providers\\AuthServiceProvider',
-      25 => 'App\\Providers\\EventServiceProvider',
-      26 => 'App\\Providers\\RouteServiceProvider',
+      22 => 'App\\Providers\\AppServiceProvider',
+      23 => 'App\\Providers\\AuthServiceProvider',
+      24 => 'App\\Providers\\EventServiceProvider',
+      25 => 'App\\Providers\\RouteServiceProvider',
     ),
     'aliases' => 
     array (
@@ -87,7 +86,7 @@
     'defaults' => 
     array (
       'guard' => 'web',
-      'passwords' => 'admin',
+      'passwords' => 'users',
     ),
     'guards' => 
     array (
@@ -587,15 +586,15 @@
     ),
     'google' => 
     array (
-      'client_id' => '867022020974-4cdqh8ha3i040l47tku0hdn4mr57fe9r.apps.googleusercontent.com',
-      'client_secret' => 'RI1ktRZmGEBQgDIZXU58fSSo',
-      'redirect' => 'http://localhost/Ecommere_Project/WhyTech/admin/google/callback',
+      'client_id' => '366571874954-g56gu5pokh9d13kj0fhevjrumra13tji.apps.googleusercontent.com',
+      'client_secret' => 'K9VZzJ_LSxhXLSUJwgiNFyiZ',
+      'redirect' => 'http://localhost:8000/admin/google/callback',
     ),
     'facebook' => 
     array (
-      'client_id' => '484291006260119',
-      'client_secret' => 'f9bfc395c05bb19f30d5822da7588f8e',
-      'redirect' => 'http://localhost/Ecommere_Project/WhyTech/admin/facebook/callback',
+      'client_id' => '560397901638010',
+      'client_secret' => '730158011c1c5e4ef53f587b5cb91f05',
+      'redirect' => 'http://localhost:8000/admin/facebook/callback',
     ),
   ),
   'session' => 

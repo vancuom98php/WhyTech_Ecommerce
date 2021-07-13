@@ -23,7 +23,7 @@ class AdminTableSeeder extends Seeder
         $admin = Admin::create([
             'admin_name' => 'Cườm Admin',
             'admin_email' => 'cuomadmin@gmail.com',
-            'admin_avatar' => 'public/backend/images/1.jpg',
+            'admin_avatar' => 'backend/images/1.jpg',
             'admin_phone' => '0764608195',
             'admin_password' => bcrypt('pass4so2555')
         ]);
@@ -31,7 +31,7 @@ class AdminTableSeeder extends Seeder
         $author = Admin::create([
             'admin_name' => 'Cườm Author',
             'admin_email' => 'cuomauthor@gmail.com',
-            'admin_avatar' => 'public/backend/images/2.jpg',
+            'admin_avatar' => 'backend/images/2.jpg',
             'admin_phone' => '090505505',
             'admin_password' => bcrypt('pass4so2555')
         ]);
@@ -39,7 +39,7 @@ class AdminTableSeeder extends Seeder
         $user = Admin::create([
             'admin_name' => 'Cườm User',
             'admin_email' => 'cuomuser@gmail.com',
-            'admin_avatar' => 'public/backend/images/3.jpg',
+            'admin_avatar' => 'backend/images/3.jpg',
             'admin_phone' => '0510008009',
             'admin_password' => bcrypt('pass4so2555')
         ]);

@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Admin - Register'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -12,7 +14,16 @@
             <?php endif; ?>
             <form method="POST" action="<?php echo e(route('register')); ?>">
                 <?php echo csrf_field(); ?>
-                <input id="admin_name" type="text" class="ggg <?php $__errorArgs = ['name'];
+                <div class="input-box <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-user"></i>
+                    <input id="admin_name" type="text" class="ggg <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -20,64 +31,30 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="name"
-                    value="<?php echo e(old('name')); ?>" required autocomplete="name" autofocus placeholder="Tên hiển thị">
-                <?php $__errorArgs = ['admin_name'];
+                        value="<?php echo e(old('name')); ?>" required autocomplete="name" autofocus placeholder="Tên hiển thị">
+                    <?php $__errorArgs = ['admin_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback" role="alert">
-                        <strong><?php echo e($message); ?></strong>
-                    </div>
-                <?php unset($message);
+                        <div class="invalid-feedback-signup" role="alert">
+                            <strong><?php echo e($message); ?></strong>
+                        </div>
+                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-
-                <input id="admin_email" type="email" class="ggg <?php $__errorArgs = ['admin_email'];
+                </div>
+                <div class="input-box <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" name="admin_email"
-                    value="<?php echo e(old('admin_email')); ?>" required autocomplete="email" autofocus placeholder="Email">
-                <?php $__errorArgs = ['admin_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback" role="alert">
-                        <strong><?php echo e($message); ?></strong>
-                    </div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-
-                <input id="admin_phone" type="text" class="ggg <?php $__errorArgs = ['phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" name="phone"
-                    value="<?php echo e(old('phone')); ?>" required autocomplete="phone" autofocus placeholder="Số điện thoại">
-                <?php $__errorArgs = ['phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback" role="alert">
-                        <strong><?php echo e($message); ?></strong>
-                    </div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                <input id="admin_password" type="password" class="ggg <?php $__errorArgs = ['password'];
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-envelope"></i>
+                    <input id="admin_email" type="email" class="ggg <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -85,22 +62,127 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                    name="password" required autocomplete="new-password" placeholder="Mật khẩu mới">
-                <?php $__errorArgs = ['password'];
+                        name="admin_email" value="<?php echo e(old('admin_email')); ?>" required autocomplete="email" autofocus
+                        placeholder="Email">
+                    <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback" role="alert">
-                        <strong><?php echo e($message); ?></strong>
-                    </div>
-                <?php unset($message);
+                        <div class="invalid-feedback-signup" role="alert">
+                            <strong><?php echo e($message); ?></strong>
+                        </div>
+                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                </div>
 
-                <input id="password-confirm" type="password" class="ggg" name="password_confirmation" required
-                    autocomplete="new-password" placeholder="Xác nhận mật khẩu">
+                <div class="input-box <?php $__errorArgs = ['admin_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-phone"></i>
+                    <input id="admin_phone" type="text" class="ggg <?php $__errorArgs = ['admin_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                        name="admin_phone" value="<?php echo e(old('admin_phone')); ?>" required autocomplete="admin_phone" autofocus
+                        placeholder="Số điện thoại">
+                    <?php $__errorArgs = ['admin_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback-signup" role="alert">
+                            <strong><?php echo e($message); ?></strong>
+                        </div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                <div class="input-box <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-lock"></i>
+                    <input id="admin_password" type="password" class="ggg <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                        name="password" required autocomplete="new-password" placeholder="Mật khẩu mới">
+                    <span class="eye" style="margin-top: 5px;" onclick="myFunction()">
+                        <i id="hide1" class="input-icon far fa-eye"></i>
+                        <i id="hide2" class="input-icon far fa-eye-slash"></i>
+                    </span>
+                    <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback-signup" role="alert">
+                            <strong><?php echo e($message); ?></strong>
+                        </div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                <div class="input-box <?php $__errorArgs = ['password-confirm'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                    <i class="input-icon fas fa-lock"></i>
+                    <input id="password_confirmation" type="password"
+                        class="ggg <?php $__errorArgs = ['password-confirm'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password_confirmation" required
+                        autocomplete="password_confirmation" placeholder="Xác nhận mật khẩu">
+                    <span class="eye" style="margin-top: 5px;" onclick="myFunctionReg()">
+                        <i id="hide3" class="input-icon far fa-eye"></i>
+                        <i id="hide4" class="input-icon far fa-eye-slash"></i>
+                    </span>
+                    <?php $__errorArgs = ['password_confirmation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback-signup" role="alert">
+                            <strong><?php echo e($message); ?></strong>
+                        </div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
 
                 <div class="clearfix"></div>
                 <input type="submit" value="Đăng ký" name="register">

@@ -21,12 +21,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- bootstrap-css -->
-    <link rel="stylesheet" href="{{ asset('public/backend/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}">
 
     <!-- Custom CSS -->
-    <link href="{{ asset('public/backend/css/style.css') }}" rel='stylesheet' type='text/css' />
-    <link href="{{ asset('public/backend/css/admin_login_style.css') }}" rel='stylesheet' type='text/css' />
-    <link href="{{ asset('public/backend/css/style-responsive.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend/css/style.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ asset('backend/css/admin_login_style.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ asset('backend/css/style-responsive.css') }}" rel="stylesheet" />
 
     <!-- font CSS -->
     <link
@@ -34,17 +34,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         rel='stylesheet' type='text/css'>
 
     <!-- font-awesome icons -->
-    <link rel="stylesheet" href="{{ asset('public/backend/css/font.css') }} type="text/css" />
-    <link href="{{ asset('public/backend/css/font-awesome.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('backend/css/font.css') }} type=" text/css" />
+    <link href="{{ asset('backend/css/font-awesome.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- //font-awesome icons -->
-    <script src="{{ asset('public/backend/js/jquery2.0.3.min.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery2.0.3.min.js') }}"></script>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('public/backend/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('backend/images/favicon.ico') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -54,13 +54,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </main>
     </div>
 
-    <script src="{{ asset('public/backend/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('public/backend/js/jquery.dcjqaccordion.2.7.js') }}"></script>
-    <script src="{{ asset('public/backend/js/scripts.js') }}"></script>
-    <script src="{{ asset('public/backend/js/jquery.slimscroll.js') }}"></script>
-    <script src="{{ asset('public/backend/js/jquery.nicescroll.js') }}"></script>
+    <script src="{{ asset('backend/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery.dcjqaccordion.2.7.js') }}"></script>
+    <script src="{{ asset('backend/js/scripts.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery.nicescroll.js') }}"></script>
     <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
-    <script src="{{ asset('public/backend/js/jquery.scrollTo.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery.scrollTo.js') }}"></script>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("admin_password");
+            var y = document.getElementById("hide1");
+            var z = document.getElementById("hide2");
+
+            if (x.type == 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
+
+        function myFunctionReg() {
+            var x = document.getElementById("password_confirmation");
+            var y = document.getElementById("hide3");
+            var z = document.getElementById("hide4");
+
+            if (x.type == 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
+    </script>
+
 </body>
 
 </html>
