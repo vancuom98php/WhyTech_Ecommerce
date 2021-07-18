@@ -282,8 +282,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Danh mục sản phẩm</span>
                             </a>
                             <ul class="sub">
-                                <li class="sub-menu_item"><a href="typography.html">Thêm danh mục</a></li>
-                                <li class="sub-menu_item"><a href="glyphicon.html">Liệt kê danh mục</a></li>
+                                <li class="sub-menu_item"><a href="{{ route('category-product.create') }}">Thêm danh
+                                        mục sản phẩm</a></li>
+                                <li class="sub-menu_item"><a href="{{ route('category-product.all') }}">Liệt kê danh
+                                        mục sản phẩm</a></li>
                             </ul>
                         </li>
                         {{-- <li>
@@ -989,6 +991,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <!-- //calendar -->
+
+    <!-- //Delete Confirmation -->
+    <script type="text/javascript">
+        $('.confirm_delete_category').on('click', function() {
+            return confirm('Bạn có chắc là muốn xóa danh mục này không?');
+        });
+    </script>
+    <!-- //Delete Confirmation -->
+
 </body>
 
 </html>

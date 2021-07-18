@@ -34,7 +34,7 @@ class LoginController extends Controller
     protected $redirectTo = '/dashboard';
 
     protected function loggedOut(Request $request) {
-        return redirect('/admin');
+        return redirect('/admin/login');
     }
     
     /**

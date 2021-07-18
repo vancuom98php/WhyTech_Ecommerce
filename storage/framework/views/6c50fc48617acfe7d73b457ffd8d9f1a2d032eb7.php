@@ -188,7 +188,7 @@ unset($__errorArgs, $__bag); ?>
                 <input type="submit" value="Đăng ký" name="register">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <a href="<?php echo e(url('/admin')); ?>" class="btn btn-success" style="height: 40px;">
+                        <a href="<?php echo e(url('/admin/login')); ?>" class="btn btn-success" style="height: 40px;">
                             <i class="auth-form__socials-icon fas fa-chevron-circle-left" style="line-height: 25px;"></i>
                             Quay lại
                         </a>

@@ -13,12 +13,16 @@
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <div class="form-group row">
-                    <label for="admin_email" class="col-md-12" style="color: #fff; font-weight: normal;">{{ __('Địa chỉ E-Mail') }}</label>
+                    <label for="admin_email" class="col-md-12"
+                        style="color: #fff; font-weight: normal;">{{ __('Địa chỉ E-Mail') }}</label>
 
                     <div class="col-md-12">
-                        <input id="admin_email" type="admin_email" class="ggg @error('admin_email') is-invalid @enderror"
-                            name="admin_email" value="{{ old('admin_email') }}" required autocomplete="admin_email" autofocus placeholder="Email">
-
+                        <div class="input-box @error('admin_email') is-invalid @enderror">
+                            <i class="input-icon fas fa-envelope"></i>
+                            <input id="admin_email" type="email" class="ggg @error('admin_email') is-invalid @enderror"
+                                name="admin_email" value="{{ old('admin_email') }}" required autocomplete="email"
+                                autofocus placeholder="Email">
+                        </div>
                         @error('admin_email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

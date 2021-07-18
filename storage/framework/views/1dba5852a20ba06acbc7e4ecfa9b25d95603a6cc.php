@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
     <div class="log-w3">
         <div class="w3layouts-main">
@@ -12,10 +14,20 @@
             <form method="POST" action="<?php echo e(route('password.email')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="form-group row">
-                    <label for="admin_email" class="col-md-12" style="color: #fff; font-weight: normal;"><?php echo e(__('Địa chỉ E-Mail')); ?></label>
+                    <label for="admin_email" class="col-md-12"
+                        style="color: #fff; font-weight: normal;"><?php echo e(__('Địa chỉ E-Mail')); ?></label>
 
                     <div class="col-md-12">
-                        <input id="admin_email" type="admin_email" class="ggg <?php $__errorArgs = ['admin_email'];
+                        <div class="input-box <?php $__errorArgs = ['admin_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                            <i class="input-icon fas fa-envelope"></i>
+                            <input id="admin_email" type="email" class="ggg <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -23,8 +35,9 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                            name="admin_email" value="<?php echo e(old('admin_email')); ?>" required autocomplete="admin_email" autofocus placeholder="Email">
-
+                                name="admin_email" value="<?php echo e(old('admin_email')); ?>" required autocomplete="email"
+                                autofocus placeholder="Email">
+                        </div>
                         <?php $__errorArgs = ['admin_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

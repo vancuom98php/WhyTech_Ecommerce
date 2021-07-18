@@ -48,6 +48,9 @@ label {
     margin: 0;
     padding: 0;
 }
+.add_category_label {
+    float: unset;
+}
 body a:hover {
     text-decoration: none;
 }
@@ -61,6 +64,19 @@ body a:hover {
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+}
+.fa-category.fa-eye-slash {
+    font-size: 25px;
+    color: red;
+    margin-left: 10px;
+}
+.category-action.active {
+    font-size: 20px;
+}
+.fa-category.fa-eye {
+    font-size: 28px;
+    color: green;
+    margin-left: 10px;
 }
 #sidebar ul li {
     position: relative;

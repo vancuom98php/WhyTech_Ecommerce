@@ -82,7 +82,7 @@
                 <input type="submit" value="Đăng ký" name="register">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <a href="{{ url('/admin') }}" class="btn btn-success" style="height: 40px;">
+                        <a href="{{ url('/admin/login') }}" class="btn btn-success" style="height: 40px;">
                             <i class="auth-form__socials-icon fas fa-chevron-circle-left" style="line-height: 25px;"></i>
                             Quay lại
                         </a>

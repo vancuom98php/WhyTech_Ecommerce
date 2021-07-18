@@ -19,7 +19,9 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
 // Admin
-Auth::routes();
+Route::group(['prefix' => 'admin'], function () {
+    Auth::routes();
+});
 
 Route::get('/dashboard', 'AdminController@show_dashboard')->name('dashboard');
 
@@ -30,3 +32,39 @@ Route::get('admin/google/callback', [App\Http\Controllers\Auth\LoginController::
 // Facebook login
 Route::get('admin/facebook', [App\Http\Controllers\Auth\LoginController::class, 'redirectToFacebook'])->name('admin.facebook');
 Route::get('admin/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);
+
+// Category Product
+Route::prefix('category-product')->group(function () {
+    Route::get('/create', [
+        'as' => 'category-product.create',
+        'uses' => 'CategoryProductController@create'
+    ]);
+    Route::get('/all', [
+        'as' => 'category-product.all',
+        'uses' => 'CategoryProductController@index'
+    ]);
+    Route::post('/save', [
+        'as' => 'category-product.save',
+        'uses' => 'CategoryProductController@store'
+    ]);
+    Route::get('/inactive/{id}', [
+        'as' => 'category-product.inactive',
+        'uses' => 'CategoryProductController@inactive'
+    ]);
+    Route::get('/active/{id}', [
+        'as' => 'category-product.active',
+        'uses' => 'CategoryProductController@active'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'category-product.edit',
+        'uses' => 'CategoryProductController@edit'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'category-product.update',
+        'uses' => 'CategoryProductController@update'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'category-product.delete',
+        'uses' => 'CategoryProductController@delete'
+    ]);
+});
