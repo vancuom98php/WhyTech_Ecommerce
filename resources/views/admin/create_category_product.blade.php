@@ -20,13 +20,25 @@
                                 @csrf
                                 <div class="form-group">
                                     <label class="add_category_label" for="category_name">Tên danh mục</label>
-                                    <input type="text" name="category_name" class="form-control" id="category_name"
+                                    <input type="text" name="category_name"
+                                        class="form-control @error('category_name') is-invalid @enderror" id="category_name"
                                         placeholder="Nhập tên danh mục">
+                                    @error('category_name')
+                                        <div class="invalid-feedback-category-product" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="add_category_label" for="category_desc">Mô tả danh mục</label>
-                                    <textarea style="resize: none" rows="5" class="form-control " id="category_desc"
+                                    <textarea style="resize: none" rows="5"
+                                        class="form-control @error('category_desc') is-invalid @enderror" id="category_desc"
                                         name="category_desc" placeholder="Mô tả danh mục sản phẩm"></textarea>
+                                    @error('category_desc')
+                                        <div class="invalid-feedback-category-product" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="add_category_label" for="">Hiển thị</label>

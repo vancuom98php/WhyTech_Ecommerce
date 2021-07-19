@@ -147,7 +147,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <div class="input-box <?php $__errorArgs = ['password-confirm'];
+                <div class="input-box <?php $__errorArgs = ['password_confirmation'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -157,7 +157,7 @@ endif;
 unset($__errorArgs, $__bag); ?>">
                     <i class="input-icon fas fa-lock"></i>
                     <input id="password_confirmation" type="password"
-                        class="ggg <?php $__errorArgs = ['password-confirm'];
+                        class="ggg <?php $__errorArgs = ['password_confirmation'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

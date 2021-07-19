@@ -11,6 +11,16 @@ use Illuminate\Support\Str;
 class CategoryProductController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Add category products
      * @return \Illuminate\Http\Response
      */

@@ -62,10 +62,10 @@
                     @enderror
                 </div>
 
-                <div class="input-box @error('password-confirm') is-invalid @enderror">
+                <div class="input-box @error('password_confirmation') is-invalid @enderror">
                     <i class="input-icon fas fa-lock"></i>
                     <input id="password_confirmation" type="password"
-                        class="ggg @error('password-confirm') is-invalid @enderror" name="password_confirmation" required
+                        class="ggg @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required
                         autocomplete="password_confirmation" placeholder="Xác nhận mật khẩu">
                     <span class="eye" style="margin-top: 5px;" onclick="myFunctionReg()">
                         <i id="hide3" class="input-icon far fa-eye"></i>
