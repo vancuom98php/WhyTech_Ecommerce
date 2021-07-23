@@ -21,7 +21,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    
+
     public function show_dashboard()
     {
         return view('admin.dashboard');

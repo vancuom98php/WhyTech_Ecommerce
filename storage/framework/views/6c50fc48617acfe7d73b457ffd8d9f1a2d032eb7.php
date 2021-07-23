@@ -147,7 +147,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <div class="input-box <?php $__errorArgs = ['password-confirm'];
+                <div class="input-box <?php $__errorArgs = ['password_confirmation'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -157,7 +157,7 @@ endif;
 unset($__errorArgs, $__bag); ?>">
                     <i class="input-icon fas fa-lock"></i>
                     <input id="password_confirmation" type="password"
-                        class="ggg <?php $__errorArgs = ['password-confirm'];
+                        class="ggg <?php $__errorArgs = ['password_confirmation'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -188,7 +188,7 @@ unset($__errorArgs, $__bag); ?>
                 <input type="submit" value="Đăng ký" name="register">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <a href="<?php echo e(url('/admin')); ?>" class="btn btn-success" style="height: 40px;">
+                        <a href="<?php echo e(url('/admin/login')); ?>" class="btn btn-success" style="height: 40px;">
                             <i class="auth-form__socials-icon fas fa-chevron-circle-left" style="line-height: 25px;"></i>
                             Quay lại
                         </a>
