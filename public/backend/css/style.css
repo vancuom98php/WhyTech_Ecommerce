@@ -1,3 +1,9 @@
+/*
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+*/
 h4,
 h5,
 h6,
@@ -9,7 +15,6 @@ h3 {
 ul,
 ol {
     margin: 0;
-    list-style-type: none;
 }
 p {
     margin: 0;
@@ -44,12 +49,8 @@ p {
 }
 ul,
 label {
-    float: right;
     margin: 0;
     padding: 0;
-}
-.add_category_label {
-    float: unset;
 }
 body a:hover {
     text-decoration: none;
@@ -80,12 +81,6 @@ body a:hover {
 }
 #sidebar ul li {
     position: relative;
-}
-.sidebar-menu {
-    float: unset;
-}
-.sub-menu_item {
-    float: left;
 }
 .leftside-navigation,
 .right-stat-bar {
@@ -859,9 +854,6 @@ header.agileits-box-header.clearfix h3 {
     color: #000;
     text-align: center;
     margin-bottom: 1em;
-}
-.auth-form__socials-icon {
-    font-size: 18px;
 }
 .calendar-widget {
     background-color: #eef9f0;
@@ -1828,6 +1820,9 @@ ul.bs-glyphicons-list {
     border-color: #ddede0 !important;
     font-size: 20px;
 }
+.dashboard-heading {
+    font-weight: bold;
+}
 p.hd-title {
     color: #b64d99;
     font-size: 20px;
@@ -2589,7 +2584,11 @@ ul.inbox-pagination li {
     color: #fff;
     float: left;
     width: 32%;
-    margin-top: 13px;
+    margin-top: 8px;
+}
+.login-span {
+    display: flex;
+    justify-content: space-between;
 }
 .eye {
     position: absolute;
@@ -2675,7 +2674,7 @@ ul.inbox-pagination li {
     outline: none;
     display: table;
     cursor: pointer;
-    margin: 15px auto 25px;
+    margin: 45px auto 31px;
     transition: 0.5s all;
     -webkit-transition: 0.5s all;
     -o-transition: 0.5s all;

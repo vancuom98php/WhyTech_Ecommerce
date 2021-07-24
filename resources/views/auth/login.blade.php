@@ -28,7 +28,7 @@
                         <strong>{{ $message }}</strong>
                     </div>
                 @enderror
-                <span>
+                <span class="login-span" style="width: 34%; margin-top: 13px;">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember"
                         {{ old('remember') ? 'checked' : '' }}>
                     <label class="form-check-label" for="remember">
@@ -43,8 +43,8 @@
                     </h6>
                 @endif
                 <div class="clearfix"></div>
-                <input type="submit" value="Đăng nhập" name="login">
-                <div class="form-group row" style="margin-bottom: 50px;">
+                <input type="submit" value="Đăng nhập" name="login" style="margin: 15px auto 25px;">
+                <div class="form-group row" style="margin-bottom: 25px;">
                     <div class="col-md-6">
                         <a href="{{ route('admin.facebook') }}" class="btn btn-primary" style="height: 40px;">
                             <i class="auth-form__socials-icon fab fa-facebook-square" style="line-height: 25px;"></i>

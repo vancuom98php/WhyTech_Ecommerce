@@ -56,7 +56,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                <span>
+                <span class="login-span" style="width: 34%; margin-top: 13px;">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember"
                         <?php echo e(old('remember') ? 'checked' : ''); ?>>
                     <label class="form-check-label" for="remember">
@@ -73,8 +73,8 @@ unset($__errorArgs, $__bag); ?>
                     </h6>
                 <?php endif; ?>
                 <div class="clearfix"></div>
-                <input type="submit" value="Đăng nhập" name="login">
-                <div class="form-group row" style="margin-bottom: 50px;">
+                <input type="submit" value="Đăng nhập" name="login" style="margin: 15px auto 25px;">
+                <div class="form-group row" style="margin-bottom: 25px;">
                     <div class="col-md-6">
                         <a href="<?php echo e(route('admin.facebook')); ?>" class="btn btn-primary" style="height: 40px;">
                             <i class="auth-form__socials-icon fab fa-facebook-square" style="line-height: 25px;"></i>

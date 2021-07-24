@@ -68,3 +68,75 @@ Route::prefix('category-product')->group(function () {
         'uses' => 'CategoryProductController@delete'
     ]);
 });
+
+// Brands
+Route::prefix('brand')->group(function () {
+    Route::get('/create', [
+        'as' => 'brand.create',
+        'uses' => 'BrandController@create'
+    ]);
+    Route::get('/all', [
+        'as' => 'brand.all',
+        'uses' => 'BrandController@index'
+    ]);
+    Route::post('/save', [
+        'as' => 'brand.save',
+        'uses' => 'BrandController@store'
+    ]);
+    Route::get('/inactive/{id}', [
+        'as' => 'brand.inactive',
+        'uses' => 'BrandController@inactive'
+    ]);
+    Route::get('/active/{id}', [
+        'as' => 'brand.active',
+        'uses' => 'BrandController@active'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'brand.edit',
+        'uses' => 'BrandController@edit'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'brand.update',
+        'uses' => 'BrandController@update'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'brand.delete',
+        'uses' => 'BrandController@delete'
+    ]);
+});
+
+// Products
+Route::prefix('product')->group(function () {
+    Route::get('/create', [
+        'as' => 'product.create',
+        'uses' => 'ProductController@create'
+    ]);
+    Route::get('/all', [
+        'as' => 'product.all',
+        'uses' => 'ProductController@index'
+    ]);
+    Route::post('/save', [
+        'as' => 'product.save',
+        'uses' => 'ProductController@store'
+    ]);
+    Route::get('/inactive/{id}', [
+        'as' => 'product.inactive',
+        'uses' => 'ProductController@inactive'
+    ]);
+    Route::get('/active/{id}', [
+        'as' => 'product.active',
+        'uses' => 'ProductController@active'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'product.edit',
+        'uses' => 'ProductController@edit'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'product.update',
+        'uses' => 'ProductController@update'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'product.delete',
+        'uses' => 'ProductController@delete'
+    ]);
+});

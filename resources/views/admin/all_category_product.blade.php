@@ -3,7 +3,7 @@
 
     <div class="table-agile-info">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading dashboard-heading">
                 Liệt kê danh mục sản phẩm
             </div>
             <div class="row w3-res-tb">

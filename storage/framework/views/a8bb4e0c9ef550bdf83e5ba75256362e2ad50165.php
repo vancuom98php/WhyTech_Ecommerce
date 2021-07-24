@@ -105,10 +105,60 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Danh mục sản phẩm</span>
                             </a>
                             <ul class="sub">
-                                <li class="sub-menu_item"><a href="<?php echo e(route('category-product.create')); ?>">Thêm danh
-                                        mục sản phẩm</a></li>
-                                <li class="sub-menu_item"><a href="<?php echo e(route('category-product.all')); ?>">Liệt kê danh
-                                        mục sản phẩm</a></li>
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('category-product.all')); ?>">
+                                        <i class="fa fa-th-list"></i>
+                                        Liệt kê danh mục
+                                    </a>
+                                </li>
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('category-product.create')); ?>">
+                                        <i class="fa fa-plus-square"></i>
+                                        Thêm danh mục
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-tasks"></i>
+                                <span>Thương hiệu sản phẩm</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('brand.all')); ?>">
+                                        <i class="fa fa-th-list"></i>
+                                        Liệt kê thương hiệu
+                                    </a>
+                                </li>
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('brand.create')); ?>">
+                                        <i class="fa fa-plus-square"></i>
+                                        Thêm thương hiệu
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-dropbox"></i>
+                                <span>Sản phẩm</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('product.all')); ?>">
+                                        <i class="fa fa-th-list"></i>
+                                        Liệt kê sản phẩm
+                                    </a>
+                                </li>
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('product.create')); ?>">
+                                        <i class="fa fa-plus-square"></i>
+                                        Thêm sản phẩm
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         
@@ -292,7 +342,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //Delete Confirmation -->
     <script type="text/javascript">
         $('.confirm_delete_category').on('click', function() {
-            return confirm('Bạn có chắc là muốn xóa danh mục này không?');
+            return confirm('Bạn có chắc muốn xóa danh mục này không?');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('.confirm_delete_brand').on('click', function() {
+            return confirm('Bạn có chắc muốn xóa thương hiệu này không?');
         });
     </script>
     <!-- //Delete Confirmation -->

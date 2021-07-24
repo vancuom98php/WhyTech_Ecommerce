@@ -185,7 +185,7 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="clearfix"></div>
-                <input type="submit" value="Đăng ký" name="register">
+                <input type="submit" value="Đăng ký" name="register" style="margin: 15px auto 25px;">
                 <div class="form-group row">
                     <div class="col-md-6">
                         <a href="<?php echo e(url('/admin/login')); ?>" class="btn btn-success" style="height: 40px;">
