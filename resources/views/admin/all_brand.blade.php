@@ -1,4 +1,7 @@
 @extends('admin_layout')
+
+@section('admin_title', 'Admin - Brand')
+
 @section('admin_content')
 
     <div class="table-agile-info">
@@ -65,20 +68,20 @@
                                 <td><span class="text-ellipsis">{{ $brand->updated_at->format('d-m-Y') }}</span></td>
                                 <td><span class="text-ellipsis">
                                         @if ($brand->brand_status == 0)
-                                            <a
-                                                href="{{ route('brand.inactive', ['id' => $brand->brand_id]) }}"><i
+                                            <a href="{{ route('brand.inactive', ['id' => $brand->brand_id]) }}"><i
                                                     class="fa-category fa fa-eye-slash"></i></a>
                                         @else
-                                            <a
-                                                href="{{ route('brand.active', ['id' => $brand->brand_id]) }}"><i
+                                            <a href="{{ route('brand.active', ['id' => $brand->brand_id]) }}"><i
                                                     class="fa-category fa fa-eye"></i></a>
                                         @endif
                                     </span></td>
                                 <td>
-                                    <a href="{{ route('brand.edit', ['id' => $brand->brand_id]) }}" class="active category-action" ui-toggle-class="">
+                                    <a href="{{ route('brand.edit', ['id' => $brand->brand_id]) }}"
+                                        class="active category-action" ui-toggle-class="">
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
-                                    <a href="{{ route('brand.delete', ['id' => $brand->brand_id]) }}" class="active category-action confirm_delete_brand" ui-toggle-class="">
+                                    <a href="{{ route('brand.delete', ['id' => $brand->brand_id]) }}"
+                                        class="active category-action confirm_delete_brand" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>
                                 </td>
@@ -101,4 +104,11 @@
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+
+    <script src="{{ asset('backend/js/sweetalert2@9.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('backend/js/list.js') }}"></script>
+    
 @endsection

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Admin - Reset Pasword')
+
 @section('content')
     <div class="log-w3">
         <div class="w3layouts-main">

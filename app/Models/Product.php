@@ -27,7 +27,23 @@ class Product extends Model
         'product_desc',
         'product_content',
         'product_price',
-        'product_image',
+        'product_image_name',
+        'product_image_path',
         'product_status',
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id')->withTimestamps();
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(CategoryProduct::class, 'category_id');
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
 }

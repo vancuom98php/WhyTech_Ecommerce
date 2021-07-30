@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Why-Tech | Admin - Dashboard</title>
+    <title>Why-Tech | @yield('admin_title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -25,6 +25,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
         rel='stylesheet' type='text/css'>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- font-awesome icons -->
     <link rel="stylesheet" href="{{ asset('backend/css/font.css') }}" type="text/css" />
     <link href="{{ asset('backend/css/font-awesome.css') }}" rel="stylesheet">
@@ -1043,19 +1044,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //calendar -->
 
     <!-- //Delete Confirmation -->
-    <script type="text/javascript">
-        $('.confirm_delete_category').on('click', function() {
-            return confirm('Bạn có chắc muốn xóa danh mục này không?');
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('.confirm_delete_brand').on('click', function() {
-            return confirm('Bạn có chắc muốn xóa thương hiệu này không?');
-        });
-    </script>
+    @yield('scripts')
     <!-- //Delete Confirmation -->
-
 </body>
 
 </html>

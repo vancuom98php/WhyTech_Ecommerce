@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Http\Requests\AddBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 use Illuminate\Support\Str;
 
 class BrandController extends Controller
@@ -87,7 +88,7 @@ class BrandController extends Controller
     }
 
     /**
-     * Inactive brands
+     * Edit brands
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -104,7 +105,7 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBrandRequest $request, $id)
     {
         $brand = Brand::find($id)->update([
             'brand_name' => $request->brand_name,

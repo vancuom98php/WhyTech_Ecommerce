@@ -4,7 +4,7 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://localhost:8000',
     'asset_url' => NULL,
     'timezone' => 'Asia/Ho_Chi_Minh',
     'locale' => 'en',
@@ -40,6 +40,8 @@
       23 => 'App\\Providers\\AuthServiceProvider',
       24 => 'App\\Providers\\EventServiceProvider',
       25 => 'App\\Providers\\RouteServiceProvider',
+      26 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
+      27 => 'Intervention\\Image\\ImageServiceProvider',
     ),
     'aliases' => 
     array (
@@ -79,6 +81,7 @@
       'URL' => 'Illuminate\\Support\\Facades\\URL',
       'Validator' => 'Illuminate\\Support\\Facades\\Validator',
       'View' => 'Illuminate\\Support\\Facades\\View',
+      'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
   'auth' => 
@@ -349,7 +352,7 @@
       array (
         'driver' => 'local',
         'root' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://localhost:8000/storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -380,6 +383,88 @@
       'memory' => 1024,
       'threads' => 2,
       'time' => 2,
+    ),
+  ),
+  'lfm' => 
+  array (
+    'use_package_routes' => true,
+    'allow_private_folder' => true,
+    'private_folder_name' => 'UniSharp\\LaravelFilemanager\\Handlers\\ConfigHandler',
+    'allow_shared_folder' => true,
+    'shared_folder_name' => 'shares',
+    'folder_categories' => 
+    array (
+      'file' => 
+      array (
+        'folder_name' => 'files',
+        'startup_view' => 'list',
+        'max_size' => 50000,
+        'valid_mime' => 
+        array (
+          0 => 'image/jpeg',
+          1 => 'image/pjpeg',
+          2 => 'image/png',
+          3 => 'image/gif',
+          4 => 'image/svg+xml',
+          5 => 'application/pdf',
+          6 => 'text/plain',
+        ),
+      ),
+      'image' => 
+      array (
+        'folder_name' => 'photos',
+        'startup_view' => 'grid',
+        'max_size' => 50000,
+        'valid_mime' => 
+        array (
+          0 => 'image/jpeg',
+          1 => 'image/pjpeg',
+          2 => 'image/png',
+          3 => 'image/gif',
+          4 => 'image/svg+xml',
+        ),
+      ),
+    ),
+    'paginator' => 
+    array (
+      'perPage' => 30,
+    ),
+    'disk' => 'public',
+    'rename_file' => false,
+    'rename_duplicates' => false,
+    'alphanumeric_filename' => false,
+    'alphanumeric_directory' => false,
+    'should_validate_size' => false,
+    'should_validate_mime' => false,
+    'over_write_on_duplicate' => false,
+    'should_create_thumbnails' => true,
+    'thumb_folder_name' => 'thumbs',
+    'raster_mimetypes' => 
+    array (
+      0 => 'image/jpeg',
+      1 => 'image/pjpeg',
+      2 => 'image/png',
+    ),
+    'thumb_img_width' => 200,
+    'thumb_img_height' => 200,
+    'file_type_array' => 
+    array (
+      'pdf' => 'Adobe Acrobat',
+      'doc' => 'Microsoft Word',
+      'docx' => 'Microsoft Word',
+      'xls' => 'Microsoft Excel',
+      'xlsx' => 'Microsoft Excel',
+      'zip' => 'Archive',
+      'gif' => 'GIF Image',
+      'jpg' => 'JPEG Image',
+      'jpeg' => 'JPEG Image',
+      'png' => 'PNG Image',
+      'ppt' => 'Microsoft PowerPoint',
+      'pptx' => 'Microsoft PowerPoint',
+    ),
+    'php_ini_overrides' => 
+    array (
+      'memory_limit' => '256M',
     ),
   ),
   'logging' => 
@@ -667,6 +752,10 @@
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
   ),
+  'image' => 
+  array (
+    'driver' => 'gd',
+  ),
   'passport' => 
   array (
     'private_key' => NULL,
@@ -683,6 +772,88 @@
       array (
         'connection' => 'mysql',
       ),
+    ),
+  ),
+  'lfm-config' => 
+  array (
+    'use_package_routes' => true,
+    'allow_private_folder' => true,
+    'private_folder_name' => 'UniSharp\\LaravelFilemanager\\Handlers\\ConfigHandler',
+    'allow_shared_folder' => true,
+    'shared_folder_name' => 'shares',
+    'folder_categories' => 
+    array (
+      'file' => 
+      array (
+        'folder_name' => 'files',
+        'startup_view' => 'list',
+        'max_size' => 50000,
+        'valid_mime' => 
+        array (
+          0 => 'image/jpeg',
+          1 => 'image/pjpeg',
+          2 => 'image/png',
+          3 => 'image/gif',
+          4 => 'image/svg+xml',
+          5 => 'application/pdf',
+          6 => 'text/plain',
+        ),
+      ),
+      'image' => 
+      array (
+        'folder_name' => 'photos',
+        'startup_view' => 'grid',
+        'max_size' => 50000,
+        'valid_mime' => 
+        array (
+          0 => 'image/jpeg',
+          1 => 'image/pjpeg',
+          2 => 'image/png',
+          3 => 'image/gif',
+          4 => 'image/svg+xml',
+        ),
+      ),
+    ),
+    'paginator' => 
+    array (
+      'perPage' => 30,
+    ),
+    'disk' => 'public',
+    'rename_file' => false,
+    'rename_duplicates' => false,
+    'alphanumeric_filename' => false,
+    'alphanumeric_directory' => false,
+    'should_validate_size' => false,
+    'should_validate_mime' => false,
+    'over_write_on_duplicate' => false,
+    'should_create_thumbnails' => true,
+    'thumb_folder_name' => 'thumbs',
+    'raster_mimetypes' => 
+    array (
+      0 => 'image/jpeg',
+      1 => 'image/pjpeg',
+      2 => 'image/png',
+    ),
+    'thumb_img_width' => 200,
+    'thumb_img_height' => 200,
+    'file_type_array' => 
+    array (
+      'pdf' => 'Adobe Acrobat',
+      'doc' => 'Microsoft Word',
+      'docx' => 'Microsoft Word',
+      'xls' => 'Microsoft Excel',
+      'xlsx' => 'Microsoft Excel',
+      'zip' => 'Archive',
+      'gif' => 'GIF Image',
+      'jpg' => 'JPEG Image',
+      'jpeg' => 'JPEG Image',
+      'png' => 'PNG Image',
+      'ppt' => 'Microsoft PowerPoint',
+      'pptx' => 'Microsoft PowerPoint',
+    ),
+    'php_ini_overrides' => 
+    array (
+      'memory_limit' => '256M',
     ),
   ),
   'trustedproxy' => 

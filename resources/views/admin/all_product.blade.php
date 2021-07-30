@@ -1,4 +1,7 @@
 @extends('admin_layout')
+
+@section('admin_title', 'Admin - Product')
+
 @section('admin_content')
 
     <div class="table-agile-info">
@@ -46,39 +49,47 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th scope="col" width="250px">Tên thương hiệu</th>
-                            <th scope="col">Mô tả</th>
-                            <th scope="col" width="200px">Ngày thêm</th>
-                            <th scope="col" width="150px">Hiển thị</th>
-                            <th scope="col" style="width:50px;"></th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Danh mục</th>
+                            <th scope="col">Thương hiệu</th>
+                            <th scope="col">Ngày thêm</th>
+                            <th scope="col">Hiển thị</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($brands as $brand)
+                        @foreach ($products as $product)
                             <tr>
                                 <td>
                                     <label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
-                                <td>{{ $brand->brand_name }}</td>
-                                <td><span class="text-ellipsis">{{ $brand->brand_desc }}</span></td>
-
-                                <td><span class="text-ellipsis">{{ $brand->updated_at->format('d-m-Y') }}</span></td>
+                                <td>{{ $product->product_name }}</td>
+                                <td><span class="text-ellipsis">{{ number_format($product->product_price) }} VNĐ</span>
+                                </td>
+                                <td><img class="product_image_50_50" src="{{ $product->product_image_path }}"
+                                        alt="{{ $product->product_image_name }}"></td>
+                                <td><span class="text-ellipsis">{{ optional($product->category)->category_name }}</span>
+                                </td>
+                                <td><span class="text-ellipsis">{{ optional($product->brand)->brand_name }}</span></td>
+                                <td><span class="text-ellipsis">{{ $product->updated_at->format('d-m-Y') }}</span></td>
                                 <td><span class="text-ellipsis">
-                                        @if ($brand->brand_status == 0)
-                                            <a
-                                                href="{{ route('brand.inactive', ['id' => $brand->brand_id]) }}"><i
+                                        @if ($product->product_status == 0)
+                                            <a href="{{ route('product.inactive', ['id' => $product->product_id]) }}"><i
                                                     class="fa-category fa fa-eye-slash"></i></a>
                                         @else
-                                            <a
-                                                href="{{ route('brand.active', ['id' => $brand->brand_id]) }}"><i
+                                            <a href="{{ route('product.active', ['id' => $product->product_id]) }}"><i
                                                     class="fa-category fa fa-eye"></i></a>
                                         @endif
                                     </span></td>
                                 <td>
-                                    <a href="{{ route('brand.edit', ['id' => $brand->brand_id]) }}" class="active category-action" ui-toggle-class="">
+                                    <a href="{{ route('product.edit', ['id' => $product->product_id]) }}"
+                                        class="active category-action" ui-toggle-class="">
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
-                                    <a href="{{ route('brand.delete', ['id' => $brand->brand_id]) }}" class="active category-action confirm_delete_brand" ui-toggle-class="">
+                                    <a href="{{ route('product.delete', ['id' => $product->product_id]) }}"
+                                        class="active category-action confirm_delete_product" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>
                                 </td>
@@ -94,11 +105,18 @@
                         <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
-                        {{ $brands->links() }}
+                        {{ $products->links() }}
                     </div>
                 </div>
             </footer>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+
+    <script src="{{ asset('backend/js/sweetalert2@9.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('backend/js/list.js') }}"></script>
 
 @endsection

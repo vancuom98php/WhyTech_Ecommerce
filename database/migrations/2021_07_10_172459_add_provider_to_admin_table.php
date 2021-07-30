@@ -28,7 +28,7 @@ class AddProviderToAdminTable extends Migration
     public function down()
     {
         Schema::table('admin', function (Blueprint $table) {
-            //
+            $table->dropColumn('provider_id');
         });
     }
 }

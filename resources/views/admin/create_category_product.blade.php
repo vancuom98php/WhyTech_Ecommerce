@@ -1,4 +1,7 @@
 @extends('admin_layout')
+
+@section('admin_title', 'Admin - Category')
+
 @section('admin_content')
 
     <div class="form-w3layouts">
@@ -21,8 +24,8 @@
                                 <div class="form-group">
                                     <label class="add_category_label" for="category_name">Tên danh mục</label>
                                     <input type="text" name="category_name"
-                                        class="form-control @error('category_name') is-invalid @enderror" id="category_name"
-                                        placeholder="Nhập tên danh mục">
+                                        class="form-control input-add-name @error('category_name') is-invalid @enderror" id="category_name"
+                                        value="{{ old('category_name') }}" placeholder="Nhập tên danh mục">
                                     @error('category_name')
                                         <div class="invalid-feedback-category-product" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -32,8 +35,8 @@
                                 <div class="form-group">
                                     <label class="add_category_label" for="category_desc">Mô tả danh mục</label>
                                     <textarea style="resize: none" rows="5"
-                                        class="form-control @error('category_desc') is-invalid @enderror" id="category_desc"
-                                        name="category_desc" placeholder="Mô tả danh mục sản phẩm"></textarea>
+                                        class="form-control input-add @error('category_desc') is-invalid @enderror" id="category_desc"
+                                        name="category_desc" placeholder="Mô tả danh mục sản phẩm">{{ old('category_desc') }}</textarea>
                                     @error('category_desc')
                                         <div class="invalid-feedback-category-product" role="alert">
                                             <strong>{{ $message }}</strong>

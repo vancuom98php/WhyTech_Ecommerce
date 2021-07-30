@@ -74,6 +74,16 @@ body a:hover {
 .category-action.active {
     font-size: 20px;
 }
+.product_image_50_50 {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+.product_image_100_100 {
+    width: 100px;
+    height: 100px;
+    margin-top: 5px;
+}
 .fa-category.fa-eye {
     font-size: 28px;
     color: green;
@@ -2634,6 +2644,16 @@ ul.inbox-pagination li {
 .form-control.is-invalid:focus {
     border-color: red;
     box-shadow: 0 0 0 0.2rem rgba(227, 52, 47, 0.25);
+}
+.input-add-name {
+    font-weight: bold;
+}
+.input-add {
+    font-weight: normal;
+}
+.select2-container {
+    font-weight: normal;
+    font-size: 14px;
 }
 .input-box.is-invalid {
     border-color: red;

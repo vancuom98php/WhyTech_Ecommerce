@@ -24,8 +24,8 @@ class AddBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'brand_name' => 'bail|required|unique:brands|max:255|min:10',
-            'brand_desc' => 'bail|required|max:512|min:10',
+            'brand_name' => 'bail|required|unique:brands|max:255',
+            'brand_desc' => 'bail|required|max:512|min:5',
         ];
     }
 
@@ -33,12 +33,11 @@ class AddBrandRequest extends FormRequest
     {
         return [
             'brand_name.required' => 'Tên không được phép để trống',
-            'brand_name.unique' => 'Tên không được phép trùng',
+            'brand_name.unique' => 'Tên thương hiệu đã tồn tại',
             'brand_name.max' => 'Tên không được phép quá 255 kí tự',
-            'brand_name.min' => 'Tên không được phép dưới 10 kí tự',
             'brand_desc.required' => 'Mô tả không được phép để trống',
             'brand_desc.max' => 'Mô tả không được phép quá 512 kí tự',
-            'brand_desc.min' => 'Mô tả không được phép dưới 10 kí tự',
+            'brand_desc.min' => 'Mô tả không được phép dưới 5 kí tự',
         ];
     }
 }
