@@ -25,4 +25,17 @@ class Brand extends Model
         'brand_desc',
         'brand_status'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'brand_id');
+    }
+
+    protected static function boot() {
+        parent::boot();
+    
+        static::deleting(function($brand) {
+            $brand->products()->delete();
+        });
+    }
 }

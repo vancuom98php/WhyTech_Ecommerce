@@ -25,4 +25,17 @@ class CategoryProduct extends Model
         'category_desc',
         'category_status'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
+
+    protected static function boot() {
+        parent::boot();
+    
+        static::deleting(function($category) {
+            $category->products()->delete();
+        });
+    }
 }

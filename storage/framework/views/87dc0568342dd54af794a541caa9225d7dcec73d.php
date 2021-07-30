@@ -1,5 +1,7 @@
 
 
+<?php $__env->startSection('admin_title', 'Admin - Dashboard'); ?>
+
 <?php $__env->startSection('admin_content'); ?>
 
 <?php $__env->stopSection(); ?>

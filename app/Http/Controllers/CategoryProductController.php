@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoryProduct;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCategoryProductRequest;
+use App\Http\Requests\UpdateCategoryProductRequest;
 use Illuminate\Support\Str;
 
 class CategoryProductController extends Controller
@@ -87,7 +88,7 @@ class CategoryProductController extends Controller
     }
 
     /**
-     * Inactive category products
+     * Edit category products
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -104,7 +105,7 @@ class CategoryProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryProductRequest $request, $id)
     {
         $category = CategoryProduct::find($id)->update([
             'category_name' => $request->category_name,

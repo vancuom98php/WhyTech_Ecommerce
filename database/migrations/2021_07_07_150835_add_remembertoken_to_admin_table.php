@@ -28,7 +28,7 @@ class AddRemembertokenToAdminTable extends Migration
     public function down()
     {
         Schema::table('admin', function (Blueprint $table) {
-            //
+            $table->dropColumn('remember_token');
         });
     }
 }

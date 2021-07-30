@@ -1,4 +1,7 @@
 @extends('admin_layout')
+
+@section('admin_title', 'Admin - Category')
+
 @section('admin_content')
 
     <div class="table-agile-info">
@@ -101,4 +104,11 @@
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+
+    <script src="{{ asset('backend/js/sweetalert2@9.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('backend/js/list.js') }}"></script>
+    
 @endsection

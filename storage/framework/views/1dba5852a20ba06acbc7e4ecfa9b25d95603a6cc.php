@@ -1,5 +1,7 @@
 
 
+<?php $__env->startSection('title', 'Admin - Reset Pasword'); ?>
+
 <?php $__env->startSection('content'); ?>
     <div class="log-w3">
         <div class="w3layouts-main">
