@@ -22,16 +22,6 @@ class ProductController extends Controller
     use StorageImageTrait;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Add products
      * @return \Illuminate\Http\Response
      */
@@ -220,5 +210,16 @@ class ProductController extends Controller
                 'message' => 'fail',
             ], 500);
         }
+    }
+
+    /**
+     * Home function page
+     */
+    public function show_details_product($id)
+    {
+        $product = Product::find($id);
+        $related_products = Product::where('category_id', $product->category->category_id)->whereNotIn('product_id', [$product->product_id])->orderBy('category_id', 'desc')->get();
+
+        return view('pages.product.show_details', compact('product', 'related_products'));
     }
 }

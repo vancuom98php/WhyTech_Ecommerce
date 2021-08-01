@@ -5,22 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Product;
+use App\Models\CategoryProduct;
 use App\Http\Requests\AddBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Add brands
      * @return \Illuminate\Http\Response
@@ -129,5 +121,17 @@ class BrandController extends Controller
 
         session()->flash('notification', 'Xóa thương hiệu sản phẩm thành công');
         return redirect()->back();
+    }
+
+    /** 
+     *  Home function page
+     */
+    public function show_brand_home($id) {
+        $categories = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
+        $productByBrandId = Product::where('brand_id', $id)->latest()->paginate(4);
+        $brandById = Brand::find($id);
+
+        return view('pages.brand.show_brand', compact('categories', 'brands', 'productByBrandId', 'brandById'));
     }
 }
