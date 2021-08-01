@@ -51,9 +51,10 @@
                             </th>
                             <th scope="col" width="250px">Tên danh mục</th>
                             <th scope="col">Mô tả</th>
-                            <th scope="col" width="200px">Ngày thêm</th>
+                            <th scope="col" width="200px">Số lượng sản phẩm</th>
+                            <th scope="col" width="150px">Ngày thêm</th>
                             <th scope="col" width="150px">Hiển thị</th>
-                            <th scope="col" style="width:50px;"></th>
+                            <th scope="col" width="50px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +65,7 @@
                                 </td>
                                 <td>{{ $category->category_name }}</td>
                                 <td><span class="text-ellipsis">{{ $category->category_desc }}</span></td>
-
+                                <td><span class="text-ellipsis">{{ $category->products->count() }}</span></td>
                                 <td><span class="text-ellipsis">{{ $category->updated_at->format('d-m-Y') }}</span></td>
                                 <td><span class="text-ellipsis">
                                         @if ($category->category_status == 0)

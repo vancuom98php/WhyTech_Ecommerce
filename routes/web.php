@@ -16,7 +16,65 @@ use Illuminate\Support\Facades\Auth;
 
 // Home
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+
+Route::group([
+    'prefix' => 'home'
+], function () {
+    // Home
+    Route::get('', 'HomeController@index');
+
+    //Home - Category 
+    Route::get('/category/{id}', [
+        'as' => 'home.category',
+        'uses' => 'CategoryProductController@show_category_home'
+    ]);
+
+    // Home - Brand
+    Route::get('/brand/{id}', [
+        'as' => 'home.brand',
+        'uses' => 'BrandController@show_brand_home'
+    ]);
+
+    // Home - Product detail
+    Route::get('/product-detail/{id}', [
+        'as' => 'product.detail',
+        'uses' => 'ProductController@show_details_product'
+    ]);
+});
+
+// Cart
+Route::group([
+    'prefix' => 'cart'
+], function() {
+    // Add Cart
+    Route::post('/add', [
+        'as' => 'cart.add',
+        'uses' => 'CartController@store'
+    ]);
+    Route::get('/show', [
+        'as' => 'cart.show',
+        'uses' => 'CartController@show'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'cart.delete',
+        'uses' => 'CartController@delete'
+    ]);
+    Route::post('/update-quantity', [
+        'as' => 'cart.update-quantity',
+        'uses' => 'CartController@update_quantity'
+    ]);
+});
+
+// Checkout
+Route::group([
+    'prefix' => 'checkout'
+], function() { 
+    // Login Checkout
+    Route::get('/login-checkout', [
+        'as' => 'checkout.login-checkout',
+        'uses' => 'CheckoutController@login_to_checkout'
+    ]);
+});
 
 // Admin
 Route::group(['prefix' => 'admin'], function () {
@@ -34,7 +92,10 @@ Route::get('admin/facebook', [App\Http\Controllers\Auth\LoginController::class, 
 Route::get('admin/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);
 
 // Category Product
-Route::prefix('category-product')->group(function () {
+Route::group([
+    'prefix' => 'category-product',
+    'middleware' => 'auth'
+], function () {
     Route::get('/create', [
         'as' => 'category-product.create',
         'uses' => 'CategoryProductController@create'
@@ -70,7 +131,10 @@ Route::prefix('category-product')->group(function () {
 });
 
 // Brands
-Route::prefix('brand')->group(function () {
+Route::group([
+    'prefix' => 'brand',
+    'middleware' => 'auth'
+], function () {
     Route::get('/create', [
         'as' => 'brand.create',
         'uses' => 'BrandController@create'
@@ -106,7 +170,10 @@ Route::prefix('brand')->group(function () {
 });
 
 // Products
-Route::prefix('product')->group(function () {
+Route::group([
+    'prefix' => 'product',
+    'middleware' => 'auth'
+], function () {
     Route::get('/create', [
         'as' => 'product.create',
         'uses' => 'ProductController@create'

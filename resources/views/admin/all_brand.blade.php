@@ -51,9 +51,10 @@
                             </th>
                             <th scope="col" width="250px">Tên thương hiệu</th>
                             <th scope="col">Mô tả</th>
-                            <th scope="col" width="200px">Ngày thêm</th>
+                            <th scope="col" width="200px">Số lượng sản phẩm</th>
+                            <th scope="col" width="150px">Ngày thêm</th>
                             <th scope="col" width="150px">Hiển thị</th>
-                            <th scope="col" style="width:50px;"></th>
+                            <th scope="col" width="50px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +65,7 @@
                                 </td>
                                 <td>{{ $brand->brand_name }}</td>
                                 <td><span class="text-ellipsis">{{ $brand->brand_desc }}</span></td>
-
+                                <td><span class="text-ellipsis">{{ $brand->products->count() }}</span></td>
                                 <td><span class="text-ellipsis">{{ $brand->updated_at->format('d-m-Y') }}</span></td>
                                 <td><span class="text-ellipsis">
                                         @if ($brand->brand_status == 0)

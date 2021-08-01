@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoryProduct;
+use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCategoryProductRequest;
 use App\Http\Requests\UpdateCategoryProductRequest;
@@ -11,16 +13,6 @@ use Illuminate\Support\Str;
 
 class CategoryProductController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Add category products
      * @return \Illuminate\Http\Response
@@ -129,5 +121,17 @@ class CategoryProductController extends Controller
 
         session()->flash('notification', 'Xóa danh mục danh mục sản phẩm thành công');
         return redirect()->back();
+    }
+
+    /** 
+     *  Home function page
+     */
+    public function show_category_home($id) {
+        $categories = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
+        $productByCategoryId = Product::where('category_id', $id)->latest()->paginate(4);
+        $categoryById = CategoryProduct::find($id);
+
+        return view('pages.category.show_category', compact('categories', 'brands', 'productByCategoryId', 'categoryById'));
     }
 }

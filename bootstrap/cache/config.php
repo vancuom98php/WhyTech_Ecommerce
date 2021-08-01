@@ -221,6 +221,23 @@
     ),
     'prefix' => 'laravel_cache',
   ),
+  'cart' => 
+  array (
+    'calculator' => 'Gloudemans\\Shoppingcart\\Calculation\\DefaultCalculator',
+    'tax' => 0,
+    'database' => 
+    array (
+      'connection' => NULL,
+      'table' => 'shoppingcart',
+    ),
+    'destroy_on_logout' => false,
+    'format' => 
+    array (
+      'decimals' => 0,
+      'decimal_point' => '.',
+      'thousand_separator' => ',',
+    ),
+  ),
   'cors' => 
   array (
     'paths' => 
