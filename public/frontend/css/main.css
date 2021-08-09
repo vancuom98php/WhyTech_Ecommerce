@@ -47,6 +47,14 @@ h6 {
     box-shadow: none;
 }
 
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+    background-color: #f9505a;
+}
+
 .navbar-toggle {
     background-color: #000;
 }
@@ -259,19 +267,16 @@ a#scrollUp i {
 }
 
 .search_box input {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: medium none;
-    color: #b2b2b2;
+    color: rgb(36, 33, 33);
     font-family: "roboto";
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     height: 35px;
     outline: medium none;
     padding-left: 10px;
-    width: 155px;
-    background-image: url(../images/home/searchicon.png);
-    background-repeat: no-repeat;
-    background-position: 130px;
+    width: 360px;
 }
 
 /*  Dropdown menu*/
@@ -348,7 +353,7 @@ ul.sub-menu {
 **************************/
 
 #footer {
-    background: #f0f0e9;
+    background: #ffe5e5;
 }
 
 .footer-top .container {
@@ -466,7 +471,6 @@ ul.sub-menu {
 }
 
 .footer-widget {
-    margin-bottom: 68px;
 }
 
 .footer-widget .container {
@@ -626,6 +630,18 @@ ul.sub-menu {
     font-size: 16px;
     font-weight: 300;
     margin-top: 23px;
+}
+
+.search {
+    background: #b73166;
+    border: 0 none;
+    border-radius: 0;
+    color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 0px;
+    margin-left: 1px;
 }
 
 .item button:hover {
@@ -1138,7 +1154,7 @@ h2.title {
 
 .pagination li a,
 .pagination li span {
-    background-color: #f0f0e9;
+    background-color: #ffe5e5;
     border: 0;
     float: left;
     line-height: 1.42857;
@@ -1374,7 +1390,7 @@ h2.title {
 }
 
 #reviews form span input {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: 0 none;
     color: #a6a6a1;
     font-family: "Roboto", sans-serif;
@@ -1388,7 +1404,7 @@ h2.title {
 }
 
 #reviews textarea {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: medium none;
     color: #a6a6a1;
     height: 195px;
@@ -1476,7 +1492,7 @@ h2.title {
 
 .login-form form input,
 .signup-form form input {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: medium none;
     color: #696763;
     display: block;
@@ -1541,6 +1557,28 @@ h2.title {
     width: 50px;
 }
 
+.input-box {
+    margin-bottom: 10px;
+}
+
+.login-form .is-invalid,
+.signup-form .is-invalid {
+    border: 1px solid red;
+    background-color: rgb(202, 120, 120);
+    margin-bottom: 0;
+}
+
+.login-form .is-invalid,
+.signup-form .is-invalid:focus {
+    border: medium none;
+    background-color: #ffe5e5;
+}
+
+.invalid-input-alert strong {
+    color: red;
+    font-weight: normal;
+}
+
 /*************************
 *******Cart CSS******
 **************************/
@@ -1574,7 +1612,7 @@ h2.title {
     border-color: transparent transparent transparent #b73166;
     position: absolute;
     top: 11px;
-    left: 73px;
+    left: 74px;
 }
 
 .breadcrumbs .breadcrumb > li + li:before {
@@ -1646,7 +1684,7 @@ h2.title {
 }
 
 .cart_quantity_button a {
-    background: #f0f0e9;
+    background: #ffe5e5;
     color: #696763;
     display: inline-block;
     font-size: 16px;
@@ -1672,7 +1710,7 @@ h2.title {
 }
 
 .cart_delete a {
-    background: #f0f0e9;
+    background: #ffe5e5;
     color: #ffffff;
     padding: 5px 7px;
     font-size: 16px;
@@ -1763,10 +1801,10 @@ h2.title {
 .user_info input,
 select,
 textarea {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: 0;
     color: #696763;
-    padding: 5px;
+    padding: 10px;
     width: 100%;
     border-radius: 0;
     resize: none;
@@ -1807,7 +1845,7 @@ textarea {
 
 .register-req,
 .step-one .heading {
-    background: none repeat scroll 0 0 #f0f0e9;
+    background: none repeat scroll 0 0 #ffe5e5;
     color: #363432;
     font-size: 20px;
     margin-bottom: 35px;
@@ -1900,16 +1938,28 @@ textarea {
     width: 47%;
 }
 
+.form-one.checkout {
+    width: 95%;
+}
+
 .shopper-info > form > input,
 .form-two > form > select,
 .form-two > form > input,
 .form-one > form > input {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: 0 none;
     margin-bottom: 10px;
     padding: 10px;
     width: 100%;
     font-weight: 300;
+}
+
+.shopper-info > form > input,
+.form-two > form > select,
+.form-two > form > input,
+.form-one > form > .save_checkout {
+    margin-bottom: 0px;
+    margin-top: 10px;
 }
 
 .form-two > form > select {
@@ -1922,7 +1972,7 @@ textarea {
 
 .order-message textarea {
     font-size: 12px;
-    height: 335px;
+    height: 190px;
     margin-bottom: 20px;
     padding: 15px 20px;
 }
@@ -1941,6 +1991,10 @@ textarea {
     font-weight: 300;
     margin-top: 45px;
     margin-bottom: 20px;
+}
+
+.review-payment h2:hover {
+    color: #b73166;
 }
 
 .payment-options {
@@ -2013,7 +2067,7 @@ textarea {
 }
 
 .blog-post-area .post-meta ul li {
-    background: #f0f0e9;
+    background: #ffe5e5;
     float: left;
     margin-right: 10px;
     padding: 0 5px;
@@ -2070,7 +2124,7 @@ textarea {
 }
 
 .pagination-area .pagination li a {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: 0 none;
     border-radius: 0;
     color: #696763;
@@ -2093,7 +2147,7 @@ textarea {
 }
 
 .pager-area .pager li a {
-    background: #f0f0e9;
+    background: #ffe5e5;
     border: 0 none;
     border-radius: 0;
     color: #696763;
@@ -2218,7 +2272,7 @@ textarea {
     display: block;
     font-size: 10px;
     padding: 1px;
-    background: #f0f0e9;
+    background: #ffe5e5;
 }
 
 .blog-socials ul li a:hover {
@@ -2271,7 +2325,7 @@ textarea {
 }
 
 .sinlge-post-meta li {
-    background: #f0f0e9;
+    background: #ffe5e5;
     color: #363432;
     float: left;
     font-size: 10px;
@@ -2352,6 +2406,10 @@ textarea {
     border: 0 none;
     border-radius: 0;
     margin-top: 16px;
+}
+
+.btn.btn-primary:hover {
+    background: #f9505a;
 }
 
 .blank-arrow {

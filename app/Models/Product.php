@@ -46,4 +46,10 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
+
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class, 'product_id');
+    }
+
 }

@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Home
+/**
+ * Home pages
+ */
 Route::get('/', 'HomeController@index');
 
 Route::group([
@@ -22,6 +24,10 @@ Route::group([
 ], function () {
     // Home
     Route::get('', 'HomeController@index');
+    Route::post('/search', [
+        'as' => 'home.search',
+        'uses' => 'HomeController@search'
+    ]);
 
     //Home - Category 
     Route::get('/category/{id}', [
@@ -74,9 +80,40 @@ Route::group([
         'as' => 'checkout.login-checkout',
         'uses' => 'CheckoutController@login_to_checkout'
     ]);
+    Route::get('/logout-checkout', [
+        'as' => 'checkout.logout-checkout',
+        'uses' => 'CheckoutController@logout_to_checkout'
+    ]);
+    Route::get('/checkout', [
+        'as' => 'checkout.checkout',
+        'uses' => 'CheckoutController@checkout'
+    ]);
+    Route::post('/register', [
+        'as' => 'customer.register',
+        'uses' => 'CheckoutController@register'
+    ]);
+    Route::post('/login', [
+        'as' => 'customer.login',
+        'uses' => 'CheckoutController@login'
+    ]);
+    Route::post('/save-checkout', [
+        'as' => 'checkout.save-checkout',
+        'uses' => 'CheckoutController@save_checkout'
+    ]);
+    Route::get('/payment', [
+        'as' => 'checkout.payment',
+        'uses' => 'CheckoutController@payment'
+    ]);
+    Route::post('/place-order', [
+        'as' => 'checkout.place-order',
+        'uses' => 'CheckoutController@place_order'
+    ]);
 });
 
-// Admin
+
+/**
+ * Admin pages
+ */
 Route::group(['prefix' => 'admin'], function () {
     Auth::routes();
 });
@@ -205,5 +242,24 @@ Route::group([
     Route::get('/delete/{id}', [
         'as' => 'product.delete',
         'uses' => 'ProductController@delete'
+    ]);
+});
+
+// Orders
+Route::group([
+    'prefix' => 'order',
+    'middleware' => 'auth'
+], function() {
+    Route::get('/manage', [
+        'as' => 'order.manage',
+        'uses' => 'CheckoutController@manage_order'
+    ]);
+    Route::get('/view/{id}', [
+        'as' => 'order.view',
+        'uses' => 'CheckoutController@view_order'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'order.delete',
+        'uses' => 'CheckoutController@delete_order'
     ]);
 });

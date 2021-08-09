@@ -19,6 +19,12 @@ class AddForeignToOrderDetailsTable extends Migration
                 $table->unsignedInteger('product_id')->index('order_details_product_id_foreign');
             }
             $table->foreign('product_id')->references('product_id')->on('products')->onUpdate('cascade')->onDelete('cascade');
+            
+            //orders table
+            if (!Schema::hasColumn('order_details', 'order_id')) {
+                $table->unsignedInteger('order_id')->index('order_details_order_id_foreign');
+            }
+            $table->foreign('order_id')->references('order_id')->on('orders')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -31,6 +37,9 @@ class AddForeignToOrderDetailsTable extends Migration
     {
         Schema::table('order_details', function (Blueprint $table) {
             $table->dropForeign('order_details_product_id_foreign');
+        });
+        Schema::table('order_details', function (Blueprint $table) {
+            $table->dropForeign('order_details_order_id_foreign');
         });
     }
 }

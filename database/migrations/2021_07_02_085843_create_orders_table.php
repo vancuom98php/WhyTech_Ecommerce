@@ -17,11 +17,13 @@ class CreateOrdersTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
-            $table->bigIncrements('order_id');
+            $table->increments('order_id');
             $table->unsignedInteger('customer_id')->index('orders_customer_id_foreign');
             $table->unsignedInteger('shipping_id')->index('orders_shipping_id_foreign');
+            $table->unsignedInteger('payment_id')->index('orders_payment_id_foreign');
             $table->unsignedInteger('order_status');
             $table->string('order_code', 50);
+            $table->string('order_total', 100);
             $table->string('order_date', 100);
             $table->string('order_destroy', 200)->nullable();
             $table->timestamps();
