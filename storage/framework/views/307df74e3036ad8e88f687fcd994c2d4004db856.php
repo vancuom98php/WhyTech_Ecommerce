@@ -95,11 +95,30 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                                <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i> Tài
+                                        khoản</a></li>
+                                <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
+                                <?php if(session()->has('customer_id') && !session()->has('shipping_id')): ?>
+                                    <li><a href="<?php echo e(route('checkout.checkout')); ?>"><i class="fa fa-crosshairs"></i>
+                                            Thanh toán</a></li>
+                                <?php elseif(session()->has('customer_id') && session()->has('shipping_id')): ?>
+                                    <li><a href="<?php echo e(route('checkout.payment')); ?>"><i class="fa fa-crosshairs"></i>
+                                            Thanh toán</a></li>
+                                <?php else: ?>
+                                    <li><a href="<?php echo e(route('checkout.login-checkout')); ?>"><i
+                                                class="fa fa-crosshairs"></i>Thanh toán</a></li>
+                                <?php endif; ?>
+
+                                <li><a href="<?php echo e(route('cart.show')); ?>"><i class="fa fa-shopping-cart"></i> Giỏ
+                                        hàng</a></li>
+                                <?php if(!session()->has('customer_id')): ?>
+                                    <li><a href="<?php echo e(route('checkout.login-checkout')); ?>"><i class="fa fa-lock"></i>
+                                            Đăng nhập</a></li>
+                                <?php else: ?>
+                                    <li><a href="<?php echo e(route('checkout.logout-checkout')); ?>"><i
+                                                class="fa fa-unlock"></i>
+                                            Đăng xuất</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
@@ -112,7 +131,7 @@
             <!--header-bottom-->
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-8">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle" data-toggle="collapse"
                                 data-target=".navbar-collapse">
@@ -125,27 +144,28 @@
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
                                 <li><a href="<?php echo e(url('/')); ?>" class="active">Trang chủ</a></li>
-                                <li class="dropdown"><a href="#">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.html">Products</a></li>
-                                        <li><a href="product-details.html">Product Details</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="login.html">Login</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <a href="#">Tin tức<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li><a href="404.html">Giỏ hàng</a></li>
+                                <li><a href="<?php echo e(route('cart.show')); ?>">Giỏ hàng</a></li>
                                 <li><a href="contact-us.html">Liên hệ</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="search_box pull-right">
-                            <input type="text" placeholder="Search" />
-                        </div>
+                    <div class="col-sm-4">
+                        <form action="<?php echo e(route('home.search')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <div class="search_box pull-right" style="display: flex">
+                                <input type="text" name="keywords_submit" placeholder="Nhập sản phẩm bạn muốn tìm" />
+                                <button type="submit" class="btn btn-default search"><i
+                                        class="fa fa-search"></i></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -238,6 +258,9 @@
                 <div class="col-sm-9 padding-right">
                     <?php echo $__env->yieldContent('home_content'); ?>
                 </div>
+            </div>
+            <div class="row">
+                <?php echo $__env->yieldContent('home_sm-12_content'); ?>
             </div>
         </div>
     </section>
@@ -342,16 +365,6 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                    <p class="pull-right">Designed by <span><a target="_blank"
-                                href="http://www.themeum.com">Themeum</a></span></p>
                 </div>
             </div>
         </div>

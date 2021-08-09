@@ -56,7 +56,7 @@
                             <th scope="col">Thương hiệu</th>
                             <th scope="col">Ngày thêm</th>
                             <th scope="col">Hiển thị</th>
-                            <th scope="col"></th>
+                            <th scope="col" width="50px"></th>
                         </tr>
                     </thead>
                     <tbody>

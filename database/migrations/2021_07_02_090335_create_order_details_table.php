@@ -20,8 +20,7 @@ class CreateOrderDetailsTable extends Migration
             $table->increments('order_details_id');
             $table->string('order_code', 50);
             $table->unsignedInteger('product_id')->index('order_details_product_id_foreign');
-            $table->string('product_name', 255);
-            $table->string('product_price', 50);
+            $table->unsignedInteger('order_id')->index('order_details_order_id_foreign');
             $table->unsignedInteger('product_sales_quantity');
             $table->string('product_coupon', 50);
             $table->string('product_feeship', 50);

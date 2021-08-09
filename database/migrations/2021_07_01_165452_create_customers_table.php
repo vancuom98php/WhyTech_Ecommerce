@@ -19,7 +19,7 @@ class CreateCustomersTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
             $table->increments('customer_id');
             $table->string('customer_name', 255);
-            $table->string('customer_email', 255);
+            $table->string('customer_email', 255)->unique();
             $table->string('customer_password', 255);
             $table->string('customer_phone', 255);
             $table->string('customer_avatar', 255)->nullable();

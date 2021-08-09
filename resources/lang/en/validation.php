@@ -96,7 +96,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => ':attribute không đúng định dạng. Vui lòng kiểm tra lại!',
-    'required' => 'The :attribute field is required.',
+    'required' => 'Vui lòng nhập :attribute.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -111,7 +111,7 @@ return [
         'array' => 'The :attribute must contain :size items.',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
+    'string' => ':attribute phải là chuỗi.',
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => ':attribute đã tồn tại. Vui lòng chọn :attribute khác!',
     'uploaded' => 'The :attribute failed to upload.',
@@ -147,10 +147,16 @@ return [
     */
 
     'attributes' => [
+        'name' => 'Tên hiển thị',
         'admin_phone' => 'Số điện thoại',
         'admin_email' => 'Email',
         'password' => 'Password',
-        'password_confirmation' => 'Confirm Password'
+        'password_confirmation' => 'Confirm Password',
+        'customer_name' => 'Họ và tên',
+        'customer_email' => 'Email',
+        'customer_phone' => 'Số điện thoại',
+        'customer_password' => 'Password',
+        'customer_confirm_password' => 'Re-password'
     ],
 
 ];

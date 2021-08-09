@@ -25,6 +25,12 @@ class AddForeignToOrdersTable extends Migration
                 $table->unsignedInteger('shipping_id')->index('orders_shipping_id_foreign');
             }
             $table->foreign('shipping_id')->references('shipping_id')->on('shippings')->onUpdate('cascade')->onDelete('cascade');
+            
+            //payments table
+            if (!Schema::hasColumn('orders', 'payment_id')) {
+                $table->unsignedInteger('payment_id')->index('orders_payment_id_foreign');
+            }
+            $table->foreign('payment_id')->references('payment_id')->on('payments')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -38,6 +44,7 @@ class AddForeignToOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->dropForeign('orders_customer_id_foreign');
             $table->dropForeign('orders_shipping_id_foreign');
+            $table->dropForeign('orders_payment_id_foreign');
         });
     }
 }

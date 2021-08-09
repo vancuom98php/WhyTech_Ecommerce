@@ -47,10 +47,11 @@
                                     <div class="cart_quantity_button">
                                         <form role="form" action="{{ route('cart.update-quantity') }}" method="post">
                                             @csrf
-                                            <input class="cart_quantity_input" type="text" name="cart_quantity"
-                                                value="{{ $value->qty }}" size="2">
+                                            <input class="cart_quantity_input" style="width:15%;" type="number" min="1"
+                                                name="cart_quantity" value="{{ $value->qty }}">
                                             <input type="hidden" name="cart_rowId" value="{{ $value->rowId }}">
-                                            <button type="submit" class="btn btn-default btn-sm" name="update_quantity">Update</button>
+                                            <button type="submit" class="btn btn-default btn-sm" name="update_quantity">Cập
+                                                nhật</button>
                                         </form>
                                     </div>
                                 </td>
@@ -149,7 +150,13 @@
                             <li>Thành tiền <span>{{ Cart::total() }} VNĐ</span></li>
                         </ul>
                         {{-- <a class="btn btn-default update" href="">Update</a> --}}
-                        <a class="btn btn-default check_out" href="{{ route('checkout.login-checkout') }}">Thanh toán</a>
+                        @if (session()->has('customer_id') && !session()->has('shipping_id'))
+                            <a class="btn btn-default check_out" href="{{ route('checkout.checkout') }}">Thanh toán</a>
+                        @elseif (session()->has('customer_id') && session()->has('shipping_id'))
+                            <a class="btn btn-default check_out" href="{{ route('checkout.payment') }}">Thanh toán</a>
+                        @else
+                            <a class="btn btn-default check_out" href="{{ route('checkout.login-checkout') }}">Thanh toán</a>
+                        @endif
                     </div>
                 </div>
             </div>
