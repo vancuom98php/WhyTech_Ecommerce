@@ -8,34 +8,13 @@
             <h2>Đăng nhập</h2>
             <form method="POST" action="<?php echo e(route('login')); ?>">
                 <?php echo csrf_field(); ?>
-                <div class="input-box <?php $__errorArgs = ['admin_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>">
+                <div class="input-box">
                     <i class="input-icon fas fa-envelope"></i>
-                    <input id="admin_email" type="email" class="ggg <?php $__errorArgs = ['admin_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
+                    <input id="admin_email" type="email" class="ggg"
                         name="admin_email" value="<?php echo e(old('admin_email')); ?>" required autocomplete="email" autofocus
                         placeholder="Email">
                 </div>
-                <div class="input-box <?php $__errorArgs = ['admin_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>">
+                <div class="input-box">
                     <i class="input-icon fas fa-lock"></i>
                     <input id="admin_password" type="password" class="ggg" name="password" required
                         autocomplete="current-password" placeholder="Password">

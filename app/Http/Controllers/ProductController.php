@@ -30,7 +30,7 @@ class ProductController extends Controller
         $categories = CategoryProduct::orderBy('category_id', 'desc')->get();
         $brands = Brand::orderBy('brand_id', 'desc')->get();
 
-        return view('admin.create_product', compact('categories', 'brands'));
+        return view('admin.product.create_product', compact('categories', 'brands'));
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(3);
 
-        return view('admin.all_product', compact('products'));
+        return view('admin.product.all_product', compact('products'));
     }
 
     /**
@@ -133,7 +133,7 @@ class ProductController extends Controller
         $categories = CategoryProduct::orderBy('category_id', 'desc')->get();
         $brands = Brand::orderBy('brand_id', 'desc')->get();
 
-        return view('admin.edit_product', compact('product', 'categories', 'brands'));
+        return view('admin.product.edit_product', compact('product', 'categories', 'brands'));
     }
 
     /**

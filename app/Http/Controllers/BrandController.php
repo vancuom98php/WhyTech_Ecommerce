@@ -19,7 +19,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.create_brand');
+        return view('admin.brand.create_brand');
     }
 
     /**
@@ -50,7 +50,7 @@ class BrandController extends Controller
     {
         $brands = Brand::latest()->paginate(2);
 
-        return view('admin.all_brand', compact('brands'));
+        return view('admin.brand.all_brand', compact('brands'));
     }
 
     /**
@@ -87,7 +87,7 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brand = Brand::find($id);
-        return view('admin.edit_brand', compact('brand'));
+        return view('admin.brand.edit_brand', compact('brand'));
     }
 
     /**

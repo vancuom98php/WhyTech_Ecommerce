@@ -41,7 +41,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- //font-awesome icons -->
-    <script src="{{ asset('backend/js/jquery2.0.3.min.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery3.0.6.min.js') }}"></script>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/images/favicon.ico') }}" type="image/x-icon">

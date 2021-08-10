@@ -36,7 +36,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     
     <link rel="shortcut icon" href="<?php echo e(asset('backend/images/favicon.ico')); ?>" type="image/x-icon">
     <!-- //font-awesome icons -->
-    <script src="<?php echo e(asset('backend/js/jquery2.0.3.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/js/jquery3.0.6.min.js')); ?>"></script>
     <script src="<?php echo e(asset('backend/js/raphael-min.js')); ?>"></script>
     <script src="<?php echo e(asset('backend/js/morris.js')); ?>"></script>
 </head>
@@ -354,7 +354,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </script>
     <!-- //calendar -->
 
-    <!-- //Delete Confirmation -->
+    <!-- Delete Confirmation -->
     <?php echo $__env->yieldContent('scripts'); ?>
     <!-- //Delete Confirmation -->
 </body>

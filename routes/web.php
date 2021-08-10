@@ -263,3 +263,6 @@ Route::group([
         'uses' => 'CheckoutController@delete_order'
     ]);
 });
+
+// Email
+Route::get('/send-mail', 'MailController@send_mail');

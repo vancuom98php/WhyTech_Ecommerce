@@ -8,13 +8,13 @@
             <h2>Đăng nhập</h2>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <div class="input-box @error('admin_email') is-invalid @enderror">
+                <div class="input-box">
                     <i class="input-icon fas fa-envelope"></i>
-                    <input id="admin_email" type="email" class="ggg @error('admin_email') is-invalid @enderror"
+                    <input id="admin_email" type="email" class="ggg"
                         name="admin_email" value="{{ old('admin_email') }}" required autocomplete="email" autofocus
                         placeholder="Email">
                 </div>
-                <div class="input-box @error('admin_email') is-invalid @enderror">
+                <div class="input-box">
                     <i class="input-icon fas fa-lock"></i>
                     <input id="admin_password" type="password" class="ggg" name="password" required
                         autocomplete="current-password" placeholder="Password">

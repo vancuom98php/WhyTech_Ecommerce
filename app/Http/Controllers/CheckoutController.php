@@ -162,7 +162,7 @@ class CheckoutController extends Controller
     {
         $orders = Order::latest()->paginate(3);
 
-        return view('admin.manage_order', compact('orders'));
+        return view('admin.order.manage_order', compact('orders'));
     }
 
     /**
@@ -174,7 +174,7 @@ class CheckoutController extends Controller
     {
         $order = Order::find($id);
 
-        return view('admin.view_order', compact('order'));
+        return view('admin.order.view_order', compact('order'));
     }
 
     /**

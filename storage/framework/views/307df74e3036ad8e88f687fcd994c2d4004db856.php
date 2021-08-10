@@ -4,9 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!---------Seo--------->
     <meta name="description" content="">
+    <meta name="keywords" content=""/>
+    <meta name="robots" content="INDEX,FOLLOW"/>
+    <link  rel="canonical" href="" />
     <meta name="author" content="">
+
+    <!------------Share fb------------------>
+    <meta property="og:url" content="" />
+    <meta property="og:type" content="articles" />
+    <meta property="og:title" content="" />
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <!--//-------Seo--------->
+
+    <link rel="shortcut icon" href="<?php echo e(asset('frontend/images/ico/favicon.ico')); ?>" type="image/x-icon">
+
     <title>Why-Tech | <?php echo $__env->yieldContent('home_title'); ?></title>
+
     <link href="<?php echo e(asset('frontend/css/bootstrap.min.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('frontend/css/font-awesome.min.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('frontend/css/prettyPhoto.css')); ?>" rel="stylesheet">
@@ -14,15 +32,7 @@
     <link href="<?php echo e(asset('frontend/css/animate.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('frontend/css/main.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('frontend/css/responsive.css')); ?>" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
-    <link rel="shortcut icon" href="<?php echo e(asset('frontend/images/ico/favicon.ico')); ?>" type="image/x-icon">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+
 </head>
 <!--/head-->
 
