@@ -571,11 +571,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'smtp.mailtrap.io',
-        'port' => '2525',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'host' => 'smtp.googlemail.com',
+        'port' => '587',
+        'encryption' => 'tls',
+        'username' => 'nguondiengao@gmail.com',
+        'password' => 'tienkhung16',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -606,9 +606,18 @@
         'transport' => 'array',
       ),
     ),
+    'stream' => 
+    array (
+      'ssl' => 
+      array (
+        'allow_self_signed' => true,
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+      ),
+    ),
     'from' => 
     array (
-      'address' => NULL,
+      'address' => 'nguondiengao@gmail.com',
       'name' => 'Laravel',
     ),
     'markdown' => 

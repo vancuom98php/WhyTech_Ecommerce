@@ -19,7 +19,7 @@ class CategoryProductController extends Controller
      */
     public function create()
     {
-        return view('admin.create_category_product');
+        return view('admin.category.create_category_product');
     }
 
     /**
@@ -50,7 +50,7 @@ class CategoryProductController extends Controller
     {
         $categories = CategoryProduct::latest()->paginate(2);
 
-        return view('admin.all_category_product', compact('categories'));
+        return view('admin.category.all_category_product', compact('categories'));
     }
 
     /**
@@ -87,7 +87,7 @@ class CategoryProductController extends Controller
     public function edit($id)
     {
         $category = CategoryProduct::find($id);
-        return view('admin.edit_category_product', compact('category'));
+        return view('admin.category.edit_category_product', compact('category'));
     }
 
     /**
