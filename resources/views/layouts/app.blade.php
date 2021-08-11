@@ -96,6 +96,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
     </script>
 
+    
+    <!-- Google Captcha -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- //Google Captcha -->
+
 </body>
 
 </html>
