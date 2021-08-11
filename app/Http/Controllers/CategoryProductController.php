@@ -34,6 +34,7 @@ class CategoryProductController extends Controller
         $categoryProduct->category_name = $request->category_name;
         $categoryProduct->category_product_slug = Str::slug($request->category_name, '-');
         $categoryProduct->category_desc = $request->category_desc;
+        $categoryProduct->meta_keywords = $request->meta_keywords;
         $categoryProduct->category_status = $request->category_status;
         $categoryProduct->save();
 
@@ -102,7 +103,8 @@ class CategoryProductController extends Controller
         $category = CategoryProduct::find($id)->update([
             'category_name' => $request->category_name,
             'category_product_slug' => Str::slug($request->category_name, '-'),
-            'category_desc' => $request->category_desc
+            'category_desc' => $request->category_desc,
+            'meta_keywords' => $request->meta_keywords
         ]);
 
         session()->flash('notification_update-success', 'Cập nhật danh mục danh mục sản phẩm thành công');
@@ -125,13 +127,25 @@ class CategoryProductController extends Controller
 
     /** 
      *  Home function page
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function show_category_home($id) {
+    public function show_category_home($category_product_slug, Request $request)
+    {
         $categories = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
-        $productByCategoryId = Product::where('category_id', $id)->latest()->paginate(4);
-        $categoryById = CategoryProduct::find($id);
 
-        return view('pages.category.show_category', compact('categories', 'brands', 'productByCategoryId', 'categoryById'));
+        $productByCategorySlug = Product::select('products.*')->where('product_status', 1)->join('category_products', 'category_products.category_id', '=', 'products.category_id')
+            ->where('category_product_slug', $category_product_slug)->latest()->paginate(4);
+
+        $categoryBySlug = CategoryProduct::where('category_product_slug', $category_product_slug)->first();
+
+        //seo 
+        $meta_desc = $categoryBySlug->category_desc;
+        $meta_keywords = $categoryBySlug->meta_keywords;
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | " . $categoryBySlug->category_name;
+        //--seo
+
+        return view('pages.category.show_category', compact('categories', 'brands', 'productByCategorySlug', 'categoryBySlug', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }

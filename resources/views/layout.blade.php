@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!---------Seo--------->
-    <meta name="description" content="">
-    <meta name="keywords" content=""/>
+    <meta name="description" content="{{ $meta_desc }}">
+    <meta name="keywords" content="{{  $meta_keywords }}"/>
     <meta name="robots" content="INDEX,FOLLOW"/>
-    <link  rel="canonical" href="" />
+    <link  rel="canonical" href="{{ $url_canonical }}" />
     <meta name="author" content="">
 
     <!------------Share fb------------------>
@@ -23,7 +23,7 @@
 
     <link rel="shortcut icon" href="{{ asset('frontend/images/ico/favicon.ico') }}" type="image/x-icon">
 
-    <title>Why-Tech | @yield('home_title')</title>
+    <title>{{ $meta_title }}</title>
 
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -168,8 +168,8 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <form action="{{ route('home.search') }}" method="POST">
-                            @csrf
+                        <form action="{{ route('home.search') }}" method="GET">
+                            {{-- @csrf --}}
                             <div class="search_box pull-right" style="display: flex">
                                 <input type="text" name="keywords_submit" placeholder="Nhập sản phẩm bạn muốn tìm" />
                                 <button type="submit" class="btn btn-default search"><i

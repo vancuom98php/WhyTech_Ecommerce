@@ -26,6 +26,7 @@ class UpdateCategoryProductRequest extends FormRequest
         return [
             'category_name' => 'bail|required|max:255',
             'category_desc' => 'bail|required|max:512|min:5',
+            'meta_keywords' => 'required'
         ];
     }
 
@@ -37,6 +38,7 @@ class UpdateCategoryProductRequest extends FormRequest
             'category_desc.required' => 'Mô tả không được phép để trống',
             'category_desc.max' => 'Mô tả không được phép quá 512 kí tự',
             'category_desc.min' => 'Mô tả không được phép dưới 5 kí tự',
+            'meta_keywords.required' => 'Từ khóa không được phép để trống',
         ];
     }
 }

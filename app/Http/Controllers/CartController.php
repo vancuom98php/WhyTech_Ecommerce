@@ -62,14 +62,21 @@ class CartController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function show()
+    public function show(Request $request)
     {
         $content = Cart::content();
 
-        return view('pages.cart.show_cart', compact('content'));
+        //seo 
+        $meta_desc = "Giỏ hàng của bạn"; 
+        $meta_keywords = "Giỏ hàng của bạn";
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | Giỏ hàng của bạn ";
+        //--seo
+
+        return view('pages.cart.show_cart', compact('content', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     /**

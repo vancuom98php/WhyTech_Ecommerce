@@ -42,6 +42,18 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label class="add_category_label" for="meta_keywords">Từ khóa danh mục</label>
+                                    <textarea style="resize: none" rows="3"
+                                        class="form-control input-add @error('meta_keywords') is-invalid @enderror"
+                                        id="meta_keywords" name="meta_keywords"
+                                        placeholder="Mô tả danh mục sản phẩm">{{ $category->meta_keywords }}</textarea>
+                                    @error('meta_keywords')
+                                        <div class="invalid-feedback-category-product" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                </div>
                                 <button type="submit" name="add_category_product" class="btn btn-info">Cập nhật danh
                                     mục</button>
                             </form>

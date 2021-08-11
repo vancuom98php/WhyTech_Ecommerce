@@ -1,7 +1,5 @@
 @extends('layout')
 
-@section('home_title', 'Brand')
-
 @section('sidebar')
     @include('pages.include.sidebar')
 @endsection
@@ -9,10 +7,10 @@
 @section('home_content')
     <div class="features_items">
         <!--features_items-->
-        <h2 class="title text-center">Thương hiệu - {{ $brandById->brand_name }}</h2>
+        <h2 class="title text-center">Thương hiệu - {{ $brandBySlug->brand_name }}</h2>
         <div class="row">
-            @foreach ($productByBrandId as $product)
-                <a href="{{ route('product.detail', ['id' => $product->product_id]) }}">
+            @foreach ($productByBrandSlug as $product)
+                <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
                     <div class="col-sm-3">
                         <div class="product-image-wrapper">
                             <div class="single-products">
@@ -38,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col-sm-7 offset-sm-4 text-right text-center-xs">
-                {{ $productByBrandId->links() }}
+                {{ $productByBrandSlug->links() }}
             </div>
         </div>
     </div>

@@ -19,9 +19,16 @@ use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
-    public function login_to_checkout()
+    public function login_to_checkout(Request $request)
     {
-        return view('pages.checkout.login_checkout');
+        //seo 
+        $meta_desc = "Khách hàng đăng ký - đăng nhập";
+        $meta_keywords = "WhyTech đăng ký, WhyTech đăng nhập, WhyTech Khách hàng, WhyTech mua sắm";
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | Đăng nhập tài khoản - Mua sắm online";
+        //--seo
+
+        return view('pages.checkout.login_checkout', compact('meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function logout_to_checkout()
@@ -82,9 +89,16 @@ class CheckoutController extends Controller
         }
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
-        return view('pages.checkout.show_checkout');
+        //seo 
+        $meta_desc = "Thông tin giao nhận hàng";
+        $meta_keywords = "WhyTech giao nhận hàng";
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | Thông tin giao nhận hàng";
+        //--seo
+
+        return view('pages.checkout.show_checkout', compact('meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function save_checkout(AddShippingRequest $request)
@@ -103,15 +117,29 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.payment');
     }
 
-    public function payment()
+    public function payment(Request $request)
     {
         $content = Cart::content();
 
-        return view('pages.checkout.payment', compact('content'));
+        //seo 
+        $meta_desc = "Thanh toán online";
+        $meta_keywords = "WhyTech thanh toán online";
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | Thanh toán online";
+        //--seo
+
+        return view('pages.checkout.payment', compact('content', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function place_order(Request $request)
     {
+        //seo 
+        $meta_desc = "Thanh toán online";
+        $meta_keywords = "WhyTech thanh toán online";
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | Thanh toán online";
+        //--seo
+
         try {
             DB::beginTransaction();
 
@@ -147,7 +175,7 @@ class CheckoutController extends Controller
             if ($payment->payment_method == 'ATM') {
                 echo "Thanh toán bằng ATM (tạm thời)";
             } else {
-                return view('pages.checkout.hand_cash');
+                return view('pages.checkout.hand_cash', compact('meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
             }
         } catch (\Exception $exception) {
             DB::rollBack();

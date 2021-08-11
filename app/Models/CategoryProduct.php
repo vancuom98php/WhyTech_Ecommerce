@@ -23,6 +23,7 @@ class CategoryProduct extends Model
         'category_name',
         'category_product_slug',
         'category_desc',
+        'meta_keywords',
         'category_status'
     ];
 
