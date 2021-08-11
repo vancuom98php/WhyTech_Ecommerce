@@ -125,13 +125,25 @@ class BrandController extends Controller
 
     /** 
      *  Home function page
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function show_brand_home($id) {
+    public function show_brand_home($brand_slug, Request $request) {
         $categories = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
-        $productByBrandId = Product::where('brand_id', $id)->latest()->paginate(4);
-        $brandById = Brand::find($id);
 
-        return view('pages.brand.show_brand', compact('categories', 'brands', 'productByBrandId', 'brandById'));
+
+        $productByBrandSlug = Product::select('products.*')->where('product_status', 1)->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('brand_slug', $brand_slug)->latest()->paginate(4);
+
+        $brandBySlug = Brand::where('brand_slug', $brand_slug)->first();
+
+        //seo 
+        $meta_desc = $brandBySlug->brand_desc;
+        $meta_keywords = $brandBySlug->brand_name;
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | " . $brandBySlug->brand_name;
+        //--seo
+
+        return view('pages.brand.show_brand', compact('categories', 'brands', 'productByBrandSlug', 'brandBySlug', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }

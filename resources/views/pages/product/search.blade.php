@@ -1,26 +1,31 @@
 @extends('layout')
 
-@section('home_title', 'Search')
-
 @section('sidebar')
-    @include('pages.include.sidebar')
+@include('pages.include.sidebar')
 @endsection
 
 @section('home_content')
-    <div class="features_items">
-        <!--features_items-->
-        <h2 class="title text-center">Kết quả tìm kiếm</h2>
+<div class="features_items">
+    <!--features_items-->
+    <h2 class="title text-center">Kết quả tìm kiếm</h2>
+    @if (session()->has('notification'))
+        <div class="alert alert-warning" style="font-weight: bold;">
+            {!! session('notification') !!}
+        </div>
+    @else
         <div class="row">
             @foreach ($products as $product)
-                <a href="{{ route('product.detail', ['id' => $product->product_id]) }}">
+                <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
                     <div class="col-sm-3">
                         <div class="product-image-wrapper product-image-wrapper-index">
                             <div class="single-products">
                                 <div class="productinfo text-center product-info-index">
-                                    <img src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}" />
+                                    <img src="{{ asset($product->product_image_path) }}"
+                                        alt="{{ $product->product_name }}" />
                                     <h2>{{ number_format($product->product_price) }} VNĐ</h2>
                                     <p>{{ $product->product_name }}</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm
+                                    <a href="#" class="btn btn-default add-to-cart"><i
+                                            class="fa fa-shopping-cart"></i>Thêm
                                         giỏ
                                         hàng</a>
                                 </div>
@@ -41,6 +46,7 @@
                 {{ $products->links() }}
             </div>
         </div>
-    </div>
-    <!--features_items-->
+    @endif
+</div>
+<!--features_items-->
 @endsection

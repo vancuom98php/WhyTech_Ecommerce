@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!---------Seo--------->
-    <meta name="description" content="">
-    <meta name="keywords" content=""/>
+    <meta name="description" content="<?php echo e($meta_desc); ?>">
+    <meta name="keywords" content="<?php echo e($meta_keywords); ?>"/>
     <meta name="robots" content="INDEX,FOLLOW"/>
-    <link  rel="canonical" href="" />
+    <link  rel="canonical" href="<?php echo e($url_canonical); ?>" />
     <meta name="author" content="">
 
     <!------------Share fb------------------>
@@ -23,7 +23,7 @@
 
     <link rel="shortcut icon" href="<?php echo e(asset('frontend/images/ico/favicon.ico')); ?>" type="image/x-icon">
 
-    <title>Why-Tech | <?php echo $__env->yieldContent('home_title'); ?></title>
+    <title><?php echo e($meta_title); ?></title>
 
     <link href="<?php echo e(asset('frontend/css/bootstrap.min.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('frontend/css/font-awesome.min.css')); ?>" rel="stylesheet">
@@ -168,8 +168,8 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <form action="<?php echo e(route('home.search')); ?>" method="POST">
-                            <?php echo csrf_field(); ?>
+                        <form action="<?php echo e(route('home.search')); ?>" method="GET">
+                            
                             <div class="search_box pull-right" style="display: flex">
                                 <input type="text" name="keywords_submit" placeholder="Nhập sản phẩm bạn muốn tìm" />
                                 <button type="submit" class="btn btn-default search"><i

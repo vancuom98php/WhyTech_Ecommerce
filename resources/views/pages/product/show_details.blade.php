@@ -1,7 +1,5 @@
 @extends('layout')
 
-@section('home_title', 'Product Details')
-
 @section('home_content')
     <div class="product-details">
         <!--product-details-->
@@ -133,7 +131,7 @@
             <div class="carousel-inner">
                 <div class="item active">
                     @foreach ($related_products as $related_product)
-                        <a href="{{ route('product.detail', ['id' => $related_product->product_id]) }}">
+                        <a href="{{ route('product.detail', ['product_slug' => $related_product->product_slug]) }}">
                             <div class="col-sm-4">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">

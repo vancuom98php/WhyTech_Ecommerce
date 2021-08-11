@@ -33,7 +33,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a
-                                href="{{ route('home.category', ['id' => $category->category_id]) }}">{{ $category->category_name }}</a>
+                                href="{{ route('home.category', ['category_product_slug' => $category->category_product_slug]) }}">{{ $category->category_name }}</a>
                         </h4>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
             <div class="brands-name">
                 <ul class="nav nav-pills nav-stacked">
                     @foreach ($brands as $brand)
-                        <li><a href="{{ route('home.brand', ['id' => $brand->brand_id]) }}"><span class="pull-right"></span>{{ $brand->brand_name }}</a></li>
+                        <li><a href="{{ route('home.brand', ['brand_slug' => $brand->brand_slug]) }}"><span class="pull-right"></span>{{ $brand->brand_name }}</a></li>
                     @endforeach
                 </ul>
             </div>

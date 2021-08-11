@@ -24,25 +24,25 @@ Route::group([
 ], function () {
     // Home
     Route::get('', 'HomeController@index');
-    Route::post('/search', [
+    Route::get('/search', [
         'as' => 'home.search',
         'uses' => 'HomeController@search'
     ]);
 
     //Home - Category 
-    Route::get('/category/{id}', [
+    Route::get('/category/{category_product_slug}', [
         'as' => 'home.category',
         'uses' => 'CategoryProductController@show_category_home'
     ]);
 
     // Home - Brand
-    Route::get('/brand/{id}', [
+    Route::get('/brand/{brand_slug}', [
         'as' => 'home.brand',
         'uses' => 'BrandController@show_brand_home'
     ]);
 
     // Home - Product detail
-    Route::get('/product-detail/{id}', [
+    Route::get('/product-detail/{product_slug}', [
         'as' => 'product.detail',
         'uses' => 'ProductController@show_details_product'
     ]);

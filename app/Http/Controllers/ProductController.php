@@ -214,12 +214,20 @@ class ProductController extends Controller
 
     /**
      * Home function page
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function show_details_product($id)
+    public function show_details_product($product_slug, Request $request)
     {
-        $product = Product::find($id);
+        $product = Product::where('product_slug', $product_slug)->first();
         $related_products = Product::where('category_id', $product->category->category_id)->whereNotIn('product_id', [$product->product_id])->orderBy('category_id', 'desc')->get();
 
-        return view('pages.product.show_details', compact('product', 'related_products'));
+        //seo 
+        $meta_desc = $product->product_desc;
+        $meta_keywords = $product->product_name;
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | " . $product->product_name;
+        //--seo
+
+        return view('pages.product.show_details', compact('product', 'related_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }

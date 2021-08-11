@@ -1,7 +1,5 @@
 
 
-<?php $__env->startSection('home_title', 'Home'); ?>
-
 <?php $__env->startSection('sidebar'); ?>
     <?php echo $__env->make('pages.include.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
@@ -12,7 +10,7 @@
         <h2 class="title text-center">Sản phẩm mới nhất</h2>
         <div class="row">
             <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <a href="<?php echo e(route('product.detail', ['id' => $product->product_id])); ?>">
+                <a href="<?php echo e(route('product.detail', ['product_slug' => $product->product_slug])); ?>">
                     <div class="col-sm-3">
                         <div class="product-image-wrapper product-image-wrapper-index">
                             <div class="single-products">

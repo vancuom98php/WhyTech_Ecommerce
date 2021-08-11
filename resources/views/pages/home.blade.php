@@ -1,7 +1,5 @@
 @extends('layout')
 
-@section('home_title', 'Home')
-
 @section('sidebar')
     @include('pages.include.sidebar')
 @endsection
@@ -12,7 +10,7 @@
         <h2 class="title text-center">Sản phẩm mới nhất</h2>
         <div class="row">
             @foreach ($products as $product)
-                <a href="{{ route('product.detail', ['id' => $product->product_id]) }}">
+                <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
                     <div class="col-sm-3">
                         <div class="product-image-wrapper product-image-wrapper-index">
                             <div class="single-products">
