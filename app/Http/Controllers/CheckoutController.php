@@ -16,6 +16,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+
 class CheckoutController extends Controller
 {
     public function login_to_checkout()

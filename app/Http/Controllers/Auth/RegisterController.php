@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Rules\Captcha;
 
 
 class RegisterController extends Controller
@@ -91,7 +92,8 @@ class RegisterController extends Controller
             'admin_email' => ['bail', 'required', 'string', 'email', 'max:255', 'unique:admin'],
             'admin_phone' => 'bail|required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9|unique:admin',
             'password' => ['bail', 'required', 'string', 'min:8'],
-            'password_confirmation' => 'bail|required_with:password|same:password|min:8'
+            'password_confirmation' => 'bail|required_with:password|same:password|min:8',
+            'g-recaptcha-response' => new Captcha(),
         ]);
     }
 

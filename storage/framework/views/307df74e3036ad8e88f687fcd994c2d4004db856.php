@@ -388,6 +388,8 @@
     <script src="<?php echo e(asset('frontend/js/price-range.js')); ?>"></script>
     <script src="<?php echo e(asset('frontend/js/jquery.prettyPhoto.js')); ?>"></script>
     <script src="<?php echo e(asset('frontend/js/main.js')); ?>"></script>
+
+    <?php echo $__env->yieldContent('scripts'); ?>
 </body>
 
 </html>
