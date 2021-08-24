@@ -36,13 +36,15 @@
       19 => 'Illuminate\\Translation\\TranslationServiceProvider',
       20 => 'Illuminate\\Validation\\ValidationServiceProvider',
       21 => 'Illuminate\\View\\ViewServiceProvider',
-      22 => 'Laravel\\Passport\\PassportServiceProvider',
-      23 => 'App\\Providers\\AppServiceProvider',
-      24 => 'App\\Providers\\AuthServiceProvider',
-      25 => 'App\\Providers\\EventServiceProvider',
-      26 => 'App\\Providers\\RouteServiceProvider',
-      27 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
-      28 => 'Intervention\\Image\\ImageServiceProvider',
+      22 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+      23 => 'Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider',
+      24 => 'Laravel\\Passport\\PassportServiceProvider',
+      25 => 'App\\Providers\\AppServiceProvider',
+      26 => 'App\\Providers\\AuthServiceProvider',
+      27 => 'App\\Providers\\EventServiceProvider',
+      28 => 'App\\Providers\\RouteServiceProvider',
+      29 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
+      30 => 'Intervention\\Image\\ImageServiceProvider',
     ),
     'aliases' => 
     array (
@@ -84,6 +86,7 @@
       'View' => 'Illuminate\\Support\\Facades\\View',
       'Image' => 'Intervention\\Image\\Facades\\Image',
       'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
+      'Cart' => 'Gloudemans\\Shoppingcart\\Facades\\Cart',
     ),
   ),
   'auth' => 
@@ -485,6 +488,42 @@
     array (
       'memory_limit' => '256M',
     ),
+  ),
+  'livewire' => 
+  array (
+    'class_namespace' => 'App\\Http\\Livewire',
+    'view_path' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\resources\\views/livewire',
+    'layout' => 'layouts.app',
+    'asset_url' => NULL,
+    'middleware_group' => 'web',
+    'temporary_file_upload' => 
+    array (
+      'disk' => NULL,
+      'rules' => NULL,
+      'directory' => NULL,
+      'middleware' => NULL,
+      'preview_mimes' => 
+      array (
+        0 => 'png',
+        1 => 'gif',
+        2 => 'bmp',
+        3 => 'svg',
+        4 => 'wav',
+        5 => 'mp4',
+        6 => 'mov',
+        7 => 'avi',
+        8 => 'wmv',
+        9 => 'mp3',
+        10 => 'm4a',
+        11 => 'jpg',
+        12 => 'jpeg',
+        13 => 'mpga',
+        14 => 'webp',
+        15 => 'wma',
+      ),
+      'max_upload_time' => 5,
+    ),
+    'manifest_path' => NULL,
   ),
   'logging' => 
   array (

@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\CategoryProduct;
-use App\Models\Brand;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
@@ -39,25 +36,47 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $productId = $request->product_id_hidden;
+        $productId = $request->productId;
         $quantity = $request->quantity;
         $product = Product::find($productId);
+        $session_id = substr(md5(microtime()), rand(0, 26), 5);
 
-        $dataAddToCart = [
-            'id' => $product->product_id,
-            'qty' => $quantity,
-            'name' => $product->product_name,
-            'price' => $product->product_price,
-            'weight' => 0,
-            'name' => $product->product_name,
-            'options' => [
-                'image' => $product->product_image_path,
-            ]
-        ];
+        $cart = session()->get('cart');
 
-        Cart::add($dataAddToCart);
+        if ($cart) {
+            $is_available = 0;
+            foreach ($cart as $key => $value) {
+                if ($value['product_id'] == $productId) {
+                    $is_available++;
+                    $cart[$key] = [
+                        'session_id' => $session_id,
+                        'product_id' => $productId,
+                        'product_info' => $product,
+                        'product_quantity' => $value['product_quantity'] + $quantity,
+                    ];
+                }
+            }
+            if ($is_available == 0) {
+                $cart[] = [
+                    'session_id' => $session_id,
+                    'product_id' => $productId,
+                    'product_info' => $product,
+                    'product_quantity' => $quantity,
+                ];
+            }
+        } else {
+            $cart[] = [
+                'session_id' => $session_id,
+                'product_id' => $productId,
+                'product_info' => $product,
+                'product_quantity' => $quantity,
+            ];
+        }
 
-        return redirect()->route('cart.show');
+        session()->put('cart', $cart);
+        session()->save();
+
+        return view('pages.cart.mini_cart');
     }
 
     /**
@@ -67,16 +86,16 @@ class CartController extends Controller
      */
     public function show(Request $request)
     {
-        $content = Cart::content();
+        $all_products = Product::where('product_status', 1)->get();
 
         //seo 
-        $meta_desc = "Giỏ hàng của bạn"; 
+        $meta_desc = "Giỏ hàng của bạn";
         $meta_keywords = "Giỏ hàng của bạn";
         $url_canonical = $request->url();
         $meta_title = "WhyTech | Giỏ hàng của bạn ";
         //--seo
 
-        return view('pages.cart.show_cart', compact('content', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.cart.show_cart', compact('all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     /**
@@ -94,12 +113,42 @@ class CartController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $request->data;
+        $cart = session()->get('cart');
+
+        if ($cart == true) {
+            foreach ($data as $value) {
+                foreach ($cart as $key => $item) {
+                    if($cart[$key]['session_id'] == $value['session_id']) 
+                        $cart[$key]['product_quantity'] = $value['quantity'];
+                }
+            }
+        }
+
+        session()->put('cart', $cart);
+        session()->save();
+
+        return view('pages.cart.show_cart_ajax');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy()
+    {
+        $cart = session()->get('cart');
+
+        if ($cart == true)
+            session()->forget('cart');
+        session()->save();
+
+        return view('pages.cart.show_cart_ajax');
     }
 
     /**
@@ -108,9 +157,26 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($session_id)
     {
-        //
+        $cart = session()->get('cart');
+
+        if ($cart == true) {
+            foreach ($cart as $key => $item) {
+                if ($item['session_id'] == $session_id) {
+                    unset($cart[$key]);
+                }
+            }
+        }
+
+        if (count($cart) > 0)
+            session()->put('cart', $cart);
+        else
+            session()->forget('cart');
+
+        session()->save();
+
+        return view('pages.cart.mini_cart');
     }
 
     /**
@@ -119,26 +185,25 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function remove($session_id)
     {
-        Cart::update($id, 0);
+        $cart = session()->get('cart');
 
-        session()->flash('notification', 'Đã xóa sản phẩm khỏi giỏ hàng');
-        return redirect()->back();
-    }
+        if ($cart == true) {
+            foreach ($cart as $key => $item) {
+                if ($item['session_id'] == $session_id) {
+                    unset($cart[$key]);
+                }
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update_quantity(Request $request)
-    {
-        $rowId = $request->cart_rowId;
-        $quantity = $request->cart_quantity;
+        if (count($cart) > 0)
+            session()->put('cart', $cart);
+        else
+            session()->forget('cart');
 
-        Cart::update($rowId, $quantity);
+        session()->save();
 
-        return redirect()->back();
+        return view('pages.cart.show_cart_ajax');
     }
 }

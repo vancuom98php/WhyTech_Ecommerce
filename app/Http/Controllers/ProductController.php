@@ -220,6 +220,7 @@ class ProductController extends Controller
     {
         $product = Product::where('product_slug', $product_slug)->first();
         $related_products = Product::where('category_id', $product->category->category_id)->whereNotIn('product_id', [$product->product_id])->orderBy('category_id', 'desc')->get();
+        $all_products = Product::where('product_status', 1)->get();
 
         //seo 
         $meta_desc = $product->product_desc;
@@ -228,6 +229,6 @@ class ProductController extends Controller
         $meta_title = "WhyTech | " . $product->product_name;
         //--seo
 
-        return view('pages.product.show_details', compact('product', 'related_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.product.show_details', compact('product', 'related_products', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }

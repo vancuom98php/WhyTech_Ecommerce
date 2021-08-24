@@ -1,167 +1,326 @@
 @extends('layout')
 
-@section('home_title', 'Cart')
-
 @section('home_content')
 
-    <section id="cart_items">
-        <div class="container">
-            <div class="breadcrumbs">
-                <ol class="breadcrumb">
-                    <li><a href="{{ url('/') }}">Trang chủ</a></li>
-                    <li class="active">Giỏ hàng của bạn</li>
-                </ol>
-            </div>
-            @if (session()->has('notification'))
-                <div class="alert alert-danger" style="font-weight: bold;">
-                    {!! session('notification') !!}
+    <div id="list-cart">
+        {{ csrf_field() }}
+        @if (session()->has('cart') && count(session()->get('cart')) > 0)
+            @php
+                $total = 0;
+            @endphp
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="{{ url('/') }}">Trang chủ</a>
+                                    </li>
+                                    <li class="is-marked">
+
+                                        <a href="{{ route('cart.show') }}">Giỏ hàng</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            @endif
-            <div class="table-responsive cart_info">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Hình ảnh</td>
-                            <td class="description">Tên sản phẩm</td>
-                            <td class="price">Giá</td>
-                            <td class="quantity">Số lượng</td>
-                            <td class="total">Tổng tiền</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($content as $value)
-                            <tr>
-                                <td class="cart_product">
-                                    <a href=""><img src="{{ asset($value->options->image) }}" width="80px" height="80px"
-                                            alt="{{ $value->name }}" /></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">{{ $value->name }}</a></h4>
-                                    <p>Web ID: 1089772</p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>{{ number_format($value->price) }} VNĐ</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <form role="form" action="{{ route('cart.update-quantity') }}" method="post">
-                                            @csrf
-                                            <input class="cart_quantity_input" style="width:15%;" type="number" min="1"
-                                                name="cart_quantity" value="{{ $value->qty }}">
-                                            <input type="hidden" name="cart_rowId" value="{{ $value->rowId }}">
-                                            <button type="submit" class="btn btn-default btn-sm" name="update_quantity">Cập
-                                                nhật</button>
-                                        </form>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Intro ======-->
+                <div class="section__intro u-s-m-b-60">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="section__text-wrap">
+                                    <h1 class="section__heading u-c-secondary">GIỎ HÀNG CỦA BẠN</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Intro ======-->
+
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
+                                <div class="table-responsive">
+                                    @if (session()->has('notification'))
+                                        <div class="alert alert-danger" style="font-size: 14px; font-weight: bold;">
+                                            {!! session('notification') !!}
+                                        </div>
+                                    @endif
+                                    <table class="table-p">
+                                        <tbody>
+                                            @foreach (session()->get('cart') as $item)
+                                                @php
+                                                    $total += $item['product_quantity'] * $item['product_info']->product_price;
+                                                @endphp
+                                                <!--====== Row ======-->
+                                                <tr class="cart-item">
+                                                    <td>
+                                                        <div class="table-p__box">
+                                                            <div class="table-p__img-wrap">
+
+                                                                <img class="u-img-fluid"
+                                                                    src="{{ asset($item['product_info']->product_image_path) }}"
+                                                                    alt="{{ $item['product_info']->product_name }}">
+                                                            </div>
+                                                            <div class="table-p__info">
+
+                                                                <span class="table-p__name">
+
+                                                                    <a
+                                                                        href="{{ route('product.detail', ['product_slug' => $item['product_info']->product_slug]) }}">{{ $item['product_info']->product_name }}</a></span>
+
+                                                                <span class="table-p__category">
+
+                                                                    <a
+                                                                        href="{{ route('home.category', ['category_product_slug' => $item['product_info']->category->category_product_slug]) }}">{{ $item['product_info']->category->category_name }}</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+
+                                                        <span
+                                                            class="table-p__price">{{ number_format($item['product_info']->product_price) }}
+                                                            VNĐ</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-p__input-counter-wrap">
+
+                                                            <!--====== Input Counter ======-->
+                                                            <div class="input-counter">
+
+                                                                <a class="btn-quantity-decrease input-counter__minus fas fa-minus"></a>
+
+                                                                <input data-id="{{ $item['session_id'] }}"
+                                                                    class="input-counter__text input-counter--text-primary-style product_quantity"
+                                                                    id="product_quantity_{{ $item['session_id'] }}"
+                                                                    type="text" name="product_quantity"
+                                                                    value="{{ $item['product_quantity'] }}" data-min="1"
+                                                                    data-max="100">
+                                                                <input class="product_rowId" type="hidden"
+                                                                    name="product_rowId" id=""
+                                                                    value="{{ $item['session_id'] }}">
+
+                                                                <a class="btn-quantity-increase input-counter__plus fas fa-plus"></a>
+                                                            </div>
+                                                            <!--====== End - Input Counter ======-->
+                                                        </div>
+                                                    </td>
+                                                    <td>
+
+                                                        <span
+                                                            class="cart-total-price table-p__price">{{ number_format($item['product_quantity'] * $item['product_info']->product_price) }}
+                                                            VNĐ</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-p__del-wrap">
+
+                                                            <a class="far fa-trash-alt table-p__delete-link list-cart-delete"
+                                                                data-id="{{ $item['session_id'] }}"></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!--====== End - Row ======-->
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="route-box">
+                                    <div class="route-box__g1">
+
+                                        <a class="route-box__link" href="{{ route('home.shop') }}"><i
+                                                class="fas fa-long-arrow-alt-left"></i>
+
+                                            <span>TIẾP TỤC MUA SẮM</span></a>
                                     </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">{{ number_format($value->price * $value->qty) }} VNĐ</p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete"
-                                        href="{{ route('cart.delete', ['id' => $value->rowId]) }}"><i
-                                            class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        <tr>
-                            <td colspan="4"></td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">{{ Cart::subtotal() }} VNĐ</p>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-    <!--/#cart_items-->
+                                    <div class="route-box__g2">
 
-    <section id="do_action">
-        <div class="container">
-            {{-- <div class="heading">
-                <h3>What would you like to do next?</h3>
-                <p>Choose if you have a discount code or reward points you want to use or would like to estimate your
-                    delivery cost.</p>
-            </div> --}}
-            <div class="row">
-                {{-- <div class="col-sm-6">
-                    <div class="chose_area">
-                        <ul class="user_option">
-                            <li>
-                                <input type="checkbox">
-                                <label>Use Coupon Code</label>
-                            </li>
-                            <li>
-                                <input type="checkbox">
-                                <label>Use Gift Voucher</label>
-                            </li>
-                            <li>
-                                <input type="checkbox">
-                                <label>Estimate Shipping & Taxes</label>
-                            </li>
-                        </ul>
-                        <ul class="user_info">
-                            <li class="single_field">
-                                <label>Country:</label>
-                                <select>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
+                                        <a class="route-box__link destroy-cart"><i class="fas fa-trash"></i>
 
-                            </li>
-                            <li class="single_field">
-                                <label>Region / State:</label>
-                                <select>
-                                    <option>Select</option>
-                                    <option>Dhaka</option>
-                                    <option>London</option>
-                                    <option>Dillih</option>
-                                    <option>Lahore</option>
-                                    <option>Alaska</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
+                                            <span>XÓA TOÀN BỘ GIỎ HÀNG</span></a>
 
-                            </li>
-                            <li class="single_field zip-field">
-                                <label>Zip Code:</label>
-                                <input type="text">
-                            </li>
-                        </ul>
-                        <a class="btn btn-default update" href="">Get Quotes</a>
-                        <a class="btn btn-default check_out" href="">Continue</a>
-                    </div>
-                </div> --}}
-                <div class="col-sm-6">
-                    <div class="total_area">
-                        <ul>
-                            <li>Tổng giá trị đơn hàng <span>{{ Cart::subtotal() }} VNĐ</span></li>
-                            <li>Thuế <span>{{ Cart::tax() }} VNĐ</span></li>
-                            <li>Phí vận chuyển <span>Free</span></li>
-                            <li>Thành tiền <span>{{ Cart::total() }} VNĐ</span></li>
-                        </ul>
-                        {{-- <a class="btn btn-default update" href="">Update</a> --}}
-                        @if (session()->has('customer_id') && !session()->has('shipping_id'))
-                            <a class="btn btn-default check_out" href="{{ route('checkout.checkout') }}">Thanh toán</a>
-                        @elseif (session()->has('customer_id') && session()->has('shipping_id'))
-                            <a class="btn btn-default check_out" href="{{ route('checkout.payment') }}">Thanh toán</a>
-                        @else
-                            <a class="btn btn-default check_out" href="{{ route('checkout.login-checkout') }}">Thanh toán</a>
-                        @endif
+                                        <a class="route-box__link update-cart"><i class="fas fa-sync"></i>
+
+                                            <span>CẬP NHẬT GIỎ HÀNG</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!--====== End - Section Content ======-->
             </div>
-        </div>
-    </section>
-    <!--/#do_action-->
+            <!--====== End - Section 2 ======-->
+
+
+            <!--====== Section 3 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
+                                <form class="f-cart">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                                            <div class="f-cart__pad-box">
+                                                <h1 class="gl-h1">TÍNH PHÍ VẬN CHUYỂN VÀ THUẾ</h1>
+
+                                                <span class="gl-text u-s-m-b-30">Chọn vị trí giao hàng để tính phí.</span>
+                                                <div class="u-s-m-b-30">
+
+                                                    <!--====== Select Box ======-->
+
+                                                    <label class="gl-label" for="shipping-country">COUNTRY *</label><select
+                                                        class="select-box select-box--primary-style" id="shipping-country">
+                                                        <option selected value="">Choose Country</option>
+                                                        <option value="uae">United Arab Emirate (UAE)</option>
+                                                        <option value="uk">United Kingdom (UK)</option>
+                                                        <option value="us">United States (US)</option>
+                                                    </select>
+                                                    <!--====== End - Select Box ======-->
+                                                </div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <!--====== Select Box ======-->
+
+                                                    <label class="gl-label" for="shipping-state">STATE/PROVINCE
+                                                        *</label><select class="select-box select-box--primary-style"
+                                                        id="shipping-state">
+                                                        <option selected value="">Choose State/Province</option>
+                                                        <option value="al">Alabama</option>
+                                                        <option value="al">Alaska</option>
+                                                        <option value="ny">New York</option>
+                                                    </select>
+                                                    <!--====== End - Select Box ======-->
+                                                </div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <label class="gl-label" for="shipping-zip">ZIP/POSTAL CODE *</label>
+
+                                                    <input class="input-text input-text--primary-style" type="text"
+                                                        id="shipping-zip" placeholder="Zip/Postal Code">
+                                                </div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <a class="f-cart__ship-link btn--e-transparent-brand-b-2"
+                                                        href="cart.html">CALCULATE SHIPPING</a>
+                                                </div>
+
+                                                <span class="gl-text">Note: There are some countries where free shipping is
+                                                    available otherwise our flat rate charges or country delivery charges
+                                                    will be
+                                                    apply.</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                                            <div class="f-cart__pad-box">
+                                                <h1 class="gl-h1">Ghi chú</h1>
+
+                                                <span class="gl-text u-s-m-b-30">Thêm lưu ý của bạn về sản phẩm</span>
+                                                <div>
+
+                                                    <label for="f-cart-note"></label><textarea
+                                                        class="text-area text-area--primary-style"
+                                                        id="f-cart-note"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                                            <div class="f-cart__pad-box">
+                                                <div class="u-s-m-b-30">
+                                                    <table id="totalajaxcall" class="f-cart__table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>PHÍ VẬN CHUYỂN</td>
+                                                                <td>Free</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>THUẾ</td>
+                                                                <td>{{ Cart::tax() }} VNĐ</td>
+                                                            </tr>
+                                                            <div class="totalpricingsection">
+                                                                <tr>
+                                                                    <td>TỔNG GIÁ TRỊ ĐƠN HÀNG</td>
+                                                                    <td>{{ number_format($total) }} VNĐ</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>THÀNH TIỀN</td>
+                                                                    <td>{{ number_format($total) }} VNĐ</td>
+                                                                </tr>
+                                                            </div>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div>
+                                                    @if (!session()->has('customer_id'))
+                                                        <a href="{{ route('checkout.login-checkout') }}"
+                                                            class="btn btn--e-brand-b-2" type="submit"
+                                                            style="text-align: center;">THỰC HIỆN THANH
+                                                            TOÁN</a>
+                                                    @else
+                                                        <a href="{{ route('checkout.checkout') }}"
+                                                            class="btn btn--e-brand-b-2" type="submit"
+                                                            style="text-align: center;">THỰC HIỆN THANH
+                                                            TOÁN</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 3 ======-->
+        @else
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 u-s-m-b-30">
+                                <div class="empty">
+                                    <div class="empty__wrap">
+
+                                        <span class="empty__big-text">TRỐNG</span>
+
+                                        <span class="empty__text-1">Bạn chưa chọn sản phẩm nào vào giỏ hàng.</span>
+
+                                        <a class="empty__redirect-link btn--e-brand" href="{{ route('home.shop') }}">TIẾP
+                                            TỤC MUA SẮM</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+        @endif
+    </div>
 
 @endsection

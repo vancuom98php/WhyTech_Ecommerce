@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Product;
 use App\Models\Shipping;
 use App\Models\Payment;
 use App\Models\Order;
@@ -28,7 +29,23 @@ class CheckoutController extends Controller
         $meta_title = "WhyTech | Đăng nhập tài khoản - Mua sắm online";
         //--seo
 
-        return view('pages.checkout.login_checkout', compact('meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        $all_products = Product::where('product_status', 1)->get();
+
+        return view('pages.checkout.login_checkout', compact('all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+    }
+
+    public function register_to_checkout(Request $request)
+    {
+        //seo 
+        $meta_desc = "Khách hàng đăng ký - đăng nhập";
+        $meta_keywords = "WhyTech đăng ký, WhyTech đăng nhập, WhyTech Khách hàng, WhyTech mua sắm";
+        $url_canonical = $request->url();
+        $meta_title = "WhyTech | Đăng ký tài khoản - Mua sắm online";
+        //--seo
+
+        $all_products = Product::where('product_status', 1)->get();
+
+        return view('pages.checkout.register_checkout', compact('all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function logout_to_checkout()
@@ -98,7 +115,9 @@ class CheckoutController extends Controller
         $meta_title = "WhyTech | Thông tin giao nhận hàng";
         //--seo
 
-        return view('pages.checkout.show_checkout', compact('meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        $all_products = Product::where('product_status', 1)->get();
+
+        return view('pages.checkout.show_checkout', compact('all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function save_checkout(AddShippingRequest $request)
@@ -113,22 +132,11 @@ class CheckoutController extends Controller
         $shipping->save();
 
         $request->session()->put('shipping_id', $shipping->shipping_id);
+        $request->session()->put('shipping_name', $shipping->shipping_name);
+        $request->session()->put('shipping_phone', $shipping->shipping_phone);
+        $request->session()->put('shipping_address', $shipping->shipping_address);
 
-        return redirect()->route('checkout.payment');
-    }
-
-    public function payment(Request $request)
-    {
-        $content = Cart::content();
-
-        //seo 
-        $meta_desc = "Thanh toán online";
-        $meta_keywords = "WhyTech thanh toán online";
-        $url_canonical = $request->url();
-        $meta_title = "WhyTech | Thanh toán online";
-        //--seo
-
-        return view('pages.checkout.payment', compact('content', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return redirect()->back();
     }
 
     public function place_order(Request $request)
@@ -140,47 +148,56 @@ class CheckoutController extends Controller
         $meta_title = "WhyTech | Thanh toán online";
         //--seo
 
-        try {
-            DB::beginTransaction();
+        $cart = session()->get('cart');
+        if ($cart == true) {
+            $total = 0;
+            foreach ($cart as $item)
+                $total += $item['product_quantity'] * $item['product_info']->product_price;
 
-            // Insert to payments
-            $payment = Payment::create([
-                'payment_method' => $request->payment_method,
-                'payment_status' => 'Đang chờ xử lý',
-            ]);
+            try {
+                DB::beginTransaction();
 
-            // Insert to orders
-            $order = Order::create([
-                'customer_id' => session()->get('customer_id'),
-                'shipping_id' => session()->get('shipping_id'),
-                'payment_id' => $payment->payment_id,
-                'order_total' => Cart::total(),
-                'order_status' => 'Đang chờ xử lý',
-            ]);
-
-            // Insert to order details
-            $content = Cart::content();
-
-            foreach ($content as $value) {
-                $order_details = OrderDetail::create([
-                    'order_id' => $order->order_id,
-                    'product_id' => $value->id,
-                    'product_sales_quantity' => $value->qty,
+                // Insert to payments
+                $payment = Payment::create([
+                    'payment_method' => $request->payment_method,
+                    'payment_status' => 'Đang chờ xử lý',
                 ]);
-            }
 
-            DB::commit();
+                // Insert to orders
+                $order = Order::create([
+                    'customer_id' => session()->get('customer_id'),
+                    'shipping_id' => session()->get('shipping_id'),
+                    'payment_id' => $payment->payment_id,
+                    'order_total' => number_format($total),
+                    'order_status' => 'Đang chờ xử lý',
+                ]);
 
-            Cart::destroy();
-            if ($payment->payment_method == 'ATM') {
-                echo "Thanh toán bằng ATM (tạm thời)";
-            } else {
-                return view('pages.checkout.hand_cash', compact('meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+                // Insert to order details
+
+                foreach ($cart as $item) {
+                    $order_details = OrderDetail::create([
+                        'order_id' => $order->order_id,
+                        'product_id' => $item['product_id'],
+                        'product_sales_quantity' => $item['product_quantity'],
+                    ]);
+                }
+
+                DB::commit();
+
+                session()->forget('cart');
+                session()->save();
+
+                if ($payment->payment_method == 'ATM') {
+                    echo "Thanh toán bằng ATM (tạm thời)";
+                } else {
+                    session()->flash('notification', 'Đơn hàng đã được đặt thành công! Hàng sẽ được giao đến bạn sớm nhất! Cảm ơn bạn');
+                    return redirect()->back();
+                }
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
+                return view('404');
             }
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
-            return view('404');
         }
     }
 

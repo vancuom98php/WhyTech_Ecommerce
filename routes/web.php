@@ -24,6 +24,10 @@ Route::group([
 ], function () {
     // Home
     Route::get('', 'HomeController@index');
+    Route::get('/shop', [
+        'as' => 'home.shop',
+        'uses' => 'HomeController@show'
+    ]);
     Route::get('/search', [
         'as' => 'home.search',
         'uses' => 'HomeController@search'
@@ -65,9 +69,17 @@ Route::group([
         'as' => 'cart.delete',
         'uses' => 'CartController@delete'
     ]);
-    Route::post('/update-quantity', [
-        'as' => 'cart.update-quantity',
-        'uses' => 'CartController@update_quantity'
+    Route::get('/remove/{id}', [
+        'as' => 'cart.remove',
+        'uses' => 'CartController@remove'
+    ]);
+    Route::post('/destroy', [
+        'as' => 'cart.destroy',
+        'uses' => 'CartController@destroy'
+    ]);
+    Route::post('/update', [
+        'as' => 'cart.update',
+        'uses' => 'CartController@update'
     ]);
 });
 
@@ -88,6 +100,10 @@ Route::group([
         'as' => 'checkout.checkout',
         'uses' => 'CheckoutController@checkout'
     ]);
+    Route::get('/register-checkout', [
+        'as' => 'checkout.register-checkout',
+        'uses' => 'CheckoutController@register_to_checkout'
+    ]);
     Route::post('/register', [
         'as' => 'customer.register',
         'uses' => 'CheckoutController@register'
@@ -99,10 +115,6 @@ Route::group([
     Route::post('/save-checkout', [
         'as' => 'checkout.save-checkout',
         'uses' => 'CheckoutController@save_checkout'
-    ]);
-    Route::get('/payment', [
-        'as' => 'checkout.payment',
-        'uses' => 'CheckoutController@payment'
     ]);
     Route::post('/place-order', [
         'as' => 'checkout.place-order',
