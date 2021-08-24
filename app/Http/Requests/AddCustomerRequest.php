@@ -30,7 +30,6 @@ class AddCustomerRequest extends FormRequest
             'customer_phone' => 'bail|required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9|unique:customers',
             'customer_password' => 'bail|required|string|min:8',
             'customer_confirm_password' => 'bail|required_with:customer_password|same:customer_password',
-            'g-recaptcha-response' => new Captcha(), 
         ];
     }
 }

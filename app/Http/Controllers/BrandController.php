@@ -136,6 +136,7 @@ class BrandController extends Controller
             ->where('brand_slug', $brand_slug)->latest()->paginate(4);
 
         $brandBySlug = Brand::where('brand_slug', $brand_slug)->first();
+        $all_products = Product::where('product_status', 1)->get();
 
         //seo 
         $meta_desc = $brandBySlug->brand_desc;
@@ -144,6 +145,6 @@ class BrandController extends Controller
         $meta_title = "WhyTech | " . $brandBySlug->brand_name;
         //--seo
 
-        return view('pages.brand.show_brand', compact('categories', 'brands', 'productByBrandSlug', 'brandBySlug', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.brand.show_brand', compact('categories', 'brands', 'productByBrandSlug', 'brandBySlug', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }

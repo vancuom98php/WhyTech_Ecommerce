@@ -138,6 +138,7 @@ class CategoryProductController extends Controller
             ->where('category_product_slug', $category_product_slug)->latest()->paginate(4);
 
         $categoryBySlug = CategoryProduct::where('category_product_slug', $category_product_slug)->first();
+        $all_products = Product::where('product_status', 1)->get();
 
         //seo 
         $meta_desc = $categoryBySlug->category_desc;
@@ -146,6 +147,6 @@ class CategoryProductController extends Controller
         $meta_title = "WhyTech | " . $categoryBySlug->category_name;
         //--seo
 
-        return view('pages.category.show_category', compact('categories', 'brands', 'productByCategorySlug', 'categoryBySlug', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.category.show_category', compact('categories', 'brands', 'productByCategorySlug', 'categoryBySlug', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }
