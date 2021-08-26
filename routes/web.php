@@ -122,7 +122,6 @@ Route::group([
     ]);
 });
 
-
 /**
  * Admin pages
  */
@@ -273,6 +272,45 @@ Route::group([
     Route::get('/delete/{id}', [
         'as' => 'order.delete',
         'uses' => 'CheckoutController@delete_order'
+    ]);
+});
+
+// Coupon
+Route::group([
+    'prefix' => 'coupon'
+], function() { 
+    // Login Checkout
+    Route::post('/check', [
+        'as' => 'coupon.check',
+        'uses' => 'CouponController@check'
+    ]);
+    Route::get('/create', [
+        'as' => 'coupon.create',
+        'uses' => 'CouponController@create'
+    ]);
+    Route::post('/save', [
+        'as' => 'coupon.save',
+        'uses' => 'CouponController@store'
+    ]);
+    Route::get('/all', [
+        'as' => 'coupon.all',
+        'uses' => 'CouponController@index'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'coupon.edit',
+        'uses' => 'CouponController@edit'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'coupon.update',
+        'uses' => 'CouponController@update'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'coupon.delete',
+        'uses' => 'CouponController@delete'
+    ]);
+    Route::get('/unset', [
+        'as' => 'coupon.unset',
+        'uses' => 'CouponController@unset'
     ]);
 });
 

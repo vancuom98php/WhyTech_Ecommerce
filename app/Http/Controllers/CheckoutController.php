@@ -9,6 +9,7 @@ use App\Models\Shipping;
 use App\Models\Payment;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AddCustomerRequest;
@@ -149,54 +150,85 @@ class CheckoutController extends Controller
         //--seo
 
         $cart = session()->get('cart');
+        $coupons = session()->get('coupon');
+
         if ($cart == true) {
-            $total = 0;
-            foreach ($cart as $item)
-                $total += $item['product_quantity'] * $item['product_info']->product_price;
+            if (session()->get('customer_id')) {
+                if (session()->get('shipping_id')) {
+                    $total = 0;
+                    foreach ($cart as $item)
+                        $total += $item['product_quantity'] * $item['product_info']->product_price;
 
-            try {
-                DB::beginTransaction();
+                    if ($coupons) {
+                        foreach ($coupons as $coupon) {
+                            if ($coupon['coupon_condition'] == 1)
+                                $total -= $total * ($coupon['coupon_number'] / 100);
+                            else
+                                $total -= $coupon['coupon_number'];
+                        }
+                    }
 
-                // Insert to payments
-                $payment = Payment::create([
-                    'payment_method' => $request->payment_method,
-                    'payment_status' => 'Đang chờ xử lý',
-                ]);
+                    try {
+                        DB::beginTransaction();
 
-                // Insert to orders
-                $order = Order::create([
-                    'customer_id' => session()->get('customer_id'),
-                    'shipping_id' => session()->get('shipping_id'),
-                    'payment_id' => $payment->payment_id,
-                    'order_total' => number_format($total),
-                    'order_status' => 'Đang chờ xử lý',
-                ]);
+                        // Insert to payments
+                        $payment = Payment::create([
+                            'payment_method' => $request->payment_method,
+                            'payment_status' => 'Đang chờ xử lý',
+                        ]);
 
-                // Insert to order details
+                        // Insert to orders
+                        $order = Order::create([
+                            'customer_id' => session()->get('customer_id'),
+                            'shipping_id' => session()->get('shipping_id'),
+                            'payment_id' => $payment->payment_id,
+                            'order_total' => number_format($total),
+                            'order_status' => 'Đang chờ xử lý',
+                        ]);
 
-                foreach ($cart as $item) {
-                    $order_details = OrderDetail::create([
-                        'order_id' => $order->order_id,
-                        'product_id' => $item['product_id'],
-                        'product_sales_quantity' => $item['product_quantity'],
-                    ]);
-                }
+                        // Insert to order details
 
-                DB::commit();
+                        foreach ($cart as $item) {
+                            $order_details = OrderDetail::create([
+                                'order_id' => $order->order_id,
+                                'product_id' => $item['product_id'],
+                                'product_sales_quantity' => $item['product_quantity'],
+                            ]);
+                        }
 
-                session()->forget('cart');
-                session()->save();
+                        if($coupons) {
+                            $coupon_manager = Coupon::where('coupon_code', $coupons['0']['coupon_code'])->first();
+                            $new_coupon_time = $coupon_manager->coupon_time - 1;
+                            $coupon_manager->update([
+                                'coupon_time' => $new_coupon_time
+                            ]);
+                        }
 
-                if ($payment->payment_method == 'ATM') {
-                    echo "Thanh toán bằng ATM (tạm thời)";
+                        DB::commit();
+
+                        session()->forget('cart');
+                        session()->forget('coupon');
+                        session()->save();
+
+                        if ($payment->payment_method == 'ATM') {
+                            echo "Thanh toán bằng ATM (tạm thời)";
+                        } else {
+                            session()->flash('notification', 'Đơn hàng đã được đặt thành công! Hàng sẽ được giao đến bạn sớm nhất! Cảm ơn bạn');
+                            return redirect()->back();
+                        }
+
+                    } catch (\Exception $exception) {
+                        DB::rollBack();
+                        Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
+                        return view('404');
+                    }
                 } else {
-                    session()->flash('notification', 'Đơn hàng đã được đặt thành công! Hàng sẽ được giao đến bạn sớm nhất! Cảm ơn bạn');
+                    session()->flash('error', 'Thanh toán thất bại! Vui lòng nhập thông tin vận chuyển trước khi thực hiện thanh toán');
                     return redirect()->back();
                 }
-            } catch (\Exception $exception) {
-                DB::rollBack();
-                Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
-                return view('404');
+            } else {
+                session()->flash('error', 'Thanh toán thất bại! Vui lòng đăng nhập trước khi thực hiện thanh toán');
+                return redirect()->back();
             }
         }
     }
