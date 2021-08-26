@@ -78,7 +78,7 @@
 
                                     <label class="gl-label" for="login-email">ĐỊA CHỈ EMAIL *</label>
 
-                                    <input class="input-text input-text--primary-style" type="text" id="login-email" name="customer_email" value="{{ old('customer_email') }}" placeholder="NHẬP ĐỊA CHỈ EMAIL">
+                                    <input class="input-text input-text--primary-style" type="email" id="login-email" name="customer_email" value="{{ old('customer_email') }}" placeholder="NHẬP ĐỊA CHỈ EMAIL" required>
                                     @if (session()->has('error_email'))
                                         <div style="color: red;">
                                             {!! session('error_email') !!}
@@ -87,9 +87,9 @@
                                 </div>
                                 <div class="u-s-m-b-30" style="position: relative;">
 
-                                    <label class="gl-label" for="login-password">MẬT KHẨU *</label>
+                                    <label class="gl-label" for="customer_password">MẬT KHẨU *</label>
 
-                                    <input id="customer_password" class="input-text input-text--primary-style" type="password" id="login-password" name="customer_password" placeholder="NHẬP MẬT KHẨU">
+                                    <input id="customer_password" class="input-text input-text--primary-style" type="password" name="customer_password" placeholder="NHẬP MẬT KHẨU" required>
                                     <span class="eye" style="margin-top: 5px;" onclick="myFunction()">
                                         <i id="hide1" class="eye-icon far fa-eye"></i>
                                         <i id="hide2" class="eye-icon far fa-eye-slash"></i>

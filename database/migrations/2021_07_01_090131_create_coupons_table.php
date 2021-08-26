@@ -27,6 +27,7 @@ class CreateCouponsTable extends Migration
             $table->string('coupon_code', 50);
             $table->unsignedInteger('coupon_status')->default(1);
             $table->string('coupon_used', 255)->nullable();
+            $table->timestamps();
         });
     }
 

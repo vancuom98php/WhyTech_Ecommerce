@@ -37,6 +37,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div id="checkout-msg-group">
+                            @if (!session()->has('customer_id'))
                             <div class="msg u-s-m-b-30">
 
                                 <span class="msg__text">Bạn là khách hàng?
@@ -47,21 +48,31 @@
 
                                         <span class="gl-text u-s-m-b-16">Nếu bạn đã đăng ký tài khoản với chúng tôi, vui
                                             lòng đăng nhập.</span>
-                                        <form class="l-f__form">
+                                        <form class="l-f__form" method="POST" action="{{ route('customer.login') }}">
+                                            @csrf
                                             <div class="gl-inline">
                                                 <div class="u-s-m-b-15">
 
                                                     <label class="gl-label" for="login-email">Địa chỉ Email *</label>
 
-                                                    <input class="input-text input-text--primary-style" type="text"
-                                                        id="login-email" placeholder="Nhập địa chỉ Email">
+                                                    <input class="input-text input-text--primary-style" type="email"
+                                                    id="login-email" name="customer_email" value="{{ old('customer_email') }}" placeholder="Nhập địa chỉ Email" required>
+                                                    @if (session()->has('error_email'))
+                                                        <div style="color: red;">
+                                                            {!! session('error_email') !!}
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="u-s-m-b-15">
 
                                                     <label class="gl-label" for="login-password">Mật khẩu *</label>
 
-                                                    <input class="input-text input-text--primary-style" type="text"
-                                                        id="login-password" placeholder="Nhập mật khẩu">
+                                                    <input class="input-text input-text--primary-style" type="password" type="password" id="login-password" name="customer_password" placeholder="Nhập mật khẩu" required>
+                                                    @if (session()->has('error_pwd'))
+                                                        <div style="color: red;">
+                                                            {!! session('error_pwd') !!}
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="gl-inline">
@@ -91,7 +102,17 @@
                                 </div>
                             </div>
                             <div class="msg">
-
+                            @endif
+                            @if (session()->has('success_coupon'))
+                                <div class="alert-success" style="width: 50%;">
+                                    <p class="alert">{!! session('success_coupon') !!}</p>
+                                </div>
+                            @endif
+                            @if (session()->has('error_coupon'))
+                                <div class="alert-error" style="width: 50%;">
+                                    <p class="alert">{!! session('error_coupon') !!}</p>
+                                </div>
+                            @endif
                                 <span class="msg__text">Có phiếu giảm giá?
 
                                     <a class="gl-link" href="#have-coupon" data-toggle="collapse">Nhấn ở đây để nhập
@@ -100,19 +121,18 @@
                                     <div class="c-f u-s-m-b-16">
 
                                         <span class="gl-text u-s-m-b-16">Nhập mã phiếu giảm giá của bạn nếu bạn có.</span>
-                                        <form class="c-f__form">
+                                        <form class="c-f__form" method="POST" action="{{ route('coupon.check') }}">
+                                            @csrf
                                             <div class="u-s-m-b-16">
                                                 <div class="u-s-m-b-15">
 
                                                     <label for="coupon"></label>
 
                                                     <input class="input-text input-text--primary-style" type="text"
-                                                        id="coupon" placeholder="Mã giảm giá">
+                                                        id="coupon" name="coupon" placeholder="Nhập mã giảm giá">
                                                 </div>
                                                 <div class="u-s-m-b-15">
-
-                                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">Áp
-                                                        dụng</button>
+                                                    <button class="btn btn--e-transparent-brand-b-2 check_coupon" type="submit">Áp dụng</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -322,6 +342,11 @@
                                         <p class="alert">{!! session('notification') !!}</p>
                                     </div>
                                 @endif
+                                @if (session()->has('error'))
+                                    <div class="alert-error">
+                                        <p class="alert">{!! session('error') !!}</p>
+                                    </div>
+                                @endif
                             </div>
                             <h1 class="checkout-f__h1">ĐƠN HÀNG ĐÃ ĐẶT</h1>
 
@@ -353,11 +378,10 @@
                                                         <span class="o-card__quantity">Số lượng x {{ $item['product_quantity'] }}</span>
 
                                                         <span
-                                                            class="o-card__price">{{ number_format($item['product_quantity'] * $item['product_info']->product_price) }} VNĐ</span>
+                                                            class="o-card__price">{{ number_format($item['product_info']->product_price) }} VNĐ</span>
                                                     </div>
                                                 </div>
 
-                                                <a class="o-card__del far fa-trash-alt"></a>
                                             </div>
                                         @endforeach
                                     </div>
@@ -384,7 +408,16 @@
                                                     </p>
 
                                                     <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal"
-                                                        data-modal-id="#edit-ship-address">Edit</a>
+                                                        data-modal-id="#edit-ship-address">Chỉnh sửa</a>
+                                                </div>
+                                            @else
+                                                <div class="ship-b__box u-s-m-b-10" style="display: block;">
+                                                    <p class="ship-b__p">
+                                                        Chưa có thông tin vận chuyển.
+                                                    </p>
+                                                    <p style="color: #ff4500;" class="ship-b__p">
+                                                        Vui lòng nhập thông tin vận chuyển bên cạnh!
+                                                    </p>
                                                 </div>
                                             @endif
                                             {{-- <div class="ship-b__box">
@@ -414,6 +447,31 @@
                                                     <td>TỔNG GIÁ TRỊ ĐƠN HÀNG</td>
                                                     <td>{{ number_format($total) }} VNĐ</td>
                                                 </tr>
+                                                @if (session()->has('coupon'))
+                                                    <tr>
+                                                        <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal"
+                                                        data-modal-id="#edit-ship-address" href="{{ route('coupon.unset') }}">Xóa mã giảm giá</a>
+                                                    </tr>
+                                                        @foreach(session()->get('coupon') as $coupon)
+                                                            @if($coupon['coupon_condition'] == 1)
+                                                                @php
+                                                                    $total -= $total * ($coupon['coupon_number'] / 100);
+                                                                @endphp 
+                                                                <tr>
+                                                                    <td>ÁP DỤNG MÃ GIẢM GIÁ</td>
+                                                                    <td>{{ $coupon['coupon_number'] }} %</td>
+                                                                </tr>
+                                                            @else
+                                                                @php
+                                                                    $total -= $coupon['coupon_number'];
+                                                                @endphp 
+                                                                <tr>
+                                                                    <td>ÁP DỤNG MÃ GIẢM GIÁ</td>
+                                                                    <td>{{ number_format($coupon['coupon_number']) }} VNĐ</td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                @endif
                                                 <tr>
                                                     <td>THÀNH TIỀN</td>
                                                     <td>{{ number_format($total) }} VNĐ</td>

@@ -123,7 +123,7 @@ class CartController extends Controller
         if ($cart == true) {
             foreach ($data as $value) {
                 foreach ($cart as $key => $item) {
-                    if($cart[$key]['session_id'] == $value['session_id']) 
+                    if ($cart[$key]['session_id'] == $value['session_id'])
                         $cart[$key]['product_quantity'] = $value['quantity'];
                 }
             }
@@ -144,8 +144,10 @@ class CartController extends Controller
     {
         $cart = session()->get('cart');
 
-        if ($cart == true)
+        if ($cart == true) {
             session()->forget('cart');
+            session()->forget('coupon');
+        }
         session()->save();
 
         return view('pages.cart.show_cart_ajax');
@@ -171,8 +173,10 @@ class CartController extends Controller
 
         if (count($cart) > 0)
             session()->put('cart', $cart);
-        else
+        else {
             session()->forget('cart');
+            session()->forget('coupon');
+        }
 
         session()->save();
 
@@ -199,8 +203,10 @@ class CartController extends Controller
 
         if (count($cart) > 0)
             session()->put('cart', $cart);
-        else
+        else {
             session()->forget('cart');
+            session()->forget('coupon');
+        }
 
         session()->save();
 

@@ -113,6 +113,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </li>
                             </ul>
                         </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-credit-card"></i>
+                                <span>Mã giảm giá</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('coupon.all')); ?>">
+                                        <i class="fa fa-list-alt"></i>
+                                        Quản lý mã
+                                    </a>
+                                </li>
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('coupon.create')); ?>">
+                                        <i class="fa fa-plus-circle"></i>
+                                        Tạo mã
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -207,7 +227,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <!-- footer -->
             <div class="footer">
                 <div class="wthree-copyright">
-                    <p>© 2021 Admin. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+                    <p>© 2021 Admin. All rights reserved | Design by <a href="http://w3layouts.com">WHYTECH ECOMMERCE</a></p>
                 </div>
             </div>
             <!-- / footer -->
