@@ -17,10 +17,10 @@ class CreateDistrictsTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
-            $table->string('district_id', 5)->primary();
+            $table->string('district_id', 10)->primary();
             $table->string('district_name', 100);
             $table->string('type', 30);
-            $table->string('province_id', 5)->index('districts_province_id_foreign');
+            $table->string('province_id', 10)->index('districts_province_id_foreign');
         });
     }
 

@@ -108,9 +108,8 @@
                                                             type="text" name="product_quantity"
                                                             value="{{ $item['product_quantity'] }}" data-min="1"
                                                             data-max="100">
-                                                        <input class="product_rowId" type="hidden"
-                                                            name="product_rowId" id=""
-                                                            value="{{ $item['session_id'] }}">
+                                                        <input class="product_rowId" type="hidden" name="product_rowId"
+                                                            id="" value="{{ $item['session_id'] }}">
 
                                                         <a class="input-counter__plus fas fa-plus"></a>
                                                     </div>
@@ -174,58 +173,92 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
-                        <form class="f-cart">
+                        <div class="f-cart">
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 u-s-m-b-30">
-                                    <div class="f-cart__pad-box">
+                                    <form class="f-cart__pad-box" method="post">
+                                        @csrf
                                         <h1 class="gl-h1">TÍNH PHÍ VẬN CHUYỂN VÀ THUẾ</h1>
 
                                         <span class="gl-text u-s-m-b-30">Chọn vị trí giao hàng để tính phí.</span>
+                                        <div class="u-s-m-b-15">
+
+                                            <label class="gl-label" for="billing-street">ĐỊA CHỈ GIAO HÀNG *</label>
+
+                                            <input
+                                                class="input-text input-text--primary-style @error('shipping_address') is-invalid  @enderror"
+                                                type="text" id="billing-street" placeholder="Địa chỉ nhà giao hàng"
+                                                data-bill="" name="shipping_address"
+                                                value="{{ old('shipping_address') }}" required>
+                                        </div>
+                                        <!--====== End - Street Address ======-->
+
+                                        <!--====== ADDDRESS ======-->
                                         <div class="u-s-m-b-30">
 
                                             <!--====== Select Box ======-->
 
-                                            <label class="gl-label" for="shipping-country">COUNTRY *</label><select
-                                                class="select-box select-box--primary-style" id="shipping-country">
-                                                <option selected value="">Choose Country</option>
-                                                <option value="uae">United Arab Emirate (UAE)</option>
-                                                <option value="uk">United Kingdom (UK)</option>
-                                                <option value="us">United States (US)</option>
+                                            <label class="gl-label" for="province">TỈNH/THÀNH PHỐ *</label>
+                                            <select style="font-weight: normal;"
+                                                class="select-box select-box--primary-style choose province @error('province') is-invalid  @enderror"
+                                                name="province" id="province" data-bill="">
+                                                <option value="">Chọn Tỉnh/Thành phố</option>
+                                                @foreach ($provinces as $province)
+                                                    <option value="{{ $province->province_id }}">
+                                                        {{ $province->province_name }}</option>
+                                                @endforeach
                                             </select>
+                                            @error('province')
+                                                <div class="invalid-feedback-category-product" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </div>
+                                            @enderror
                                             <!--====== End - Select Box ======-->
                                         </div>
                                         <div class="u-s-m-b-30">
 
                                             <!--====== Select Box ======-->
 
-                                            <label class="gl-label" for="shipping-state">STATE/PROVINCE
-                                                *</label><select class="select-box select-box--primary-style"
-                                                id="shipping-state">
-                                                <option selected value="">Choose State/Province</option>
-                                                <option value="al">Alabama</option>
-                                                <option value="al">Alaska</option>
-                                                <option value="ny">New York</option>
+                                            <label class="gl-label" for="district">QUẬN/HUYỆN *</label>
+                                            <select style="font-weight: normal;"
+                                                class="select-box select-box--primary-style choose district @error('district') is-invalid  @enderror"
+                                                name="district" id="district" data-bill="">
+                                                <option value="">Chọn Quận/Huyện</option>
                                             </select>
+                                            @error('district')
+                                                <div class="invalid-feedback-category-product" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </div>
+                                            @enderror
                                             <!--====== End - Select Box ======-->
                                         </div>
                                         <div class="u-s-m-b-30">
 
-                                            <label class="gl-label" for="shipping-zip">ZIP/POSTAL CODE *</label>
+                                            <!--====== Select Box ======-->
 
-                                            <input class="input-text input-text--primary-style" type="text"
-                                                id="shipping-zip" placeholder="Zip/Postal Code">
+                                            <label class="gl-label" for="ward">XÃ/PHƯỜNG *</label>
+                                            <select style="font-weight: normal;"
+                                                class="select-box select-box--primary-style ward @error('ward') is-invalid  @enderror"
+                                                name="ward" id="ward" data-bill="">
+                                                <option value="">Chọn Xã/Phường</option>
+                                            </select>
+                                            @error('ward')
+                                                <div class="invalid-feedback-category-product" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </div>
+                                            @enderror
+                                            <!--====== End - Select Box ======-->
                                         </div>
+                                        <!--====== End - Country ======-->
                                         <div class="u-s-m-b-30">
-
-                                            <a class="f-cart__ship-link btn--e-transparent-brand-b-2"
-                                                href="cart.html">CALCULATE SHIPPING</a>
+                                            <button type="button"
+                                                class="f-cart__ship-link btn btn--e-transparent-brand-b-2 calculate_delivery">TÍNH
+                                                PHÍ VẬN CHUYỂN</button>
                                         </div>
-
-                                        <span class="gl-text">Note: There are some countries where free shipping is
-                                            available otherwise our flat rate charges or country delivery charges
-                                            will be
-                                            apply.</span>
-                                    </div>
+                                        <span class="gl-text">Lưu ý: Có một số tỉnh/thành phố được cung cấp dịch vụ giao
+                                            hàng miễn phí, nếu không chúng tôi sẽ áp dụng mức phí theo quy định tùy vào
+                                            xa gần.</span>
+                                    </form>
                                 </div>
                                 <div class="col-lg-4 col-md-6 u-s-m-b-30">
                                     <div class="f-cart__pad-box">
@@ -235,8 +268,7 @@
                                         <div>
 
                                             <label for="f-cart-note"></label><textarea
-                                                class="text-area text-area--primary-style"
-                                                id="f-cart-note"></textarea>
+                                                class="text-area text-area--primary-style" id="f-cart-note"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -247,7 +279,15 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>PHÍ VẬN CHUYỂN</td>
-                                                        <td>Free</td>
+                                                        @if (session()->has('feeship'))
+                                                            @php
+                                                                $total += session()->get('feeship');
+                                                            @endphp
+                                                            <td>
+                                                                {{ number_format(session()->get('feeship')) }} VNĐ</td>
+                                                        @else
+                                                            <td>Free</td>
+                                                        @endif
                                                     </tr>
                                                     <tr>
                                                         <td>THUẾ</td>
@@ -282,7 +322,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,10 @@ use App\Models\Payment;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Coupon;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\Ward;
+use App\Models\Feeship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AddCustomerRequest;
@@ -118,7 +122,9 @@ class CheckoutController extends Controller
 
         $all_products = Product::where('product_status', 1)->get();
 
-        return view('pages.checkout.show_checkout', compact('all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        $provinces = Province::orderBy('province_id', 'asc')->get();
+
+        return view('pages.checkout.show_checkout', compact('all_products', 'provinces', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function save_checkout(AddShippingRequest $request)
@@ -196,7 +202,7 @@ class CheckoutController extends Controller
                             ]);
                         }
 
-                        if($coupons) {
+                        if ($coupons) {
                             $coupon_manager = Coupon::where('coupon_code', $coupons['0']['coupon_code'])->first();
                             $new_coupon_time = $coupon_manager->coupon_time - 1;
                             $coupon_manager->update([
@@ -216,7 +222,6 @@ class CheckoutController extends Controller
                             session()->flash('notification', 'Đơn hàng đã được đặt thành công! Hàng sẽ được giao đến bạn sớm nhất! Cảm ơn bạn');
                             return redirect()->back();
                         }
-
                     } catch (\Exception $exception) {
                         DB::rollBack();
                         Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
@@ -267,5 +272,79 @@ class CheckoutController extends Controller
 
         session()->flash('notification', 'Xóa đơn hàng thành công');
         return redirect()->back();
+    }
+
+    public function select_delivery(Request $request)
+    {
+        $data = $request->all();
+
+        if ($data['action']) {
+            $output = '';
+            if ($data['action'] == 'province') {
+                if ($data['id'] < 10)
+                    $province_id = '0' . $data['id'];
+                else
+                    $province_id = $data['id'];
+                $districts = District::where('province_id', $province_id)->orderBy('district_id', 'asc')->get();
+                $output = '<option value="">Chọn Quận/Huyện</option>';
+                foreach ($districts as $district)
+                    $output .= '<option value="' . $district->district_id . '">' . $district->district_name . '</option>';
+            } else {
+                if ($data['id'] < 10)
+                    $district_id = '00' . $data['id'];
+                elseif ($data['id'] < 100)
+                    $district_id = '0' . $data['id'];
+                else
+                    $district_id = $data['id'];
+                $wards = Ward::where('district_id', $district_id)->orderBy('ward_id', 'asc')->get();
+                $output = '<option value="">Chọn Xã/Phường</option>';
+                foreach ($wards as $ward)
+                    $output .= '<option value="' . $ward->ward_id . '">' . $ward->ward_name . '</option>';
+            }
+        }
+        echo $output;
+    }
+
+    public function calculate_delivery(Request $request)
+    {
+        $data = $request->all();
+        $output = '';
+        $provinces = Province::orderBy('province_id', 'asc')->get();
+
+        if ($data['province_id']) {
+            if ($data['province_id'] < 10)
+                $province_id = '0' . $data['province_id'];
+            else
+                $province_id = $data['province_id'];
+
+            if ($data['district_id'] < 10)
+                $district_id = '00' . $data['district_id'];
+            elseif ($data['district_id'] < 100)
+                $district_id = '0' . $data['district_id'];
+            else
+                $district_id = $data['district_id'];
+
+            if ($data['ward_id'] < 10)
+                $ward_id = '0000' . $data['ward_id'];
+            elseif ($data['ward_id'] < 100)
+                $ward_id = '000' . $data['ward_id'];
+            elseif ($data['ward_id'] < 1000)
+                $ward_id = '00' . $data['ward_id'];
+            elseif ($data['ward_id'] < 10000)
+                $ward_id = '0' . $data['ward_id'];
+            else
+                $ward_id = $data['ward_id'];
+            $feeship = Feeship::where('province_id', $province_id)->where('district_id', $district_id)->where('ward_id', $ward_id)->first();
+            if ($feeship == null) {
+                $feeship = Feeship::where('province_id', $province_id)->where('district_id', $district_id)->first();
+                if ($feeship == null) {
+                    $feeship = Feeship::where('province_id', $province_id)->first();
+                }
+            }
+            session()->put('feeship', $feeship->fee_feeship);
+            session()->save();
+        }
+
+        return view('pages.cart.show_cart_ajax', compact('provinces'));
     }
 }

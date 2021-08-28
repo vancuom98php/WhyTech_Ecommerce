@@ -81,7 +81,7 @@
             <div class="clearfix"></div>
 
             <div class="g-recaptcha" style="margin: 15px 0 0 40px;"
-                data-sitekey="6LeMJfIbAAAAALY7Hq0M7xzfoqDa8DxHSGQo9qdK"></div>
+                data-sitekey="6LcaLCgcAAAAADv0IREf00HG1Uh6YMHtLCLWwxCI"></div>
             <br />
             @if ($errors->has('g-recaptcha-response'))
                 <span class="invalid-feedback" style="display:block; width: 100%; margin: -20px 0 15px 0;">
