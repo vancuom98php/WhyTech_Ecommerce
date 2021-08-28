@@ -99,3 +99,64 @@ $("#list-cart").on("click", ".route-box__g2 .update-cart", function () {
         alertify.success('Cập nhật giỏ hàng thành công');
     });
 });
+
+// Đơn vị hành chính
+$(document).ready(function () {
+    $(".choose").on("change", (function () {
+        let action = $(this).attr('id');
+        let id = $(this).val();
+        let _token = $('input[name="_token"]').val();
+        let result = '';
+        let urlToRedirect = '/checkout/select-delivery';
+
+        if (action == 'province')
+            result = 'district';
+        else
+            result = 'ward';
+
+        $.ajax({
+            url: urlToRedirect,
+            method: 'POST',
+            data: {
+                action: action,
+                id: id,
+                _token: _token
+            },
+            success: function (data) {
+                $('#' + result).html(data);
+            }
+        });
+    }));
+});
+
+// Calculate fee shippings
+$(document).ready(function () {
+    $(".calculate_delivery").on("click", (function () {
+        let province_id = $('.province').val();
+        let district_id = $('.district').val();
+        let ward_id = $('.ward').val();
+        let _token = $('input[name="_token"]').val();
+        let urlToRedirect = '/checkout/calculate-delivery';
+
+        if(province_id == '' || district_id == '' || ward_id == '')
+            alertify.error('Vui lòng chọn địa chỉ cụ thể để tính phí vận chuyển');
+        else {
+            $.ajax({
+                url: urlToRedirect,
+                method: 'POST',
+                data: {
+                    province_id: province_id,
+                    district_id: district_id,
+                    ward_id: ward_id,
+                    _token: _token
+                },
+                success: function (response) {
+                    $("#list-cart").empty();
+                    $("#list-cart").html(response);
+                }
+            });
+        }
+    }));
+});
+
+

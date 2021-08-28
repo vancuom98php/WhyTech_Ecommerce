@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Province;
 
 class CartController extends Controller
 {
@@ -88,6 +89,8 @@ class CartController extends Controller
     {
         $all_products = Product::where('product_status', 1)->get();
 
+        $provinces = Province::orderBy('province_id', 'asc')->get();
+
         //seo 
         $meta_desc = "Giỏ hàng của bạn";
         $meta_keywords = "Giỏ hàng của bạn";
@@ -95,7 +98,7 @@ class CartController extends Controller
         $meta_title = "WhyTech | Giỏ hàng của bạn ";
         //--seo
 
-        return view('pages.cart.show_cart', compact('all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.cart.show_cart', compact('all_products', 'provinces', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     /**
@@ -117,6 +120,8 @@ class CartController extends Controller
      */
     public function update(Request $request)
     {
+        $provinces = Province::orderBy('province_id', 'asc')->get();
+
         $data = $request->data;
         $cart = session()->get('cart');
 
@@ -132,7 +137,7 @@ class CartController extends Controller
         session()->put('cart', $cart);
         session()->save();
 
-        return view('pages.cart.show_cart_ajax');
+        return view('pages.cart.show_cart_ajax', compact('provinces'));
     }
 
     /**
@@ -191,6 +196,8 @@ class CartController extends Controller
      */
     public function remove($session_id)
     {
+        $provinces = Province::orderBy('province_id', 'asc')->get();
+
         $cart = session()->get('cart');
 
         if ($cart == true) {
@@ -210,6 +217,6 @@ class CartController extends Controller
 
         session()->save();
 
-        return view('pages.cart.show_cart_ajax');
+        return view('pages.cart.show_cart_ajax', compact('provinces'));
     }
 }

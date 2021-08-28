@@ -17,7 +17,7 @@ class CreateProvincesTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
-            $table->string('province_id', 5)->primary();
+            $table->string('province_id', 10)->primary();
             $table->string('province_name', 100);
             $table->string('type', 30);
         });

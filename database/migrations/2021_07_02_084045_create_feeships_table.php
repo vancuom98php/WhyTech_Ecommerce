@@ -18,9 +18,9 @@ class CreateFeeshipsTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('fee_id');
-            $table->string('province_id', 5)->index('feeships_province_id_foreign');
-            $table->string('district_id', 5)->index('feeships_district_id_foreign');
-            $table->string('ward_id', 5)->index('feeships_ward_id_foreign');
+            $table->string('province_id', 10)->index('feeships_province_id_foreign');
+            $table->string('district_id', 10)->index('feeships_district_id_foreign');
+            $table->string('ward_id', 10)->index('feeships_ward_id_foreign');
             $table->string('fee_feeship', 50);
         });
     }

@@ -120,6 +120,14 @@ Route::group([
         'as' => 'checkout.place-order',
         'uses' => 'CheckoutController@place_order'
     ]);
+    Route::post('/select-delivery', [
+        'as' => 'checkout.select-delivery',
+        'uses' => 'CheckoutController@select_delivery'
+    ]);
+    Route::post('/calculate-delivery', [
+        'as' => 'checkout.calculate-delivery',
+        'uses' => 'CheckoutController@calculate_delivery'
+    ]);
 });
 
 /**
@@ -311,6 +319,40 @@ Route::group([
     Route::get('/unset', [
         'as' => 'coupon.unset',
         'uses' => 'CouponController@unset'
+    ]);
+});
+
+Route::group([
+    'prefix' => 'delivery',
+    'middleware' => 'auth'
+], function() {
+    Route::get('/create', [
+        'as' => 'delivery.create',
+        'uses' => 'DeliveryController@create'
+    ]);
+    Route::post('/select', [
+        'as' => 'delivery.select',
+        'uses' => 'DeliveryController@select'
+    ]);
+    Route::post('/save', [
+        'as' => 'delivery.save',
+        'uses' => 'DeliveryController@store'
+    ]);
+    Route::get('/all', [
+        'as' => 'delivery.all',
+        'uses' => 'DeliveryController@index'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'delivery.edit',
+        'uses' => 'DeliveryController@edit'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'delivery.update',
+        'uses' => 'DeliveryController@update'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'delivery.delete',
+        'uses' => 'DeliveryController@delete'
     ]);
 });
 

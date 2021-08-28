@@ -17,10 +17,10 @@ class CreateWardsTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
-            $table->string('ward_id', 5)->primary();
+            $table->string('ward_id', 10)->primary();
             $table->string('ward_name', 100);
             $table->string('type', 30);
-            $table->string('district_id', 5)->index('wards_district_id_foreign');
+            $table->string('district_id', 10)->index('wards_district_id_foreign');
         });
     }
 

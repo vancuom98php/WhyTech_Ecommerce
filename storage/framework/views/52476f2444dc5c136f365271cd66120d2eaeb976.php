@@ -51,10 +51,10 @@ unset($__errorArgs, $__bag); ?>
                 </h6>
             <?php endif; ?>
             <div class="clearfix"></div>
-            <div class="g-recaptcha" style="margin: 15px 0 0 40px;" data-sitekey="6LeMJfIbAAAAALY7Hq0M7xzfoqDa8DxHSGQo9qdK"></div>
+            <div class="g-recaptcha" style="margin: 15px 0 0 40px;" data-sitekey="6LcaLCgcAAAAADv0IREf00HG1Uh6YMHtLCLWwxCI"></div>
             <br />
             <?php if($errors->has('g-recaptcha-response')): ?>
-                <span class="invalid-feedback" style="display:block; width: 100%; margin: -20px 0 15px 0;">
+                <span class="invalid-feedback" style="display:block; width: 100%; margin: -20px 0 15px 0; text-align:center;">
                     <strong><?php echo e($errors->first('g-recaptcha-response')); ?></strong>
                 </span>
             <?php endif; ?>
