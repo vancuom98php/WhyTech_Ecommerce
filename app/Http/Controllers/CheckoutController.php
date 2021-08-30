@@ -55,7 +55,8 @@ class CheckoutController extends Controller
 
     public function logout_to_checkout()
     {
-        session()->forget(['customer_id', 'shipping_id']);
+        session()->forget(['customer_id', 'shipping_id', 'shipping_feeship']);
+        session()->save();
 
         return redirect()->route('checkout.login-checkout');
     }
@@ -129,13 +130,57 @@ class CheckoutController extends Controller
 
     public function save_checkout(AddShippingRequest $request)
     {
+        $data = $request->all();
+
+        if ($data['province'] < 10)
+            $province_id = '0' . $data['province'];
+        else
+            $province_id = $data['province'];
+
+        if ($data['district'] < 10)
+            $district_id = '00' . $data['district'];
+        elseif ($data['district'] < 100)
+            $district_id = '0' . $data['district'];
+        else
+            $district_id = $data['district'];
+
+        if ($data['ward'] < 10)
+            $ward_id = '0000' . $data['ward'];
+        elseif ($data['ward'] < 100)
+            $ward_id = '000' . $data['ward'];
+        elseif ($data['ward'] < 1000)
+            $ward_id = '00' . $data['ward'];
+        elseif ($data['ward'] < 10000)
+            $ward_id = '0' . $data['ward'];
+        else
+            $ward_id = $data['ward'];
+
+        $feeship = Feeship::where('province_id', $province_id)->where('district_id', $district_id)->where('ward_id', $ward_id)->first();
+
+        if ($feeship == null) {
+            $feeship = Feeship::where('province_id', $province_id)->where('district_id', $district_id)->first();
+            if ($feeship == null) {
+                $feeship = Feeship::where('province_id', $province_id)->first();
+            }
+        }
+
+        if ($feeship == null)
+            session()->put('shipping_feeship', 0);
+        else
+            session()->put('shipping_feeship', $feeship->fee_feeship);
+        session()->save();
+
+        $province = Province::find($province_id);
+        $district = District::find($district_id);
+        $ward = Ward::find($ward_id);
+
         $shipping = new Shipping();
 
-        $shipping->shipping_name = $request->shipping_name;
-        $shipping->shipping_email = $request->shipping_email;
-        $shipping->shipping_phone = $request->shipping_phone;
-        $shipping->shipping_address = $request->shipping_address;
-        $shipping->shipping_notes = $request->shipping_notes;
+        $shipping->shipping_name = $data['shipping_name'];
+        $shipping->shipping_email = $data['shipping_email'];
+        $shipping->shipping_phone = $data['shipping_phone'];
+        $shipping->shipping_address = $data['shipping_address'] . ', ' . $ward->ward_name . ', ' . $district->district_name . ', ' . $province->province_name;
+        $shipping->shipping_notes = $data['shipping_notes'];
         $shipping->save();
 
         $request->session()->put('shipping_id', $shipping->shipping_id);
@@ -154,124 +199,90 @@ class CheckoutController extends Controller
         $url_canonical = $request->url();
         $meta_title = "WhyTech | Thanh toán online";
         //--seo
-
+        $data =  $request->all();
         $cart = session()->get('cart');
         $coupons = session()->get('coupon');
+        $order_code = substr(md5(microtime()), rand(0, 26), 5);
 
         if ($cart == true) {
-            if (session()->get('customer_id')) {
-                if (session()->get('shipping_id')) {
-                    $total = 0;
-                    foreach ($cart as $item)
-                        $total += $item['product_quantity'] * $item['product_info']->product_price;
+            $total = 0;
 
-                    if ($coupons) {
-                        foreach ($coupons as $coupon) {
-                            if ($coupon['coupon_condition'] == 1)
-                                $total -= $total * ($coupon['coupon_number'] / 100);
-                            else
-                                $total -= $coupon['coupon_number'];
-                        }
-                    }
+            foreach ($cart as $item)
+                $total += $item['product_quantity'] * $item['product_info']->product_price;
 
-                    try {
-                        DB::beginTransaction();
+            $total += session()->get('shipping_feeship');
 
-                        // Insert to payments
-                        $payment = Payment::create([
-                            'payment_method' => $request->payment_method,
-                            'payment_status' => 'Đang chờ xử lý',
-                        ]);
+            if ($coupons) {
+                foreach ($coupons as $coupon) {
+                    if ($coupon['coupon_condition'] == 1)
+                        $total -= $total * ($coupon['coupon_number'] / 100);
+                    else
+                        $total -= $coupon['coupon_number'];
+                }
+            }
 
-                        // Insert to orders
-                        $order = Order::create([
-                            'customer_id' => session()->get('customer_id'),
-                            'shipping_id' => session()->get('shipping_id'),
-                            'payment_id' => $payment->payment_id,
-                            'order_total' => number_format($total),
-                            'order_status' => 'Đang chờ xử lý',
-                        ]);
+            try {
+                DB::beginTransaction();
 
-                        // Insert to order details
+                // Insert to payments
+                $payment = Payment::create([
+                    'payment_method' => $data['payment_method'],
+                    'payment_status' => 0,
+                ]);
 
-                        foreach ($cart as $item) {
-                            $order_details = OrderDetail::create([
-                                'order_id' => $order->order_id,
-                                'product_id' => $item['product_id'],
-                                'product_sales_quantity' => $item['product_quantity'],
-                            ]);
-                        }
+                $order_coupon = null;
 
-                        if ($coupons) {
-                            $coupon_manager = Coupon::where('coupon_code', $coupons['0']['coupon_code'])->first();
-                            $new_coupon_time = $coupon_manager->coupon_time - 1;
-                            $coupon_manager->update([
-                                'coupon_time' => $new_coupon_time
-                            ]);
-                        }
+                if ($coupons) {
+                    $coupon_manager = Coupon::where('coupon_code', $coupons['0']['coupon_code'])->first();
+                    $new_coupon_time = $coupon_manager->coupon_time - 1;
+                    $coupon_manager->update([
+                        'coupon_time' => $new_coupon_time
+                    ]);
+                    $order_coupon = $coupons['0']['coupon_code'];
+                }
 
-                        DB::commit();
+                // Insert to orders
+                $order = Order::create([
+                    'customer_id' => session()->get('customer_id'),
+                    'shipping_id' => session()->get('shipping_id'),
+                    'payment_id' => $payment->payment_id,
+                    'order_total' => number_format($total),
+                    'order_status' => 0,
+                    'order_code' => $order_code,
+                    'order_coupon' => $order_coupon,
+                    'order_feeship' => session()->get('shipping_feeship'),
+                    'order_code' => $order_code,
+                ]);
 
-                        session()->forget('cart');
-                        session()->forget('coupon');
-                        session()->save();
+                // Insert to order details
 
-                        if ($payment->payment_method == 'ATM') {
-                            echo "Thanh toán bằng ATM (tạm thời)";
-                        } else {
-                            session()->flash('notification', 'Đơn hàng đã được đặt thành công! Hàng sẽ được giao đến bạn sớm nhất! Cảm ơn bạn');
-                            return redirect()->back();
-                        }
-                    } catch (\Exception $exception) {
-                        DB::rollBack();
-                        Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
-                        return view('404');
-                    }
+                foreach ($cart as $item) {
+                    $order_details = OrderDetail::create([
+                        'order_id' => $order->order_id,
+                        'product_id' => $item['product_id'],
+                        'product_sales_quantity' => $item['product_quantity'],
+                        'order_code' => $order_code,
+                    ]);
+                }
+
+                session()->forget(['cart', 'coupon']);
+                session()->save();
+
+                DB::commit();
+
+                if ($payment->payment_method == 'ATM') {
+                    echo "Thanh toán bằng ATM (tạm thời)";
                 } else {
-                    session()->flash('error', 'Thanh toán thất bại! Vui lòng nhập thông tin vận chuyển trước khi thực hiện thanh toán');
+                    session()->flash('notification', 'Đơn hàng đã được đặt thành công! Hàng sẽ được giao đến bạn sớm nhất! Cảm ơn bạn');
                     return redirect()->back();
                 }
-            } else {
-                session()->flash('error', 'Thanh toán thất bại! Vui lòng đăng nhập trước khi thực hiện thanh toán');
-                return redirect()->back();
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                dd($exception->getMessage());
+                Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
+                return view('404');
             }
         }
-    }
-
-    /**
-     * Admin page
-     */
-    public function manage_order()
-    {
-        $orders = Order::latest()->paginate(3);
-
-        return view('admin.order.manage_order', compact('orders'));
-    }
-
-    /**
-     * Show Order Details
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function view_order($id)
-    {
-        $order = Order::find($id);
-
-        return view('admin.order.view_order', compact('order'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete_order($id)
-    {
-        $order = Order::find($id)->delete();
-
-        session()->flash('notification', 'Xóa đơn hàng thành công');
-        return redirect()->back();
     }
 
     public function select_delivery(Request $request)
@@ -334,14 +345,20 @@ class CheckoutController extends Controller
                 $ward_id = '0' . $data['ward_id'];
             else
                 $ward_id = $data['ward_id'];
+
             $feeship = Feeship::where('province_id', $province_id)->where('district_id', $district_id)->where('ward_id', $ward_id)->first();
+
             if ($feeship == null) {
                 $feeship = Feeship::where('province_id', $province_id)->where('district_id', $district_id)->first();
                 if ($feeship == null) {
                     $feeship = Feeship::where('province_id', $province_id)->first();
                 }
             }
-            session()->put('feeship', $feeship->fee_feeship);
+
+            if ($feeship == null)
+                session()->put('feeship', 0);
+            else
+                session()->put('feeship', $feeship->fee_feeship);
             session()->save();
         }
 

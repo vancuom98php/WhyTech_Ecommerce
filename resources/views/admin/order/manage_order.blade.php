@@ -44,6 +44,7 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
+                            <th scope="col">Mã đơn hàng</th>
                             <th scope="col">Tên khách hàng</th>
                             <th scope="col">Tổng giá tiền</th>
                             <th scope="col">Tình trạng đơn hàng</th>
@@ -57,16 +58,25 @@
                                 <td>
                                     <label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
+                                <td>{{ $order->order_code }}</td>
                                 <td>{{ optional($order->customer)->customer_name }}</td>
                                 <td><span class="text-ellipsis">{{ $order->order_total }} VNĐ</span></td>
-                                <td><span class="text-ellipsis">{{ $order->order_status }}</span></td>
+                                <td><span class="text-ellipsis">
+                                    @if($order->status == 0)
+                                        Đơn hàng chưa được xử lý
+                                    @elseif ($order->status == 1)
+                                        Đơn hàng đã được vận chuyển
+                                    @elseif ($order->status == 2)
+                                        Đơn hàng đã được giao
+                                    @endif
+                                    </span></td>
                                 <td><span class="text-ellipsis">{{ $order->created_at }}</span></td>
                                 <td>
-                                    <a href="{{ route('order.view', ['id' => $order->order_id]) }}"
+                                    <a href="{{ route('order.show', ['code' => $order->order_code]) }}"
                                         class="active category-action" style="margin-right: 10px;" ui-toggle-class="">
                                         <i class="fa fa-eye text-success text-active"></i>
                                     </a>
-                                    <a href="{{ route('order.delete', ['id' => $order->order_id]) }}"
+                                    <a href="{{ route('order.delete', ['code' => $order->order_code]) }}"
                                         class="active category-action confirm_delete_order" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>

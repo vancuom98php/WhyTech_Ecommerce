@@ -21,6 +21,7 @@
                         <th scope="col">Tên khách hàng</th>
                         <th scope="col">Email</th>
                         <th scope="col">Số điện thoại</th>
+                        <th scope="col">Mã giảm giá</th>
                         <th scope="col">Hình thức thanh toán</th>
                         <th scope="col">Số tiền còn nợ</th>
                     </tr>
@@ -33,6 +34,13 @@
                         <td>{{ optional($order->customer)->customer_name }}</td>
                         <td><span class="text-ellipsis">{{ optional($order->customer)->customer_email }}</span></td>
                         <td><span class="text-ellipsis">{{ optional($order->customer)->customer_phone }}</span></td>
+                        <td><span class="text-ellipsis">
+                                @if($order->order_coupon)
+                                    {{ $order->order_coupon }} ({{ $coupon_type }})
+                                @else
+                                    Không áp dụng
+                                @endif
+                            </span></td>
                         <td><span class="text-ellipsis">{{ optional($order->payment)->payment_method }}</span></td>
                         <td><span class="text-ellipsis">{{ $order->order_total }} VNĐ</span></td>
                     </tr>
@@ -60,6 +68,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Địa chỉ giao hàng</th>
                         <th scope="col">Số điện thoại</th>
+                        <th scope="col">Phí vận chuyển</th>
                         <th scope="col">Ghi chú</th>
                     </tr>
                 </thead>
@@ -72,6 +81,7 @@
                         <td><span class="text-ellipsis">{{ optional($order->shipping)->shipping_email }}</span></td>
                         <td><span class="text-ellipsis">{{ optional($order->shipping)->shipping_address }}</span></td>
                         <td><span class="text-ellipsis">{{ optional($order->shipping)->shipping_phone }}</span></td>
+                        <td><span class="text-ellipsis">{{ number_format($order->order_feeship) }} VNĐ</span></td>
                         <td><span class="text-ellipsis">{{ optional($order->shipping)->shipping_notes }}</span></td>
                     </tr>
                 </tbody>
@@ -141,7 +151,10 @@
         </div>
     </div>
 </div>
-
+<br>
+<div class="table-agile-info">
+    <a href="{{ route('order.print', ['code' => $order->order_code]) }}" class="btn btn-danger" target="_blank">IN HÓA ĐƠN</a>
+</div>
 @endsection
 
 @section('scripts')

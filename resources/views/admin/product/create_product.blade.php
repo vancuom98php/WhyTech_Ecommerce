@@ -95,6 +95,7 @@
                                 <div class="form-group">
                                     <label class="add_category_label" for="">Danh mục sản phẩm</label>
                                     <select name="category_id" class="form-control input-sm m-bot15">
+                                        <option value="">Chọn danh mục sản phẩm</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->category_id }}">{{ $category->category_name }}
                                             </option>
@@ -104,6 +105,7 @@
                                 <div class="form-group">
                                     <label class="add_category_label" for="">Thương hiệu sản phẩm</label>
                                     <select name="brand_id" class="form-control input-sm m-bot15">
+                                        <option value="">Chọn thương hiệu sản phẩm</option>
                                         @foreach ($brands as $brand)
                                             <option value="{{ $brand->brand_id }}">{{ $brand->brand_name }}</option>
                                         @endforeach

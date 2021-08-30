@@ -22,8 +22,6 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedInteger('product_id')->index('order_details_product_id_foreign');
             $table->unsignedInteger('order_id')->index('order_details_order_id_foreign');
             $table->unsignedInteger('product_sales_quantity');
-            $table->string('product_coupon', 50);
-            $table->string('product_feeship', 50);
             $table->timestamps();
         });
     }

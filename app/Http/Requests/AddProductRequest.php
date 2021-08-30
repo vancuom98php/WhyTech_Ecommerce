@@ -27,7 +27,7 @@ class AddProductRequest extends FormRequest
             'product_name' => 'bail|required|unique:products|max:255',
             'product_price' => 'bail|required|numeric',
             'product_desc' => 'bail|required|max:512|min:5',
-            'product_content' => 'bail|required|max:512|min:5',
+            'product_content' => 'required',
             'product_image' => 'bail|required|image',
         ];
     }
@@ -44,8 +44,6 @@ class AddProductRequest extends FormRequest
             'product_desc.max' => 'Mô tả không được phép quá 512 kí tự',
             'product_desc.min' => 'Mô tả không được phép dưới 5 kí tự',
             'product_content.required' => 'Nội dung không được phép để trống',
-            'product_content.max' => 'Nội dung không được phép quá 512 kí tự',
-            'product_content.min' => 'Nội dung không được phép dưới 5 kí tự',
             'product_image.required' => 'Hình ảnh không được phép để trống',
             'product_image.image' => 'Hình ảnh phải bao gồm các định dạng: .jpeg, .png, .bmp, .gif, .svg, hoặc .webp',
         ];

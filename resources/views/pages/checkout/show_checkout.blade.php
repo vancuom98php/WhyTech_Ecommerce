@@ -265,7 +265,7 @@
                                         <label class="gl-label" for="province">TỈNH/THÀNH PHỐ *</label>
                                         <select style="font-weight: normal;"
                                             class="select-box select-box--primary-style choose province @error('province') is-invalid  @enderror"
-                                            name="province" id="province" data-bill="">
+                                            name="province" id="province" data-bill="" required>
                                             <option value="">Chọn Tỉnh/Thành phố</option>
                                             @foreach ($provinces as $province)
                                                 <option value="{{ $province->province_id }}">
@@ -286,7 +286,7 @@
                                         <label class="gl-label" for="district">QUẬN/HUYỆN *</label>
                                         <select style="font-weight: normal;"
                                             class="select-box select-box--primary-style choose district @error('district') is-invalid  @enderror"
-                                            name="district" id="district" data-bill="">
+                                            name="district" id="district" data-bill="" required>
                                             <option value="">Chọn Quận/Huyện</option>
                                         </select>
                                         @error('district')
@@ -303,7 +303,7 @@
                                         <label class="gl-label" for="ward">XÃ/PHƯỜNG *</label>
                                         <select style="font-weight: normal;"
                                             class="select-box select-box--primary-style ward @error('ward') is-invalid  @enderror"
-                                            name="ward" id="ward" data-bill="">
+                                            name="ward" id="ward" data-bill="" required>
                                             <option value="">Chọn Xã/Phường</option>
                                         </select>
                                         @error('ward')
@@ -343,27 +343,15 @@
                             </form>
                         </div>
                         <div class="col-lg-6">
-                            <div class="div">
-                                @if (session()->has('notification'))
-                                    <div class="alert-success">
-                                        <p class="alert">{!! session('notification') !!}</p>
-                                    </div>
-                                @endif
-                                @if (session()->has('error'))
-                                    <div class="alert-error">
-                                        <p class="alert">{!! session('error') !!}</p>
-                                    </div>
-                                @endif
-                            </div>
                             <h1 class="checkout-f__h1">ĐƠN HÀNG ĐÃ ĐẶT</h1>
 
                             <!--====== Order Summary ======-->
                             <div class="o-summary">
+                                @php
+                                    $total = 0;
+                                @endphp
                                 <div class="o-summary__section u-s-m-b-30">
                                     @if (session()->has('cart') && count(session()->get('cart')) > 0)
-                                        @php
-                                            $total = 0;
-                                        @endphp
                                         <div class="o-summary__item-wrap gl-scroll">
                                             @foreach (session()->get('cart') as $item)
                                                 @php
@@ -448,7 +436,16 @@
                                             <tbody>
                                                 <tr>
                                                     <td>PHÍ VẬN CHUYỂN</td>
-                                                    <td>Free</td>
+                                                    @if (session()->has('shipping_feeship'))
+                                                        @php
+                                                            $total += session()->get('shipping_feeship');
+                                                        @endphp
+                                                        <td>
+                                                            {{ number_format(session()->get('shipping_feeship')) }} VNĐ
+                                                        </td>
+                                                    @else
+                                                        <td>Free</td>
+                                                    @endif
                                                 </tr>
                                                 <tr>
                                                     <td>THUẾ</td>
@@ -507,7 +504,7 @@
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__box">
                                         <h1 class="checkout-f__h1">HÌNH THỨC THANH TOÁN</h1>
-                                        <form class="checkout-f__payment" method="POST"
+                                        <form class="checkout-f__payment" id="checkout-f__payment" method="POST"
                                             action="{{ route('checkout.place-order') }}">
                                             @csrf
                                             <div class="u-s-m-b-10">
@@ -605,8 +602,11 @@
 
                                                 <a class="gl-link">Điều khoản Dịch vụ.</a>
                                             </div>
+                                            <input type="hidden" id="is_customer_login" value="@if (session()->has('customer_id')) 1 @else 0 @endif" />
+                                            <input type="hidden" id="is_shipping_form" value="@if (session()->has('shipping_id')) 1 @else 0 @endif" />
                                             <div>
-                                                <button class="btn btn--e-brand-b-2" type="submit">ĐẶT HÀNG</button>
+                                                <button class="btn btn--e-brand-b-2 place_order" type="button">ĐẶT
+                                                    HÀNG</button>
                                             </div>
                                         </form>
                                     </div>

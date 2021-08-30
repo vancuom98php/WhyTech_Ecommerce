@@ -45,6 +45,7 @@
       28 => 'App\\Providers\\RouteServiceProvider',
       29 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
       30 => 'Intervention\\Image\\ImageServiceProvider',
+      31 => 'Barryvdh\\DomPDF\\ServiceProvider',
     ),
     'aliases' => 
     array (
@@ -87,6 +88,7 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
       'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
       'Cart' => 'Gloudemans\\Shoppingcart\\Facades\\Cart',
+      'PDF' => 'Barryvdh\\DomPDF\\Facade',
     ),
   ),
   'auth' => 
@@ -359,6 +361,29 @@
       ),
     ),
   ),
+  'dompdf' => 
+  array (
+    'show_warnings' => false,
+    'orientation' => 'portrait',
+    'defines' => 
+    array (
+      'font_dir' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\fonts/',
+      'font_cache' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\HP\\AppData\\Local\\Temp',
+      'chroot' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech',
+      'enable_font_subsetting' => false,
+      'pdf_backend' => 'CPDF',
+      'default_media_type' => 'screen',
+      'default_paper_size' => 'a4',
+      'default_font' => 'serif',
+      'dpi' => 96,
+      'enable_php' => false,
+      'enable_javascript' => true,
+      'enable_remote' => true,
+      'font_height_ratio' => 1.1,
+      'enable_html5_parser' => false,
+    ),
+  ),
   'filesystems' => 
   array (
     'default' => 'local',
@@ -393,6 +418,31 @@
       'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\public\\storage' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\app/public',
     ),
   ),
+  'flare' => 
+  array (
+    'key' => NULL,
+    'reporting' => 
+    array (
+      'anonymize_ips' => true,
+      'collect_git_information' => false,
+      'report_queries' => true,
+      'maximum_number_of_collected_queries' => 200,
+      'report_query_bindings' => true,
+      'report_view_data' => true,
+      'grouping_type' => NULL,
+      'report_logs' => true,
+      'maximum_number_of_collected_logs' => 200,
+      'censor_request_body_fields' => 
+      array (
+        0 => 'password',
+      ),
+    ),
+    'send_logs_as_events' => true,
+    'censor_request_body_fields' => 
+    array (
+      0 => 'password',
+    ),
+  ),
   'hashing' => 
   array (
     'driver' => 'bcrypt',
@@ -406,6 +456,25 @@
       'threads' => 2,
       'time' => 2,
     ),
+  ),
+  'ignition' => 
+  array (
+    'editor' => 'phpstorm',
+    'theme' => 'light',
+    'enable_share_button' => true,
+    'register_commands' => false,
+    'ignored_solution_providers' => 
+    array (
+      0 => 'Facade\\Ignition\\SolutionProviders\\MissingPackageSolutionProvider',
+    ),
+    'enable_runnable_solutions' => NULL,
+    'remote_sites_path' => '',
+    'local_sites_path' => '',
+    'housekeeping_endpoint_prefix' => '_ignition',
+  ),
+  'image' => 
+  array (
+    'driver' => 'gd',
   ),
   'lfm' => 
   array (
@@ -668,6 +737,24 @@
       ),
     ),
   ),
+  'passport' => 
+  array (
+    'private_key' => NULL,
+    'public_key' => NULL,
+    'client_uuids' => false,
+    'personal_access_client' => 
+    array (
+      'id' => NULL,
+      'secret' => NULL,
+    ),
+    'storage' => 
+    array (
+      'database' => 
+      array (
+        'connection' => 'mysql',
+      ),
+    ),
+  ),
   'queue' => 
   array (
     'default' => 'sync',
@@ -771,6 +858,24 @@
     'http_only' => true,
     'same_site' => 'lax',
   ),
+  'tinker' => 
+  array (
+    'commands' => 
+    array (
+    ),
+    'alias' => 
+    array (
+    ),
+    'dont_alias' => 
+    array (
+      0 => 'App\\Nova',
+    ),
+  ),
+  'trustedproxy' => 
+  array (
+    'proxies' => NULL,
+    'headers' => 94,
+  ),
   'view' => 
   array (
     'paths' => 
@@ -778,68 +883,6 @@
       0 => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\resources\\views',
     ),
     'compiled' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\framework\\views',
-  ),
-  'flare' => 
-  array (
-    'key' => NULL,
-    'reporting' => 
-    array (
-      'anonymize_ips' => true,
-      'collect_git_information' => false,
-      'report_queries' => true,
-      'maximum_number_of_collected_queries' => 200,
-      'report_query_bindings' => true,
-      'report_view_data' => true,
-      'grouping_type' => NULL,
-      'report_logs' => true,
-      'maximum_number_of_collected_logs' => 200,
-      'censor_request_body_fields' => 
-      array (
-        0 => 'password',
-      ),
-    ),
-    'send_logs_as_events' => true,
-    'censor_request_body_fields' => 
-    array (
-      0 => 'password',
-    ),
-  ),
-  'ignition' => 
-  array (
-    'editor' => 'phpstorm',
-    'theme' => 'light',
-    'enable_share_button' => true,
-    'register_commands' => false,
-    'ignored_solution_providers' => 
-    array (
-      0 => 'Facade\\Ignition\\SolutionProviders\\MissingPackageSolutionProvider',
-    ),
-    'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => '',
-    'local_sites_path' => '',
-    'housekeeping_endpoint_prefix' => '_ignition',
-  ),
-  'image' => 
-  array (
-    'driver' => 'gd',
-  ),
-  'passport' => 
-  array (
-    'private_key' => NULL,
-    'public_key' => NULL,
-    'client_uuids' => false,
-    'personal_access_client' => 
-    array (
-      'id' => NULL,
-      'secret' => NULL,
-    ),
-    'storage' => 
-    array (
-      'database' => 
-      array (
-        'connection' => 'mysql',
-      ),
-    ),
   ),
   'lfm-config' => 
   array (
@@ -921,24 +964,6 @@
     'php_ini_overrides' => 
     array (
       'memory_limit' => '256M',
-    ),
-  ),
-  'trustedproxy' => 
-  array (
-    'proxies' => NULL,
-    'headers' => 94,
-  ),
-  'tinker' => 
-  array (
-    'commands' => 
-    array (
-    ),
-    'alias' => 
-    array (
-    ),
-    'dont_alias' => 
-    array (
-      0 => 'App\\Nova',
     ),
   ),
 );
