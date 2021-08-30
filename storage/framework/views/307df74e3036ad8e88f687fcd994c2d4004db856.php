@@ -102,7 +102,7 @@
                                         <!--====== Dropdown ======-->
 
                                         <span class="js-menu-toggle"></span>
-                                        <ul style="width:120px">
+                                        <ul style="width:140px">
                                             <?php if(session()->has('customer_id')): ?>
                                                 <li>
                                                     <a href="dashboard.html"><i
@@ -1989,7 +1989,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <!-- Bootstrap theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
-
+   <!-- Sweetalert2 -->
+    <script src="<?php echo e(asset('frontend/js/sweetalert2@9.js')); ?>"></script>
     <!--====== AJAX Js ======-->
     <script src="<?php echo e(asset('frontend/js/ajax.js')); ?>"></script>
 

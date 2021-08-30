@@ -24,7 +24,10 @@ class Order extends Model
         'shipping_id',
         'payment_id',
         'order_total',
-        'order_status'
+        'order_status',
+        'order_coupon',
+        'order_feeship',
+        'order_code',
     ];
 
     public function customer()

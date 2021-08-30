@@ -138,7 +138,7 @@ $(document).ready(function () {
         let _token = $('input[name="_token"]').val();
         let urlToRedirect = '/checkout/calculate-delivery';
 
-        if(province_id == '' || district_id == '' || ward_id == '')
+        if (province_id == '' || district_id == '' || ward_id == '')
             alertify.error('Vui lòng chọn địa chỉ cụ thể để tính phí vận chuyển');
         else {
             $.ajax({
@@ -157,6 +157,81 @@ $(document).ready(function () {
             });
         }
     }));
+});
+
+// Place Order
+$(document).ready(function () {
+    $(".place_order").on("click", function (event) {
+        let urlToRedirect = '/checkout/place-order';
+        let that = $(this);
+        let is_login = $("#is_customer_login").val();
+        let is_shipping = $("#is_shipping_form").val();
+        let _token = $('input[name="_token"]').val();
+        let payment_method = ($('input[name=payment_method]:checked', '#checkout-f__payment').val());
+
+        if (!$("#term-and-condition").is(":checked")) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi...',
+                text: 'Vui lòng đồng ý với điều khoản dịch vụ!',
+            })
+        } else {
+            if (is_login == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi...',
+                    text: 'Vui lòng đăng nhập trước khi thanh toán!',
+                    footer: '<a class="gl-link" style="font-size: 16px" href="/checkout/login-checkout">Đến trang đăng nhập?</a>'
+                })
+            } else if (is_shipping == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi...',
+                    text: 'Vui lòng điền thông tin vận chuyển trước khi thanh toán!',
+                })
+            } else {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Bạn có chắc muốn xác nhận đặt hàng?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28A745',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xác nhận',
+                    cancelButtonText: 'Hủy!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: urlToRedirect,
+                            type: 'POST',
+                            data: {
+                                payment_method: payment_method,
+                                _token: _token
+                            },
+                            success: function () {
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                                Swal.fire(
+                                    'Đã xác nhận!',
+                                    'Đơn hàng sẽ được phê duyệt và chuyển đến bạn một cách nhanh chóng!',
+                                    'success'
+                                );
+                            },
+                            error: function () {
+                            }
+                        });
+                    } else {
+                        Swal.fire(
+                            'Đã hủy!',
+                            'Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng!',
+                            'error'
+                        )
+                    }
+                })
+            }
+        }
+    });
 });
 
 

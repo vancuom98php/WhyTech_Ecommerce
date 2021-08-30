@@ -23,7 +23,6 @@ class CreateShippingsTable extends Migration
             $table->string('shipping_phone', 255)->nullable();
             $table->string('shipping_email', 255)->nullable();
             $table->text('shipping_notes')->nullable();
-            $table->unsignedInteger('shipping_method')->nullable();
             $table->timestamps();
         });
     }

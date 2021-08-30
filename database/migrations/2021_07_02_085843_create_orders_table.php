@@ -24,8 +24,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('order_status');
             $table->string('order_code', 50);
             $table->string('order_total', 100);
-            $table->string('order_date', 100);
-            $table->string('order_destroy', 200)->nullable();
+            $table->string('order_coupon', 50)->nullable();
+            $table->string('order_feeship', 50);
             $table->timestamps();
         });
     }

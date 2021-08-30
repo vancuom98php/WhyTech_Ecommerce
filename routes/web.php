@@ -271,15 +271,19 @@ Route::group([
 ], function() {
     Route::get('/manage', [
         'as' => 'order.manage',
-        'uses' => 'CheckoutController@manage_order'
+        'uses' => 'OrderController@index'
     ]);
-    Route::get('/view/{id}', [
-        'as' => 'order.view',
-        'uses' => 'CheckoutController@view_order'
+    Route::get('/show/{code}', [
+        'as' => 'order.show',
+        'uses' => 'OrderController@show'
     ]);
-    Route::get('/delete/{id}', [
+    Route::get('/delete/{code}', [
         'as' => 'order.delete',
-        'uses' => 'CheckoutController@delete_order'
+        'uses' => 'OrderController@delete'
+    ]);
+    Route::get('/print/{code}', [
+        'as' => 'order.print',
+        'uses' => 'OrderController@print'
     ]);
 });
 
