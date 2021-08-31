@@ -201,3 +201,37 @@ $('.confirm_delete_feeship').on('click', function (event) {
         }
     })
 });
+
+$('.confirm_delete_slider').on('click', function (event) {
+    event.preventDefault();
+    let urlToRedirect = event.currentTarget.getAttribute('href');
+    let that = $(this);
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Bạn có chắc muốn xóa slider này không?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28A745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy!'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: 'GET',
+                url: urlToRedirect,
+                success: function () {
+                        that.parent().parent().remove();
+                        Swal.fire(
+                            'Đã xóa!',
+                            'Xóa slider thành công!',
+                            'success'
+                        )
+                },
+                error: function () {
+                }
+            });
+        }
+    })
+});

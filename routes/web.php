@@ -55,7 +55,7 @@ Route::group([
 // Cart
 Route::group([
     'prefix' => 'cart'
-], function() {
+], function () {
     // Add Cart
     Route::post('/add', [
         'as' => 'cart.add',
@@ -86,7 +86,7 @@ Route::group([
 // Checkout
 Route::group([
     'prefix' => 'checkout'
-], function() { 
+], function () {
     // Login Checkout
     Route::get('/login-checkout', [
         'as' => 'checkout.login-checkout',
@@ -268,7 +268,7 @@ Route::group([
 Route::group([
     'prefix' => 'order',
     'middleware' => 'auth'
-], function() {
+], function () {
     Route::get('/manage', [
         'as' => 'order.manage',
         'uses' => 'OrderController@index'
@@ -290,33 +290,38 @@ Route::group([
 // Coupon
 Route::group([
     'prefix' => 'coupon'
-], function() { 
-    // Login Checkout
+], function () {
     Route::post('/check', [
         'as' => 'coupon.check',
         'uses' => 'CouponController@check'
     ]);
     Route::get('/create', [
+        'middleware' => 'auth',
         'as' => 'coupon.create',
         'uses' => 'CouponController@create'
     ]);
     Route::post('/save', [
+        'middleware' => 'auth',
         'as' => 'coupon.save',
         'uses' => 'CouponController@store'
     ]);
     Route::get('/all', [
+        'middleware' => 'auth',
         'as' => 'coupon.all',
         'uses' => 'CouponController@index'
     ]);
     Route::get('/edit/{id}', [
+        'middleware' => 'auth',
         'as' => 'coupon.edit',
         'uses' => 'CouponController@edit'
     ]);
     Route::post('/update/{id}', [
+        'middleware' => 'auth',
         'as' => 'coupon.update',
         'uses' => 'CouponController@update'
     ]);
     Route::get('/delete/{id}', [
+        'middleware' => 'auth',
         'as' => 'coupon.delete',
         'uses' => 'CouponController@delete'
     ]);
@@ -326,10 +331,11 @@ Route::group([
     ]);
 });
 
+// Delivery
 Route::group([
     'prefix' => 'delivery',
     'middleware' => 'auth'
-], function() {
+], function () {
     Route::get('/create', [
         'as' => 'delivery.create',
         'uses' => 'DeliveryController@create'
@@ -357,6 +363,45 @@ Route::group([
     Route::get('/delete/{id}', [
         'as' => 'delivery.delete',
         'uses' => 'DeliveryController@delete'
+    ]);
+});
+
+// Slider
+Route::group([
+    'prefix' => 'slider',
+    'middleware' => 'auth'
+], function () {
+    Route::get('/all', [
+        'as' => 'slider.all',
+        'uses' => 'SliderController@index'
+    ]);
+    Route::get('/create', [
+        'as' => 'slider.create',
+        'uses' => 'SliderController@create'
+    ]);
+    Route::post('/save', [
+        'as' => 'slider.save',
+        'uses' => 'SliderController@store'
+    ]);
+    Route::get('/inactive/{id}', [
+        'as' => 'slider.inactive',
+        'uses' => 'SliderController@inactive'
+    ]);
+    Route::get('/active/{id}', [
+        'as' => 'slider.active',
+        'uses' => 'SliderController@active'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'slider.edit',
+        'uses' => 'SliderController@edit'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'slider.update',
+        'uses' => 'SliderController@update'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'slider.delete',
+        'uses' => 'SliderController@delete'
     ]);
 });
 

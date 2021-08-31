@@ -72,8 +72,7 @@
                                         <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a>
                                     </div>
                                     <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i
-                                            class="far fa-star"></i><i class="far fa-star"></i>
+                                            class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
 
                                         <span class="product-m__review">(19)</span>
                                     </div>

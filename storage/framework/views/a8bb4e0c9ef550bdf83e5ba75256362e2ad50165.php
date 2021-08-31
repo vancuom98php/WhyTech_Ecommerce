@@ -220,7 +220,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </li>
                             </ul>
                         </li>
-                        
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fab fa-slideshare"></i>
+                                <span>Slider</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('slider.all')); ?>">
+                                        <i class="fas fa-sliders-h"></i>
+                                        Quản lý slider
+                                    </a>
+                                </li>
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('slider.create')); ?>">
+                                        <i class="fa fa-plus-square"></i>
+                                        Thêm slider
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <!-- sidebar menu end-->
