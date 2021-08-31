@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CategoryProduct;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Slider;
 
 class HomeController extends Controller
 {
@@ -23,8 +24,9 @@ class HomeController extends Controller
         $products = Product::where('product_status', 1)->latest()->get()->take(8);
         $top_products = Product::where('product_status', 1)->latest()->get()->take(4);
         $all_products = Product::where('product_status', 1)->get();
+        $sliders = Slider::where('slider_status', 1)->orderBy('slider_id', 'desc')->get()->take(3);
 
-        return view('pages.home', compact('categories', 'brands', 'products', 'top_products', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.home', compact('categories', 'brands', 'products', 'top_products', 'all_products', 'sliders', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function show(Request $request)
