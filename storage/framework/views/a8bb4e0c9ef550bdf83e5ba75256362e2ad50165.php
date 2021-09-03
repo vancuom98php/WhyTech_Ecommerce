@@ -27,7 +27,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         rel='stylesheet' type='text/css'>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- font-awesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="<?php echo e(asset('backend/css/font.css')); ?>" type="text/css" />
     <link href="<?php echo e(asset('backend/css/font-awesome.css')); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo e(asset('backend/css/morris.css')); ?>" type="text/css" />
@@ -35,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link rel="stylesheet" href="<?php echo e(asset('backend/css/monthly.css')); ?>">
     <!-- //calendar -->
     <!-- alertify -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <!-- //alertify -->
     
     <link rel="shortcut icon" href="<?php echo e(asset('backend/images/favicon.ico')); ?>" type="image/x-icon">
@@ -79,7 +81,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li><a href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"><i class="fa fa-key"></i> Đăng
                                     xuất</a></li>
-                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST"
+                                class="d-none">
                                 <?php echo csrf_field(); ?>
                             </form>
                         </ul>
@@ -271,7 +274,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <!-- footer -->
             <div class="footer">
                 <div class="wthree-copyright">
-                    <p>© 2021 Admin. All rights reserved | Design by <a href="http://w3layouts.com">WHYTECH ECOMMERCE</a></p>
+                    <p>© 2021 Admin. All rights reserved | Design by <a href="http://w3layouts.com">WHYTECH
+                            ECOMMERCE</a></p>
                 </div>
             </div>
             <!-- / footer -->
@@ -419,6 +423,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <!-- //calendar -->
+
+    <!-- Alertify -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <!-- //Alertify -->
 
     <!-- Delete Confirmation -->
     <?php echo $__env->yieldContent('scripts'); ?>

@@ -49,9 +49,11 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col" width="200px;">Tên sản phẩm</th>
                             <th scope="col">Giá</th>
                             <th scope="col">Hình ảnh</th>
+                            <th scope="col">Số lượng tồn</th>
+                            <th scope="col">Đã bán</th>
                             <th scope="col">Danh mục</th>
                             <th scope="col">Thương hiệu</th>
                             <th scope="col">Ngày thêm</th>
@@ -70,6 +72,8 @@
                                 </td>
                                 <td><img class="product_image_50_50" src="{{ $product->product_image_path }}"
                                         alt="{{ $product->product_image_name }}"></td>
+                                <td><span class="text-ellipsis">{{ $product->product_quantity }}</span></td>
+                                <td><span class="text-ellipsis">{{ $product->product_sold }}</span></td>
                                 <td><span class="text-ellipsis">{{ optional($product->category)->category_name }}</span>
                                 </td>
                                 <td><span class="text-ellipsis">{{ optional($product->brand)->brand_name }}</span></td>

@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\Product;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
 
@@ -143,14 +144,14 @@ class OrderController extends Controller
         $total = 0;
         $coupon = '';
 
-        if($order->order_coupon)
+        if ($order->order_coupon)
             $coupon .= $order->order_coupon;
         else
             $coupon .= 'Không';
 
         $output = '';
 
-		$output.='<style>body{
+        $output .= '<style>body{
 			font-family: DejaVu Sans;
 		}
 		.table-styling{
@@ -175,17 +176,17 @@ class OrderController extends Controller
 		</thead>
 		<tbody>';
 
-		$output.='		
+        $output .= '		
 		<tr>
-		<td>'.optional($order->customer)->customer_name.'</td>
-		<td>'.optional($order->customer)->customer_phone.'</td>
-		<td>'.optional($order->customer)->customer_email.'</td>
-		<td>'.optional($order->payment)->payment_method.'</td>
-		<td>'.$order->order_total.' VNĐ</td>
+		<td>' . optional($order->customer)->customer_name . '</td>
+		<td>' . optional($order->customer)->customer_phone . '</td>
+		<td>' . optional($order->customer)->customer_email . '</td>
+		<td>' . optional($order->payment)->payment_method . '</td>
+		<td>' . $order->order_total . ' VNĐ</td>
 		</tr>';
 
 
-		$output.='				
+        $output .= '				
 		</tbody>
 
 		</table>
@@ -203,17 +204,17 @@ class OrderController extends Controller
 		</thead>
 		<tbody>';
 
-		$output.='		
+        $output .= '		
 		<tr>
-		<td>'.optional($order->shipping)->shipping_name.'</td>
-		<td>'.optional($order->shipping)->shipping_address.'</td>
-		<td>'.optional($order->shipping)->shipping_phone.'</td>
-		<td>'.optional($order->shipping)->shipping_email.'</td>
-		<td>'.optional($order->shipping)->shipping_notes.'</td>
+		<td>' . optional($order->shipping)->shipping_name . '</td>
+		<td>' . optional($order->shipping)->shipping_address . '</td>
+		<td>' . optional($order->shipping)->shipping_phone . '</td>
+		<td>' . optional($order->shipping)->shipping_email . '</td>
+		<td>' . optional($order->shipping)->shipping_notes . '</td>
 		</tr>';
 
 
-		$output.='				
+        $output .= '				
 		</tbody>
 
 		</table>
@@ -230,27 +231,27 @@ class OrderController extends Controller
 		</thead>
 		<tbody>';
 
-		foreach ($order->order_details as $order_details){
+        foreach ($order->order_details as $order_details) {
             $total += $order_details->product_sales_quantity * optional($order_details->product)->product_price;
-			$output.='		
+            $output .= '		
 			<tr>
-			<td>'.optional($order_details->product)->product_name.'</td>
-			<td>'.number_format(optional($order_details->product)->product_price).' VNĐ</td>
-			<td>'.$order_details->product_sales_quantity.'</td>
-			<td>'.number_format($order_details->product_sales_quantity * optional($order_details->product)->product_price).' VNĐ</td>
+			<td>' . optional($order_details->product)->product_name . '</td>
+			<td>' . number_format(optional($order_details->product)->product_price) . ' VNĐ</td>
+			<td>' . $order_details->product_sales_quantity . '</td>
+			<td>' . number_format($order_details->product_sales_quantity * optional($order_details->product)->product_price) . ' VNĐ</td>
 			</tr>';
-		}
+        }
 
-		$output.= '<tr>
+        $output .= '<tr>
 		<td colspan="4">
-		<p>Mã giảm giá: '.$coupon. ' ('.$coupon_type.')</p>
-		<p>Phí vận chuyển: '.number_format($order->order_feeship).' VNĐ</p>
-		<p>Tổng giá trị đơn hàng: '.number_format($total).' VNĐ</p>
-		<p>Số tiền phải trả: '.$order->order_total.' VNĐ</p>
+		<p>Mã giảm giá: ' . $coupon . ' (' . $coupon_type . ')</p>
+		<p>Phí vận chuyển: ' . number_format($order->order_feeship) . ' VNĐ</p>
+		<p>Tổng giá trị đơn hàng: ' . number_format($total) . ' VNĐ</p>
+		<p>Số tiền phải trả: ' . $order->order_total . ' VNĐ</p>
 		</td>
 		</tr>';
 
-		$output.='				
+        $output .= '				
 		</tbody>
 
 		</table>
@@ -266,12 +267,51 @@ class OrderController extends Controller
 		</thead>
 		<tbody>';
 
-		$output.='				
+        $output .= '				
 		</tbody>
 
 		</table>
 		';
 
-		return $output;
+        return $output;
+    }
+
+    public function handle(Request $request)
+    {
+        $data = $request->all();
+
+        $order = Order::find($data['order_id']);
+
+        $order->update([
+            'order_status' => $data['order_status']
+        ]);
+
+        if ($data['order_status'] == 1) {
+            foreach ($order->order_details as $order_details) {
+                $product = Product::find($order_details->product_id);
+
+                $newQuantity = $product->product_quantity - $order_details->product_sales_quantity;
+                $newSold = $product->product_sold + $order_details->product_sales_quantity;
+
+                $product->update([
+                    'product_quantity' => $newQuantity,
+                    'product_sold' => $newSold,
+                ]);
+            }
+        }
+
+        if ($data['order_status'] == 2 && $data['order_status_before'] == 1) {
+            foreach ($order->order_details as $order_details) {
+                $product = Product::find($order_details->product_id);
+
+                $newQuantity = $product->product_quantity + $order_details->product_sales_quantity;
+                $newSold = $product->product_sold - $order_details->product_sales_quantity;
+
+                $product->update([
+                    'product_quantity' => $newQuantity,
+                    'product_sold' => $newSold,
+                ]);
+            }
+        }
     }
 }

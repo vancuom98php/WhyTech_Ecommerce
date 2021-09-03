@@ -285,6 +285,10 @@ Route::group([
         'as' => 'order.print',
         'uses' => 'OrderController@print'
     ]);
+    Route::post('/handle', [
+        'as' => 'order.handle',
+        'uses' => 'OrderController@handle'
+    ]);
 });
 
 // Coupon

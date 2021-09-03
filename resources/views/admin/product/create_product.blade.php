@@ -56,6 +56,17 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="add_category_label" for="product_quantity">Số lượng</label>
+                                    <input type="text" name="product_quantity"
+                                        class="form-control input-add @error('product_quantity') is-invalid @enderror"
+                                        id="product_quantity" placeholder="Nhập tên sản phẩm" value="{{ old('product_quantity') }}">
+                                    @error('product_quantity')
+                                        <div class="invalid-feedback-category-product" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label class="add_category_label" for="product_desc">Mô tả sản phẩm</label>
                                     <textarea style="resize: none" rows="3"
                                         class="form-control input-add @error('product_desc') is-invalid @enderror"

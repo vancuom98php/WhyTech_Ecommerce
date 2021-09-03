@@ -18,12 +18,12 @@ $('.confirm_delete_brand').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa thương hiệu sản phẩm thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa thương hiệu sản phẩm thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
@@ -52,12 +52,12 @@ $('.confirm_delete_category').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa danh mục sản phẩm thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa danh mục sản phẩm thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
@@ -86,12 +86,12 @@ $('.confirm_delete_product').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa sản phẩm thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa sản phẩm thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
@@ -120,12 +120,12 @@ $('.confirm_delete_order').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa đơn hàng thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa đơn hàng thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
@@ -154,12 +154,12 @@ $('.confirm_delete_coupon').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa mã giảm giá thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa mã giảm giá thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
@@ -188,12 +188,12 @@ $('.confirm_delete_feeship').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa phí vận chuyển thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa phí vận chuyển thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
@@ -222,16 +222,68 @@ $('.confirm_delete_slider').on('click', function (event) {
                 type: 'GET',
                 url: urlToRedirect,
                 success: function () {
-                        that.parent().parent().remove();
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Xóa slider thành công!',
-                            'success'
-                        )
+                    that.parent().parent().remove();
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa slider thành công!',
+                        'success'
+                    )
                 },
                 error: function () {
                 }
             });
         }
     })
+});
+
+// Xử lý đơn hàng
+$(document).ready(function () {
+    $(".order_details").on("change", (function () {
+        let order_status = $(this).val();
+        let order_id = $(this).children(":selected").attr("id");
+        let order_status_before = $("#order_status_before").val();
+        let _token = $('input[name="_token"]').val();
+        let urlToRedirect = '/order/handle';
+
+        order_product_id = [];
+        $('input[name="order_product_id"]').each(function () {
+            order_product_id.push($(this).val());
+        })
+
+        j = 0;
+
+        if (order_status == 1) {
+            for (i = 0; i < order_product_id.length; i++) {
+                let product_sales_quantity = $('.product_sales_quantity_' + order_product_id[i]).val();
+                let product_quantity = $('.product_quantity_' + order_product_id[i]).val();
+
+                if (parseInt(product_sales_quantity) > parseInt(product_quantity)) {
+                    j++;
+                    if (j == 1)
+                        alertify.error('Lỗi xử lý đơn hàng. Vài sản phẩm không đủ số lượng');
+                    $('.error_quantity_' + order_product_id[i]).css('background-color', '#eddddd');
+                }
+            }
+        }
+
+        if (j == 0) {
+            $.ajax({
+                url: urlToRedirect,
+                method: 'POST',
+                data: {
+                    order_status: order_status,
+                    order_status_before: order_status_before,
+                    order_id: order_id,
+                    _token: _token
+                },
+                success: function (response) {
+                    if(order_status == 1) 
+                        alertify.success('Xử lý đơn hàng thành công');
+                    else
+                        alertify.error('Hủy đơn hàng thành công');
+                    location.reload();
+                }
+            });
+        }
+    }));
 });
