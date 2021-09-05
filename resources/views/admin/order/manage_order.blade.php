@@ -62,12 +62,12 @@
                                 <td>{{ optional($order->customer)->customer_name }}</td>
                                 <td><span class="text-ellipsis">{{ $order->order_total }} VNĐ</span></td>
                                 <td><span class="text-ellipsis">
-                                    @if($order->status == 0)
-                                        Đơn hàng chưa được xử lý
-                                    @elseif ($order->status == 1)
-                                        Đơn hàng đã được vận chuyển
-                                    @elseif ($order->status == 2)
-                                        Đơn hàng đã được giao
+                                    @if($order->order_status == 0)
+                                        Chưa được xử lý
+                                    @elseif ($order->order_status == 1)
+                                        Đã xử lý - Đang giao hàng
+                                    @elseif ($order->order_status == 2)
+                                        Đã hủy - Tạm giữ
                                     @endif
                                     </span></td>
                                 <td><span class="text-ellipsis">{{ $order->created_at }}</span></td>

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('product_name', 255);
             $table->text('product_tags')->nullable();
             $table->string('product_quantity', 50);
-            $table->unsignedInteger('product_sold')->nullable();
+            $table->string('product_sold', 50)->nullable();
             $table->string('product_slug', 255);
             $table->unsignedInteger('category_id')->index('products_category_id_foreign');
             $table->unsignedInteger('brand_id')->index('products_brand_id_foreign');

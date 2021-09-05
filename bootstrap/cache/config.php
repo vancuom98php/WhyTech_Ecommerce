@@ -369,7 +369,7 @@
     array (
       'font_dir' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\fonts/',
       'font_cache' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\HP\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\Admin\\AppData\\Local\\Temp',
       'chroot' => 'D:\\xampp\\htdocs\\Ecommere_Project\\WhyTech',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',

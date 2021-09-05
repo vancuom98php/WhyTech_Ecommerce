@@ -26,6 +26,7 @@ class AddProductRequest extends FormRequest
         return [
             'product_name' => 'bail|required|unique:products|max:255',
             'product_price' => 'bail|required|numeric',
+            'product_quantity' => 'bail|required|numeric',
             'product_desc' => 'bail|required|max:512|min:5',
             'product_content' => 'required',
             'product_image' => 'bail|required|image',
@@ -40,6 +41,8 @@ class AddProductRequest extends FormRequest
             'product_name.max' => 'Tên không được phép quá 255 kí tự',
             'product_price.required' => 'Giá sản phẩm không được để trống',
             'product_price.numeric' => 'Giá sản phẩm phải là số',
+            'product_quantity.required' => 'Số lượng không được để trống',
+            'product_quantity.numeric' => 'Số lượng phải là số cụ thể',
             'product_desc.required' => 'Mô tả không được phép để trống',
             'product_desc.max' => 'Mô tả không được phép quá 512 kí tự',
             'product_desc.min' => 'Mô tả không được phép dưới 5 kí tự',

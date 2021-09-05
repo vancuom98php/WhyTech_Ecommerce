@@ -47,6 +47,8 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'product_slug' => Str::slug($request->product_name, '-'),
                 'product_price' => $request->product_price,
+                'product_quantity' => $request->product_quantity,
+                'product_sold' => 0,
                 'product_desc' => $request->product_desc,
                 'product_content' => $request->product_content,
                 'category_id' => $request->category_id,
@@ -91,7 +93,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(3);
+        $products = Product::latest()->paginate(5);
 
         return view('admin.product.all_product', compact('products'));
     }
@@ -152,6 +154,7 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'product_slug' => Str::slug($request->product_name, '-'),
                 'product_price' => $request->product_price,
+                'product_quantity' => $request->product_quantity,
                 'product_desc' => $request->product_desc,
                 'product_content' => $request->product_content,
                 'category_id' => $request->category_id,
