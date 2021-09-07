@@ -83,7 +83,6 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
-            return view('404');
         }
     }
 
@@ -189,7 +188,6 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
-            return view('404');
         }
     }
 
