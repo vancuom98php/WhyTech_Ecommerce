@@ -280,7 +280,6 @@ class CheckoutController extends Controller
                 DB::rollBack();
                 dd($exception->getMessage());
                 Log::error('Message: ' . $exception->getMessage() . 'Line: ' . $exception->getLine());
-                return view('404');
             }
         }
     }
