@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -111,7 +112,7 @@ class RegisterController extends Controller
             'admin_phone' => $data['admin_phone'],
             'admin_avatar' => 'backend/images/default_avatar.png',
             'admin_password' => Hash::make($data['password']),
-        ]);
+        ])->roles()->attach(Role::where('role_name', 'user')->first());
     }
 
     /**

@@ -3587,3 +3587,9 @@ div#graph11 {
         padding: 0;
     }
 }
+
+/* Config */
+.btn-delete_user {
+    margin-top: 10px;
+    padding: 5px 31px;
+}
