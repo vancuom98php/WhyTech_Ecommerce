@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
-use App\Models\Roles;
+use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 class AdminTableSeeder extends Seeder
@@ -16,9 +16,9 @@ class AdminTableSeeder extends Seeder
     {
         DB::table('admin_roles')->truncate();
 
-        $adminRoles = Roles::where('role_name', 'admin')->first();
-        $authorRoles = Roles::where('role_name', 'author')->first();
-        $userRoles = Roles::where('role_name', 'user')->first();
+        $adminRoles = Role::where('role_name', 'admin')->first();
+        $authorRoles = Role::where('role_name', 'author')->first();
+        $userRoles = Role::where('role_name', 'user')->first();
 
         $admin = Admin::create([
             'admin_name' => 'Cườm Admin',

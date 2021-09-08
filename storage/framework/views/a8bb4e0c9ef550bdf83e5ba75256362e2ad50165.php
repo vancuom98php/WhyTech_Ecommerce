@@ -106,20 +106,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Tổng quan</span>
                             </a>
                         </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;">
+                        <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
+                        <li>
+                            <a class="" href=" <?php echo e(route('order.manage')); ?>">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Đơn hàng</span>
+                                <span>Quản lý đơn hàng </span>
                             </a>
-                            <ul class="sub">
-                                <li class="sub-menu_item">
-                                    <a href="<?php echo e(route('order.manage')); ?>">
-                                        <i class="fa fa-th-list"></i>
-                                        Quản lý đơn hàng
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+                        <?php endif; ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fas fa-truck-moving"></i>
@@ -132,14 +126,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Quản lý phí vận chuyển
                                     </a>
                                 </li>
+                                <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
                                 <li class="sub-menu_item">
                                     <a href="<?php echo e(route('delivery.create')); ?>">
                                         <i class="fas fa-plus-square"></i>
                                         Thêm phí vận chuyển
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
+                        <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-credit-card"></i>
@@ -158,9 +155,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Tạo mã
                                     </a>
                                 </li>
+
                             </ul>
                         </li>
-
+                        <?php endif; ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
@@ -173,12 +171,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Liệt kê danh mục
                                     </a>
                                 </li>
+                                <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
                                 <li class="sub-menu_item">
                                     <a href="<?php echo e(route('category-product.create')); ?>">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm danh mục
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
 
@@ -194,12 +194,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Liệt kê thương hiệu
                                     </a>
                                 </li>
+                                <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
                                 <li class="sub-menu_item">
                                     <a href="<?php echo e(route('brand.create')); ?>">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm thương hiệu
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
 
@@ -215,12 +217,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Liệt kê sản phẩm
                                     </a>
                                 </li>
+                                <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
                                 <li class="sub-menu_item">
                                     <a href="<?php echo e(route('product.create')); ?>">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm sản phẩm
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
 
@@ -236,14 +240,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Quản lý slider
                                     </a>
                                 </li>
+                                <?php if (\Illuminate\Support\Facades\Blade::check('hasAnyRoles', ['admin', 'author'])): ?>
                                 <li class="sub-menu_item">
                                     <a href="<?php echo e(route('slider.create')); ?>">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm slider
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
+                        <?php if (\Illuminate\Support\Facades\Blade::check('hasRole', 'admin')): ?>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fas fa-users-cog"></i>
+                                <span>Users</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu_item">
+                                    <a href="<?php echo e(route('user.all')); ?>">
+                                        <i class="fas fa-users"></i>
+                                        Quản lý user
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
                 <!-- sidebar menu end-->

@@ -283,20 +283,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Tổng quan</span>
                             </a>
                         </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;">
+                        @hasAnyRoles(['admin', 'author'])
+                        <li>
+                            <a class="" href=" {{ route('order.manage') }}">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Đơn hàng</span>
+                                <span>Quản lý đơn hàng </span>
                             </a>
-                            <ul class="sub">
-                                <li class="sub-menu_item">
-                                    <a href="{{ route('order.manage') }}">
-                                        <i class="fa fa-th-list"></i>
-                                        Quản lý đơn hàng
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+                        @endhasAnyRoles
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fas fa-truck-moving"></i>
@@ -309,14 +303,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Quản lý phí vận chuyển
                                     </a>
                                 </li>
+                                @hasAnyRoles(['admin', 'author'])
                                 <li class="sub-menu_item">
                                     <a href="{{ route('delivery.create') }}">
                                         <i class="fas fa-plus-square"></i>
                                         Thêm phí vận chuyển
                                     </a>
                                 </li>
+                                @endhasAnyRoles
                             </ul>
                         </li>
+                        @hasAnyRoles(['admin', 'author'])
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-credit-card"></i>
@@ -335,9 +332,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Tạo mã
                                     </a>
                                 </li>
+
                             </ul>
                         </li>
-
+                        @endhasAnyRoles
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
@@ -350,12 +348,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Liệt kê danh mục
                                     </a>
                                 </li>
+                                @hasAnyRoles(['admin', 'author'])
                                 <li class="sub-menu_item">
                                     <a href="{{ route('category-product.create') }}">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm danh mục
                                     </a>
                                 </li>
+                                @endhasAnyRoles
                             </ul>
                         </li>
 
@@ -371,12 +371,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Liệt kê thương hiệu
                                     </a>
                                 </li>
+                                @hasAnyRoles(['admin', 'author'])
                                 <li class="sub-menu_item">
                                     <a href="{{ route('brand.create') }}">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm thương hiệu
                                     </a>
                                 </li>
+                                @endhasAnyRoles
                             </ul>
                         </li>
 
@@ -392,12 +394,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Liệt kê sản phẩm
                                     </a>
                                 </li>
+                                @hasAnyRoles(['admin', 'author'])
                                 <li class="sub-menu_item">
                                     <a href="{{ route('product.create') }}">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm sản phẩm
                                     </a>
                                 </li>
+                                @endhasAnyRoles
                             </ul>
                         </li>
 
@@ -413,14 +417,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         Quản lý slider
                                     </a>
                                 </li>
+                                @hasAnyRoles(['admin', 'author'])
                                 <li class="sub-menu_item">
                                     <a href="{{ route('slider.create') }}">
                                         <i class="fa fa-plus-square"></i>
                                         Thêm slider
                                     </a>
                                 </li>
+                                @endhasAnyRoles
                             </ul>
                         </li>
+                        @hasRole('admin')
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fas fa-users-cog"></i>
+                                <span>Users</span>
+                            </a>
+                            <ul class="sub">
+                                <li class="sub-menu_item">
+                                    <a href="{{ route('user.all') }}">
+                                        <i class="fas fa-users"></i>
+                                        Quản lý user
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endhasRole
                     </ul>
                 </div>
                 <!-- sidebar menu end-->

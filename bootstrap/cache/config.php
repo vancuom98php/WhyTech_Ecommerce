@@ -40,12 +40,13 @@
       23 => 'Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider',
       24 => 'Laravel\\Passport\\PassportServiceProvider',
       25 => 'App\\Providers\\AppServiceProvider',
-      26 => 'App\\Providers\\AuthServiceProvider',
-      27 => 'App\\Providers\\EventServiceProvider',
-      28 => 'App\\Providers\\RouteServiceProvider',
-      29 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
-      30 => 'Intervention\\Image\\ImageServiceProvider',
-      31 => 'Barryvdh\\DomPDF\\ServiceProvider',
+      26 => 'App\\Providers\\BladeServiceProvider',
+      27 => 'App\\Providers\\AuthServiceProvider',
+      28 => 'App\\Providers\\EventServiceProvider',
+      29 => 'App\\Providers\\RouteServiceProvider',
+      30 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
+      31 => 'Intervention\\Image\\ImageServiceProvider',
+      32 => 'Barryvdh\\DomPDF\\ServiceProvider',
     ),
     'aliases' => 
     array (
@@ -96,7 +97,7 @@
     'defaults' => 
     array (
       'guard' => 'web',
-      'passwords' => 'users',
+      'passwords' => 'admin',
     ),
     'guards' => 
     array (

@@ -152,38 +152,42 @@ Route::group([
     'prefix' => 'category-product',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/create', [
-        'as' => 'category-product.create',
-        'uses' => 'CategoryProductController@create'
-    ]);
     Route::get('/all', [
         'as' => 'category-product.all',
         'uses' => 'CategoryProductController@index'
     ]);
-    Route::post('/save', [
-        'as' => 'category-product.save',
-        'uses' => 'CategoryProductController@store'
-    ]);
-    Route::get('/inactive/{id}', [
-        'as' => 'category-product.inactive',
-        'uses' => 'CategoryProductController@inactive'
-    ]);
-    Route::get('/active/{id}', [
-        'as' => 'category-product.active',
-        'uses' => 'CategoryProductController@active'
-    ]);
-    Route::get('/edit/{id}', [
-        'as' => 'category-product.edit',
-        'uses' => 'CategoryProductController@edit'
-    ]);
-    Route::post('/update/{id}', [
-        'as' => 'category-product.update',
-        'uses' => 'CategoryProductController@update'
-    ]);
-    Route::get('/delete/{id}', [
-        'as' => 'category-product.delete',
-        'uses' => 'CategoryProductController@delete'
-    ]);
+    Route::group([
+        'middleware' => 'auth.role.admin',
+    ], function () {
+        Route::get('/create', [
+            'as' => 'category-product.create',
+            'uses' => 'CategoryProductController@create'
+        ]);
+        Route::post('/save', [
+            'as' => 'category-product.save',
+            'uses' => 'CategoryProductController@store'
+        ]);
+        Route::get('/inactive/{id}', [
+            'as' => 'category-product.inactive',
+            'uses' => 'CategoryProductController@inactive'
+        ]);
+        Route::get('/active/{id}', [
+            'as' => 'category-product.active',
+            'uses' => 'CategoryProductController@active'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'category-product.edit',
+            'uses' => 'CategoryProductController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'category-product.update',
+            'uses' => 'CategoryProductController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'category-product.delete',
+            'uses' => 'CategoryProductController@delete'
+        ]);
+    });
 });
 
 // Brands
@@ -191,38 +195,42 @@ Route::group([
     'prefix' => 'brand',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/create', [
-        'as' => 'brand.create',
-        'uses' => 'BrandController@create'
-    ]);
     Route::get('/all', [
         'as' => 'brand.all',
         'uses' => 'BrandController@index'
     ]);
-    Route::post('/save', [
-        'as' => 'brand.save',
-        'uses' => 'BrandController@store'
-    ]);
-    Route::get('/inactive/{id}', [
-        'as' => 'brand.inactive',
-        'uses' => 'BrandController@inactive'
-    ]);
-    Route::get('/active/{id}', [
-        'as' => 'brand.active',
-        'uses' => 'BrandController@active'
-    ]);
-    Route::get('/edit/{id}', [
-        'as' => 'brand.edit',
-        'uses' => 'BrandController@edit'
-    ]);
-    Route::post('/update/{id}', [
-        'as' => 'brand.update',
-        'uses' => 'BrandController@update'
-    ]);
-    Route::get('/delete/{id}', [
-        'as' => 'brand.delete',
-        'uses' => 'BrandController@delete'
-    ]);
+    Route::group([
+        'middleware' => 'auth.role.admin',
+    ], function () {
+        Route::get('/create', [
+            'as' => 'brand.create',
+            'uses' => 'BrandController@create'
+        ]);
+        Route::post('/save', [
+            'as' => 'brand.save',
+            'uses' => 'BrandController@store'
+        ]);
+        Route::get('/inactive/{id}', [
+            'as' => 'brand.inactive',
+            'uses' => 'BrandController@inactive'
+        ]);
+        Route::get('/active/{id}', [
+            'as' => 'brand.active',
+            'uses' => 'BrandController@active'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'brand.edit',
+            'uses' => 'BrandController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'brand.update',
+            'uses' => 'BrandController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'brand.delete',
+            'uses' => 'BrandController@delete'
+        ]);
+    });
 });
 
 // Products
@@ -230,44 +238,48 @@ Route::group([
     'prefix' => 'product',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/create', [
-        'as' => 'product.create',
-        'uses' => 'ProductController@create'
-    ]);
     Route::get('/all', [
         'as' => 'product.all',
         'uses' => 'ProductController@index'
     ]);
-    Route::post('/save', [
-        'as' => 'product.save',
-        'uses' => 'ProductController@store'
-    ]);
-    Route::get('/inactive/{id}', [
-        'as' => 'product.inactive',
-        'uses' => 'ProductController@inactive'
-    ]);
-    Route::get('/active/{id}', [
-        'as' => 'product.active',
-        'uses' => 'ProductController@active'
-    ]);
-    Route::get('/edit/{id}', [
-        'as' => 'product.edit',
-        'uses' => 'ProductController@edit'
-    ]);
-    Route::post('/update/{id}', [
-        'as' => 'product.update',
-        'uses' => 'ProductController@update'
-    ]);
-    Route::get('/delete/{id}', [
-        'as' => 'product.delete',
-        'uses' => 'ProductController@delete'
-    ]);
+    Route::group([
+        'middleware' => 'auth.role.admin',
+    ], function () {
+        Route::get('/create', [
+            'as' => 'product.create',
+            'uses' => 'ProductController@create'
+        ]);
+        Route::post('/save', [
+            'as' => 'product.save',
+            'uses' => 'ProductController@store'
+        ]);
+        Route::get('/inactive/{id}', [
+            'as' => 'product.inactive',
+            'uses' => 'ProductController@inactive'
+        ]);
+        Route::get('/active/{id}', [
+            'as' => 'product.active',
+            'uses' => 'ProductController@active'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'product.edit',
+            'uses' => 'ProductController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'product.update',
+            'uses' => 'ProductController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'product.delete',
+            'uses' => 'ProductController@delete'
+        ]);
+    });
 });
 
 // Orders
 Route::group([
     'prefix' => 'order',
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'auth.role.admin']
 ], function () {
     Route::get('/manage', [
         'as' => 'order.manage',
@@ -299,40 +311,38 @@ Route::group([
         'as' => 'coupon.check',
         'uses' => 'CouponController@check'
     ]);
-    Route::get('/create', [
-        'middleware' => 'auth',
-        'as' => 'coupon.create',
-        'uses' => 'CouponController@create'
-    ]);
-    Route::post('/save', [
-        'middleware' => 'auth',
-        'as' => 'coupon.save',
-        'uses' => 'CouponController@store'
-    ]);
-    Route::get('/all', [
-        'middleware' => 'auth',
-        'as' => 'coupon.all',
-        'uses' => 'CouponController@index'
-    ]);
-    Route::get('/edit/{id}', [
-        'middleware' => 'auth',
-        'as' => 'coupon.edit',
-        'uses' => 'CouponController@edit'
-    ]);
-    Route::post('/update/{id}', [
-        'middleware' => 'auth',
-        'as' => 'coupon.update',
-        'uses' => 'CouponController@update'
-    ]);
-    Route::get('/delete/{id}', [
-        'middleware' => 'auth',
-        'as' => 'coupon.delete',
-        'uses' => 'CouponController@delete'
-    ]);
     Route::get('/unset', [
         'as' => 'coupon.unset',
         'uses' => 'CouponController@unset'
     ]);
+    Route::group([
+        'middleware' => ['auth', 'auth.role.admin'],
+    ], function () {
+        Route::get('/all', [
+            'as' => 'coupon.all',
+            'uses' => 'CouponController@index'
+        ]);
+        Route::get('/create', [
+            'as' => 'coupon.create',
+            'uses' => 'CouponController@create'
+        ]);
+        Route::post('/save', [
+            'as' => 'coupon.save',
+            'uses' => 'CouponController@store'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'coupon.edit',
+            'uses' => 'CouponController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'coupon.update',
+            'uses' => 'CouponController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'coupon.delete',
+            'uses' => 'CouponController@delete'
+        ]);
+    });
 });
 
 // Delivery
@@ -340,34 +350,38 @@ Route::group([
     'prefix' => 'delivery',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/create', [
-        'as' => 'delivery.create',
-        'uses' => 'DeliveryController@create'
-    ]);
-    Route::post('/select', [
-        'as' => 'delivery.select',
-        'uses' => 'DeliveryController@select'
-    ]);
-    Route::post('/save', [
-        'as' => 'delivery.save',
-        'uses' => 'DeliveryController@store'
-    ]);
     Route::get('/all', [
         'as' => 'delivery.all',
         'uses' => 'DeliveryController@index'
     ]);
-    Route::get('/edit/{id}', [
-        'as' => 'delivery.edit',
-        'uses' => 'DeliveryController@edit'
-    ]);
-    Route::post('/update/{id}', [
-        'as' => 'delivery.update',
-        'uses' => 'DeliveryController@update'
-    ]);
-    Route::get('/delete/{id}', [
-        'as' => 'delivery.delete',
-        'uses' => 'DeliveryController@delete'
-    ]);
+    Route::group([
+        'middleware' => 'auth.role.admin',
+    ], function () {
+        Route::post('/select', [
+            'as' => 'delivery.select',
+            'uses' => 'DeliveryController@select'
+        ]);
+        Route::get('/create', [
+            'as' => 'delivery.create',
+            'uses' => 'DeliveryController@create'
+        ]);
+        Route::post('/save', [
+            'as' => 'delivery.save',
+            'uses' => 'DeliveryController@store'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'delivery.edit',
+            'uses' => 'DeliveryController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'delivery.update',
+            'uses' => 'DeliveryController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'delivery.delete',
+            'uses' => 'DeliveryController@delete'
+        ]);
+    });
 });
 
 // Slider
@@ -379,33 +393,56 @@ Route::group([
         'as' => 'slider.all',
         'uses' => 'SliderController@index'
     ]);
-    Route::get('/create', [
-        'as' => 'slider.create',
-        'uses' => 'SliderController@create'
+    Route::group([
+        'middleware' => 'auth.role.admin'
+    ], function () {
+        Route::get('/create', [
+            'as' => 'slider.create',
+            'uses' => 'SliderController@create'
+        ]);
+        Route::post('/save', [
+            'as' => 'slider.save',
+            'uses' => 'SliderController@store'
+        ]);
+        Route::get('/inactive/{id}', [
+            'as' => 'slider.inactive',
+            'uses' => 'SliderController@inactive'
+        ]);
+        Route::get('/active/{id}', [
+            'as' => 'slider.active',
+            'uses' => 'SliderController@active'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'slider.edit',
+            'uses' => 'SliderController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'slider.update',
+            'uses' => 'SliderController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'slider.delete',
+            'uses' => 'SliderController@delete'
+        ]);
+    });
+});
+
+// User Role
+Route::group([
+    'prefix' => 'user',
+    'middleware' => ['auth', 'auth.role']
+], function () {
+    Route::get('/all', [
+        'as' => 'user.all',
+        'uses' => 'UserController@index'
     ]);
-    Route::post('/save', [
-        'as' => 'slider.save',
-        'uses' => 'SliderController@store'
-    ]);
-    Route::get('/inactive/{id}', [
-        'as' => 'slider.inactive',
-        'uses' => 'SliderController@inactive'
-    ]);
-    Route::get('/active/{id}', [
-        'as' => 'slider.active',
-        'uses' => 'SliderController@active'
-    ]);
-    Route::get('/edit/{id}', [
-        'as' => 'slider.edit',
-        'uses' => 'SliderController@edit'
-    ]);
-    Route::post('/update/{id}', [
-        'as' => 'slider.update',
-        'uses' => 'SliderController@update'
+    Route::post('/assign/{id}', [
+        'as' => 'user.assign',
+        'uses' => 'UserController@assign'
     ]);
     Route::get('/delete/{id}', [
-        'as' => 'slider.delete',
-        'uses' => 'SliderController@delete'
+        'as' => 'user.delete',
+        'uses' => 'UserController@delete'
     ]);
 });
 

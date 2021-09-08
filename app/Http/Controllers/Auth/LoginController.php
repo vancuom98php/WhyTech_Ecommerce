@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\Role;
 use App\Rules\Captcha;
 use Illuminate\Support\Facades\Validator;
 
@@ -144,6 +145,7 @@ class LoginController extends Controller
             $admin->provider_id = $data->id;
             $admin->admin_avatar = $data->avatar;
             $admin->save();
+            $admin->roles()->attach(Role::where('role_name', 'user')->first());
         }
 
         Auth::login($admin);
