@@ -16,10 +16,21 @@ use Illuminate\Support\Facades\Storage;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Components\Recursive;
 
 class ProductController extends Controller
 {
     use StorageImageTrait;
+
+    public function getCategory($category_parent)
+    {
+        $categories = CategoryProduct::where('category_status', 1)->get();
+        $category_recursive = new Recursive($categories);
+
+        $htmlOption = $category_recursive->categoryRecursive($category_parent);
+
+        return $htmlOption;
+    }
 
     /**
      * Add products
@@ -27,10 +38,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = CategoryProduct::orderBy('category_id', 'desc')->get();
+        $htmlOption = $this->getCategory(null);
         $brands = Brand::orderBy('brand_id', 'desc')->get();
 
-        return view('admin.product.create_product', compact('categories', 'brands'));
+        return view('admin.product.create_product', compact('htmlOption', 'brands'));
     }
 
     /**
@@ -131,10 +142,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories = CategoryProduct::orderBy('category_id', 'desc')->get();
+        $htmlOption = $this->getCategory($product->category_id);
         $brands = Brand::orderBy('brand_id', 'desc')->get();
 
-        return view('admin.product.edit_product', compact('product', 'categories', 'brands'));
+        return view('admin.product.edit_product', compact('product', 'htmlOption', 'brands'));
     }
 
     /**

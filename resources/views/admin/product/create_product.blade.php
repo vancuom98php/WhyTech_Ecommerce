@@ -107,10 +107,7 @@
                                     <label class="add_category_label" for="">Danh mục sản phẩm</label>
                                     <select name="category_id" class="form-control input-sm m-bot15">
                                         <option value="">Chọn danh mục sản phẩm</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->category_id }}">{{ $category->category_name }}
-                                            </option>
-                                        @endforeach
+                                        {!! $htmlOption !!}
                                     </select>
                                 </div>
                                 <div class="form-group">

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class CategoryProduct extends Model
 {
@@ -22,6 +23,7 @@ class CategoryProduct extends Model
     protected $fillable = [
         'category_name',
         'category_product_slug',
+        'category_parent',
         'category_desc',
         'meta_keywords',
         'category_status'
@@ -32,11 +34,27 @@ class CategoryProduct extends Model
         return $this->hasMany(Product::class, 'category_id');
     }
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
-    
-        static::deleting(function($category) {
+
+        static::deleting(function ($category) {
             $category->products()->delete();
         });
+    }
+
+    public function categoryParent()
+    {
+        return $this->belongsTo(CategoryProduct::class, 'category_parent');
+    }
+
+    public function categoryChildren()
+    {
+        return $this->hasMany(CategoryProduct::class, 'category_parent');
+    }
+
+    public function childrenProducts()
+    {
+        return $this->hasManyThrough(Product::class, self::class, 'category_parent', 'category_id');
     }
 }

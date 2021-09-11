@@ -31,6 +31,13 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="add_category_label">Danh mục cha</label>
+                                    <select name="category_parent" class="form-control input-sm m-bot15">
+                                        <option value="0">---Danh mục cha---</option>
+                                        {!! $htmlOption !!}
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label class="add_category_label" for="category_desc">Mô tả danh mục</label>
                                     <textarea style="resize: none" rows="5"
                                         class="form-control input-add @error('category_desc') is-invalid @enderror"

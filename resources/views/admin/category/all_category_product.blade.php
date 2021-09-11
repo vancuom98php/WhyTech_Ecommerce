@@ -49,11 +49,12 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th scope="col" width="250px">Tên danh mục</th>
+                            <th scope="col">Tên danh mục</th>
+                            <th scope="col">Danh mục cha</th>
                             <th scope="col">Mô tả</th>
-                            <th scope="col" width="200px">Số lượng sản phẩm</th>
-                            <th scope="col" width="150px">Ngày thêm</th>
-                            <th scope="col" width="150px">Hiển thị</th>
+                            <th scope="col">Số lượng sản phẩm</th>
+                            <th scope="col" width="110px">Ngày thêm</th>
+                            <th scope="col">Hiển thị</th>
                             <th scope="col" width="50px"></th>
                         </tr>
                     </thead>
@@ -64,8 +65,21 @@
                                     <label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td>{{ $category->category_name }}</td>
+                                <td><span class="text-ellipsis">
+                                    @if($category->category_parent == 0)
+                                        --------
+                                    @else
+                                        @foreach($sub_categories as $sub_category)
+                                            @if($sub_category->category_id == $category->category_parent)
+                                                {{ $sub_category->category_name }}
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    </span>
+                                </td>
                                 <td><span class="text-ellipsis">{{ $category->category_desc }}</span></td>
-                                <td><span class="text-ellipsis">{{ $category->products->count() }}</span></td>
+                                <td><span class="text-ellipsis">{{ $category->products->merge($category->childrenProducts)->count() }}</span></td>
                                 <td><span class="text-ellipsis">{{ $category->updated_at->format('d-m-Y') }}</span></td>
                                 <td><span class="text-ellipsis">
                                         @if ($category->category_status == 0)
