@@ -128,14 +128,12 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      */
     public function show_brand_home($brand_slug, Request $request) {
-        $categories = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
+        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
-
+        $brandBySlug = Brand::where('brand_slug', $brand_slug)->first();
 
         $productByBrandSlug = Product::select('products.*')->where('product_status', 1)->join('brands', 'brands.brand_id', '=', 'products.brand_id')
             ->where('brand_slug', $brand_slug)->latest()->paginate(4);
-
-        $brandBySlug = Brand::where('brand_slug', $brand_slug)->first();
         $all_products = Product::where('product_status', 1)->get();
 
         //seo 

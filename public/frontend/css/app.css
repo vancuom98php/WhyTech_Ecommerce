@@ -4954,13 +4954,14 @@ input::-ms-clear {
     padding: 4px 14px; }
     .shop-w__category-list > li > a {
       font-size: 14px;
+      font-weight: 600;
       color: #333333;
       transition: color 110ms ease-in-out; }
       .shop-w__category-list > li > a:hover {
         color: #ff4500; }
     .shop-w__category-list > li ul .has-list > a {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 300;
       color: #333333; }
     .shop-w__category-list > li ul {
       display: none;

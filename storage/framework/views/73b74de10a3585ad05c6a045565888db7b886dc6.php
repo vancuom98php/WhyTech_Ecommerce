@@ -116,7 +116,10 @@
                         <div class="row">
                         
                         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php $__currentLoopData = $category->products->take(2); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $productByCategory = $category->products->merge($category->childrenProducts)->take(2);
+                            ?>
+                            <?php $__currentLoopData = $productByCategory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 u-s-m-b-30 filter__item <?php echo e($category->category_id); ?>">
                                 <div class="product-o product-o--hover-on product-o--radius">
                                     <div class="product-o__wrap">

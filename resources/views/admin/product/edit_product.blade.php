@@ -110,16 +110,8 @@
                                 <div class="form-group">
                                     <label class="add_category_label" for="">Danh mục sản phẩm</label>
                                     <select name="category_id" class="form-control input-sm m-bot15">
-                                        @foreach ($categories as $category)
-                                            @if ($product->category_id == $category->category_id)
-                                                <option selected value="{{ $category->category_id }}">
-                                                    {{ $category->category_name }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $category->category_id }}">
-                                                    {{ $category->category_name }}</option>
-                                            @endif
-                                        @endforeach
+                                        <option value="">Chọn danh mục sản phẩm</option>
+                                        {!! $htmlOption !!}
                                     </select>
                                 </div>
                                 <div class="form-group">

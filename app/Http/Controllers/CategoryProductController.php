@@ -10,16 +10,29 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AddCategoryProductRequest;
 use App\Http\Requests\UpdateCategoryProductRequest;
 use Illuminate\Support\Str;
+use App\Components\Recursive;
 
 class CategoryProductController extends Controller
 {
+    public function getCategory($category_parent)
+    {
+        $categories = CategoryProduct::where('category_status', 1)->get();
+        $category_recursive = new Recursive($categories);
+
+        $htmlOption = $category_recursive->categoryRecursive($category_parent);
+
+        return $htmlOption;
+    }
+
     /**
      * Add category products
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('admin.category.create_category_product');
+        $htmlOption = $this->getCategory(null);
+
+        return view('admin.category.create_category_product', compact('htmlOption'));
     }
 
     /**
@@ -32,6 +45,7 @@ class CategoryProductController extends Controller
         $categoryProduct = new CategoryProduct();
 
         $categoryProduct->category_name = $request->category_name;
+        $categoryProduct->category_parent = $request->category_parent;
         $categoryProduct->category_product_slug = Str::slug($request->category_name, '-');
         $categoryProduct->category_desc = $request->category_desc;
         $categoryProduct->meta_keywords = $request->meta_keywords;
@@ -49,9 +63,10 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        $categories = CategoryProduct::latest()->paginate(2);
+        $categories = CategoryProduct::latest()->paginate(5);
+        $sub_categories = CategoryProduct::all();
 
-        return view('admin.category.all_category_product', compact('categories'));
+        return view('admin.category.all_category_product', compact('categories', 'sub_categories'));
     }
 
     /**
@@ -88,7 +103,10 @@ class CategoryProductController extends Controller
     public function edit($id)
     {
         $category = CategoryProduct::find($id);
-        return view('admin.category.edit_category_product', compact('category'));
+
+        $htmlOption = $this->getCategory($category->category_parent);
+
+        return view('admin.category.edit_category_product', compact('category', 'htmlOption'));
     }
 
     /**
@@ -102,6 +120,7 @@ class CategoryProductController extends Controller
     {
         $category = CategoryProduct::find($id)->update([
             'category_name' => $request->category_name,
+            'category_parent' => $request->category_parent,
             'category_product_slug' => Str::slug($request->category_name, '-'),
             'category_desc' => $request->category_desc,
             'meta_keywords' => $request->meta_keywords
@@ -131,13 +150,18 @@ class CategoryProductController extends Controller
      */
     public function show_category_home($category_product_slug, Request $request)
     {
-        $categories = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
+        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
-
-        $productByCategorySlug = Product::select('products.*')->where('product_status', 1)->join('category_products', 'category_products.category_id', '=', 'products.category_id')
-            ->where('category_product_slug', $category_product_slug)->latest()->paginate(4);
-
         $categoryBySlug = CategoryProduct::where('category_product_slug', $category_product_slug)->first();
+
+        if ($categoryBySlug->category_parent != 0)
+            $productByCategorySlug = Product::select('products.*')->where('product_status', 1)->join('category_products', 'category_products.category_id', '=', 'products.category_id')
+                ->where('category_product_slug', $category_product_slug)->latest()->paginate(4);
+        else {
+            $categoryBySlug = CategoryProduct::with(['products', 'childrenProducts'])->where('category_product_slug', $category_product_slug)->first();
+            $productByCategorySlug = $categoryBySlug->products->merge($categoryBySlug->childrenProducts);
+        }
+
         $all_products = Product::where('product_status', 1)->get();
 
         //seo 
