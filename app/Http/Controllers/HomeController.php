@@ -20,7 +20,7 @@ class HomeController extends Controller
         //--seo
 
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get()->take(5);
-        $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $products = Product::where('product_status', 1)->latest()->get()->take(8);
         $top_products = Product::where('product_status', 1)->latest()->get()->take(4);
         $all_products = Product::where('product_status', 1)->get();
@@ -39,7 +39,7 @@ class HomeController extends Controller
         //--seo
 
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
-        $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $products = Product::where('product_status', 1)->latest()->paginate(12);
         $all_products = Product::where('product_status', 1)->get();
 
@@ -49,7 +49,7 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
-        $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $keywords = $request->keywords;
 
         if (empty($keywords))

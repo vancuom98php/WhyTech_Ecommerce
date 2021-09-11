@@ -63,7 +63,7 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        $categories = CategoryProduct::latest()->paginate(5);
+        $categories = CategoryProduct::orderBy('category_parent', 'desc')->orderBy('category_name', 'asc')->paginate(5);
         $sub_categories = CategoryProduct::all();
 
         return view('admin.category.all_category_product', compact('categories', 'sub_categories'));
@@ -151,7 +151,7 @@ class CategoryProductController extends Controller
     public function show_category_home($category_product_slug, Request $request)
     {
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
-        $brands = Brand::where('brand_status', 1)->orderBy('brand_id', 'desc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $categoryBySlug = CategoryProduct::where('category_product_slug', $category_product_slug)->first();
 
         if ($categoryBySlug->category_parent != 0)
