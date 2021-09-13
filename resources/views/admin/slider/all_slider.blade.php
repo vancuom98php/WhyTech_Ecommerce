@@ -82,7 +82,7 @@
                                     </a>
                                     <a href="{{ route('slider.delete', ['id' => $slider->slider_id]) }}"
                                         class="active category-action confirm_delete_slider" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>

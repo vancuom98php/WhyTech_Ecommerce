@@ -36,7 +36,6 @@
 
     <!--====== App ======-->
     <link rel="stylesheet" href="{{ asset('frontend/css/app.css') }}">
-
 </head>
 
 <body class="config">
@@ -1992,7 +1991,6 @@
     <script src="{{ asset('frontend/js/ajax.js') }}"></script>
 
     @yield('scripts')
-
 
     <!--====== Noscript ======-->
     <noscript>

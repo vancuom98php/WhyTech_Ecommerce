@@ -29,35 +29,17 @@
                         <div class="slider-fouc pd-wrap">
                             <div id="pd-o-initiate">
                                 <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-
-                                    <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
+                                    <img style="height: 445px" class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
                                         data-zoom-image="{{ asset($product->product_image_path) }}"
                                         alt="{{ $product->product_name }}">
                                 </div>
-                                <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-
-                                    <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
-                                        data-zoom-image="{{ asset($product->product_image_path) }}"
-                                        alt="{{ $product->product_name }}">
-                                </div>
-                                <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-
-                                    <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
-                                        data-zoom-image="{{ asset($product->product_image_path) }}"
-                                        alt="{{ $product->product_name }}">
-                                </div>
-                                <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-
-                                    <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
-                                        data-zoom-image="{{ asset($product->product_image_path) }}"
-                                        alt="{{ $product->product_name }}">
-                                </div>
-                                <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-
-                                    <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
-                                        data-zoom-image="{{ asset($product->product_image_path) }}"
-                                        alt="{{ $product->product_name }}">
-                                </div>
+                                @foreach($galleries as $gallery)
+                                    <div class="pd-o-img-wrap" data-src="{{ asset($gallery->gallery_image) }}">
+                                        <img style="height: 445px" class="u-img-fluid" src="{{ asset($gallery->gallery_image) }}"
+                                            data-zoom-image="{{ asset($gallery->gallery_image) }}"
+                                            alt="{{ $gallery->gallery_name }}">
+                                    </div>
+                                @endforeach
                             </div>
 
                             <span class="pd-text">Nhấn để xem rõ hơn</span>
@@ -66,25 +48,13 @@
                             <div class="slider-fouc">
                                 <div id="pd-o-thumbnail">
                                     <div>
-
-                                        <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
+                                        <img style="height: 120px" class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
                                     </div>
-                                    <div>
-
-                                        <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
-                                    </div>
-                                    <div>
-
-                                        <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
-                                    </div>
-                                    <div>
-
-                                        <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
-                                    </div>
-                                    <div>
-
-                                        <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
-                                    </div>
+                                    @foreach($galleries as $gallery)
+                                        <div>
+                                            <img style="height: 120px" class="u-img-fluid" src="{{ asset($gallery->gallery_image) }}" alt="{{ $gallery->gallery_name }}">
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

@@ -80,8 +80,8 @@
                                     <td><input type="radio" name="role_name" value="user"
                                             {{ $admin->hasRole('user') ? 'checked' : '' }}></td>
                                     <td>
-                                        <p><input type="submit" value="Phân quyền" class="btn btn-sm btn-default"></p>
-                                        <a href="{{ route('user.delete', ['id' => $admin->admin_id]) }}" id="{{ $admin->admin_id }}" auth_id="{{ Auth::id() }}" class="btn btn-sm btn-danger btn-delete_user confirm_delete_user">Xoá</a>
+                                        <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-hand-lizard"></i></button>
+                                        <a href="{{ route('user.delete', ['id' => $admin->admin_id]) }}" id="{{ $admin->admin_id }}" auth_id="{{ Auth::id() }}" class="btn btn-sm btn-danger confirm_delete_user"><i class="far fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                             </form>

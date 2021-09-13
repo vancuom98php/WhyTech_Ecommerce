@@ -276,6 +276,37 @@ Route::group([
     });
 });
 
+// Galleries
+Route::group([
+    'prefix' => 'gallery',
+    'middleware' => ['auth', 'auth.role.admin']
+], function () {
+    Route::get('/index/{id}', [
+        'as' => 'gallery.index',
+        'uses' => 'GalleryController@index'
+    ]);
+    Route::post('/show', [
+        'as' => 'gallery.show',
+        'uses' => 'GalleryController@show'
+    ]);
+    Route::post('/store/{id}', [
+        'as' => 'gallery.store',
+        'uses' => 'GalleryController@store'
+    ]);
+    Route::post('/update-name', [
+        'as' => 'gallery.update-name',
+        'uses' => 'GalleryController@update_name'
+    ]);
+    Route::post('/update', [
+        'as' => 'gallery.update',
+        'uses' => 'GalleryController@update'
+    ]);
+    Route::post('/delete', [
+        'as' => 'gallery.delete',
+        'uses' => 'GalleryController@delete'
+    ]);
+});
+
 // Orders
 Route::group([
     'prefix' => 'order',

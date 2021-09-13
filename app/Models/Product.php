@@ -54,4 +54,8 @@ class Product extends Model
         return $this->hasMany(OrderDetail::class, 'product_id');
     }
 
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'product_id');
+    }
 }
