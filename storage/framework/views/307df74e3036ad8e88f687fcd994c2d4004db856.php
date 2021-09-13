@@ -36,7 +36,6 @@
 
     <!--====== App ======-->
     <link rel="stylesheet" href="<?php echo e(asset('frontend/css/app.css')); ?>">
-
 </head>
 
 <body class="config">
@@ -1995,7 +1994,6 @@
     <script src="<?php echo e(asset('frontend/js/ajax.js')); ?>"></script>
 
     <?php echo $__env->yieldContent('scripts'); ?>
-
 
     <!--====== Noscript ======-->
     <noscript>

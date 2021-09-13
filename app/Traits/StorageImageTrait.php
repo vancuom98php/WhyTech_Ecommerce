@@ -25,4 +25,22 @@ trait StorageImageTrait
         }
         return null;
     }
+
+    public function storageTraitUploadGallery($fieldName, $folderName)
+    {
+        if ($fieldName) {
+            $file = $fieldName;
+            $fileNameOrigin = $file->getClientOriginalName();
+            $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $filePath = $fieldName->storeAs('public/' . $folderName . '/', $fileNameHash);
+
+            $dataUploadTrait = [
+                'file_name' => pathinfo($fileNameOrigin, PATHINFO_FILENAME),
+                'file_path' => Storage::url($filePath)
+            ];
+
+            return $dataUploadTrait;
+        }
+        return null;
+    }
 }

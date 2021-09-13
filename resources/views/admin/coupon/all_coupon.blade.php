@@ -91,7 +91,7 @@
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
                                     <a href="{{ route('coupon.delete', ['id' => $coupon->coupon_id]) }}" class="active category-action confirm_delete_coupon" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -78,7 +78,7 @@
                                     </a>
                                     <a href="{{ route('order.delete', ['code' => $order->order_code]) }}"
                                         class="active category-action confirm_delete_order" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Gallery;
 use App\Models\CategoryProduct;
 use App\Models\Brand;
 use App\Models\Tag;
@@ -17,6 +18,7 @@ use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Components\Recursive;
+use Illuminate\Support\Facades\File; 
 
 class ProductController extends Controller
 {
@@ -160,6 +162,8 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
 
+            $product = Product::find($id);
+
             $dataProductUpdate = [
                 'product_name' => $request->product_name,
                 'product_slug' => Str::slug($request->product_name, '-'),
@@ -174,11 +178,12 @@ class ProductController extends Controller
             $dataUploadFeatureImage = $this->storageTraitUpload($request, 'product_image', 'product');
 
             if (!empty($dataUploadFeatureImage)) {
+                File::delete(public_path($product->product_image_path));
                 $dataProductUpdate['product_image_name'] = $dataUploadFeatureImage['file_name'];
                 $dataProductUpdate['product_image_path'] = $dataUploadFeatureImage['file_path'];
             }
 
-            $product = Product::find($id)->update($dataProductUpdate);
+            $product->update($dataProductUpdate);
             $product = Product::find($id);
 
             // Insert tags for products
@@ -211,7 +216,10 @@ class ProductController extends Controller
     public function delete($id)
     {
         try {
-            $product = Product::find($id)->delete();
+            $product = Product::find($id);
+
+            File::delete(public_path($product->product_image_path));
+            $product->delete();
 
             session()->flash('notification', 'Xóa sản phẩm thành công');
             return redirect()->back();
@@ -233,6 +241,7 @@ class ProductController extends Controller
         $product = Product::where('product_slug', $product_slug)->first();
         $related_products = Product::where('category_id', $product->category->category_id)->whereNotIn('product_id', [$product->product_id])->orderBy('category_id', 'desc')->get();
         $all_products = Product::where('product_status', 1)->get();
+        $galleries = Gallery::where('product_id', $product->product_id)->get();
 
         //seo 
         $meta_desc = $product->product_desc;
@@ -241,6 +250,6 @@ class ProductController extends Controller
         $meta_title = "WhyTech | " . $product->product_name;
         //--seo
 
-        return view('pages.product.show_details', compact('product', 'related_products', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.product.show_details', compact('product', 'related_products', 'all_products', 'galleries', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 }

@@ -49,14 +49,15 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th scope="col" width="200px;">Tên sản phẩm</th>
-                            <th scope="col">Giá</th>
+                            <th scope="col" width="200px">Tên sản phẩm</th>
+                            <th scope="col" width="140px">Giá</th>
                             <th scope="col">Hình ảnh</th>
+                            <th scope="col">Thư viện</th>
                             <th scope="col">Số lượng tồn</th>
                             <th scope="col">Đã bán</th>
                             <th scope="col">Danh mục</th>
                             <th scope="col">Thương hiệu</th>
-                            <th scope="col">Ngày thêm</th>
+                            <th scope="col" width="110px">Ngày thêm</th>
                             <th scope="col">Hiển thị</th>
                             <th scope="col" width="50px"></th>
                         </tr>
@@ -72,6 +73,11 @@
                                 </td>
                                 <td><img class="product_image_50_50" src="{{ $product->product_image_path }}"
                                         alt="{{ $product->product_image_name }}"></td>
+                                <td>
+                                    <span class="text-ellipsis product-gallery">
+                                        <a href="{{ route('gallery.index', ['id' => $product->product_id]) }}"><i class="fas fa-images"></i></a>
+                                    </span>
+                                </td>
                                 <td><span class="text-ellipsis">{{ $product->product_quantity }}</span></td>
                                 <td><span class="text-ellipsis">{{ $product->product_sold }}</span></td>
                                 <td><span class="text-ellipsis">{{ optional($product->category)->category_name }}</span>
@@ -94,7 +100,7 @@
                                     </a>
                                     <a href="{{ route('product.delete', ['id' => $product->product_id]) }}"
                                         class="active category-action confirm_delete_product" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -83,7 +83,7 @@
                                     </a>
                                     <a href="{{ route('brand.delete', ['id' => $brand->brand_id]) }}"
                                         class="active category-action confirm_delete_brand" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>

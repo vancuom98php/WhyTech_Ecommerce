@@ -9,6 +9,7 @@ use App\Http\Requests\AddSliderRequest;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File; 
 
 class SliderController extends Controller
 {
@@ -132,6 +133,7 @@ class SliderController extends Controller
     {
         try {
             DB::beginTransaction();
+            $slider = Slider::find($id);
 
             $dataSliderUpdate = [
                 'slider_name' => $request->slider_name,
@@ -141,10 +143,11 @@ class SliderController extends Controller
             $dataUploadFeatureImage = $this->storageTraitUpload($request, 'slider_image', 'slider');
 
             if (!empty($dataUploadFeatureImage)) {
+                File::delete(public_path($slider->slider_image));
                 $dataSliderUpdate['slider_image'] = $dataUploadFeatureImage['file_path'];
             }
 
-            $slider = Slider::find($id)->update($dataSliderUpdate);
+            $slider->update($dataSliderUpdate);
 
             DB::commit();
 
@@ -165,5 +168,19 @@ class SliderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $slider = Slider::find($id);
+
+        File::delete(public_path($slider->slider_image));
+        $slider->delete();
     }
 }

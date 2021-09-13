@@ -97,7 +97,7 @@
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
                                     <a href="{{ route('category-product.delete', ['id' => $category->category_id]) }}" class="active category-action confirm_delete_category" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>

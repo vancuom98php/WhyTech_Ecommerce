@@ -69,7 +69,6 @@ body a:hover {
 .fa-category.fa-eye-slash {
     font-size: 25px;
     color: red;
-    margin-left: 10px;
 }
 .category-action.active {
     font-size: 20px;
@@ -85,9 +84,8 @@ body a:hover {
     margin-top: 5px;
 }
 .fa-category.fa-eye {
-    font-size: 28px;
+    font-size: 25px;
     color: green;
-    margin-left: 10px;
 }
 #sidebar ul li {
     position: relative;
@@ -3592,4 +3590,8 @@ div#graph11 {
 .btn-delete_user {
     margin-top: 10px;
     padding: 5px 31px;
+}
+
+.product-gallery {
+    font-size: 20px;
 }

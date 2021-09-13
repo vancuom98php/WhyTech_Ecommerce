@@ -74,7 +74,7 @@
                                     &nbsp; &nbsp;
                                     <a href="{{ route('delivery.delete', ['id' => $feeship->fee_id]) }}"
                                         class="active category-action confirm_delete_feeship" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
+                                        <i class="fas fa-trash-alt text-danger text"></i>
                                     </a>
                                 </td>
                             </tr>
