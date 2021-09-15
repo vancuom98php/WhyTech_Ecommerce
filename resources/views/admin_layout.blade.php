@@ -40,12 +40,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- alertify -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <!-- //alertify -->
+    <!-- datatable -->
+    <link rel="stylesheet" href="{{ asset('backend/css/dataTables.css') }}" type="text/css" />
+    <!-- //datatable -->
     {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ asset('backend/images/favicon.ico') }}" type="image/x-icon">
     <!-- //font-awesome icons -->
     <script src="{{ asset('backend/js/jquery3.0.6.min.js') }}"></script>
     <script src="{{ asset('backend/js/raphael-min.js') }}"></script>
     <script src="{{ asset('backend/js/morris.js') }}"></script>
+    
 </head>
 
 <body>
@@ -940,6 +944,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('backend/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.slimscroll.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.nicescroll.js') }}"></script>
+    <script src="{{ asset('backend/js/jquery.dataTables.min.js') }}"></script>
     <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
     <script src="{{ asset('backend/js/jquery.scrollTo.js') }}"></script>
     <!-- morris JavaScript -->
@@ -1079,7 +1084,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     <!-- Alertify -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-
     <!-- CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <!-- Default theme -->

@@ -9,27 +9,6 @@
             <div class="panel-heading dashboard-heading">
                 Quản lý phí vận chuyển
             </div>
-            <div class="row w3-res-tb">
-                <div class="col-sm-5 m-b-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="0">Bulk action</option>
-                        <option value="1">Delete selected</option>
-                        <option value="2">Bulk edit</option>
-                        <option value="3">Export</option>
-                    </select>
-                    <button class="btn btn-sm btn-default">Apply</button>
-                </div>
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive">
                 @if (session()->has('notification'))
                     <div class="alert alert-danger" style="font-weight: bold;">
@@ -41,7 +20,7 @@
                         {!! session('notification_update-success') !!}
                     </div>
                 @endif
-                <table class="table table-striped b-t b-light">
+                <table class="table table-striped b-t b-light" id="myTable">
                     <thead>
                         <tr>
                             <th style="width:20px;">
@@ -82,17 +61,6 @@
                     </tbody>
                 </table>
             </div>
-            <footer class="panel-footer">
-                <div class="row">
-
-                    <div class="col-sm-5 text-center">
-                        <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
-                    </div>
-                    <div class="col-sm-7 text-right text-center-xs">
-                        {{ $feeships->links() }}
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
 
@@ -102,5 +70,10 @@
 
     <script src="{{ asset('backend/js/sweetalert2@9.js') }}"></script>
     <script type="text/javascript" src="{{ asset('backend/js/list.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
     
 @endsection

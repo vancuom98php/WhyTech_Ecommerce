@@ -19,7 +19,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $feeships = Feeship::orderBy('province_id', 'asc')->orderBy('district_id', 'asc')->orderBy('ward_id', 'asc')->paginate(20);
+        $feeships = Feeship::orderBy('province_id', 'asc')->orderBy('district_id', 'asc')->orderBy('ward_id', 'asc')->get();
 
         return view('admin.delivery.all_delivery', compact('feeships'));
     }
