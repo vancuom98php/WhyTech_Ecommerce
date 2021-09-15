@@ -22,7 +22,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::orderBy('slider_id', 'desc')->paginate(5);
+        $sliders = Slider::orderBy('slider_id', 'desc')->get();
 
         return view('admin.slider.all_slider', compact('sliders'));
     }

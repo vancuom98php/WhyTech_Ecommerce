@@ -70,12 +70,15 @@
 
 
                         <!--====== Search Form ======-->
-                        <form class="main-form" action="{{ route('home.search') }}" method="GET">
+                        <form class="main-form search-area" action="{{ route('product.search') }}" method="GET">
                             <label for="main-search"></label>
 
                             <input class="input-text input-text--border-radius input-text--style-1" type="text"
-                                name="keywords" id="main-search" placeholder="Bạn tìm gì...">
+                                name="keywords" id="main-search" placeholder="Bạn tìm gì..." autocomplete="off"
+                                onfocus="showSearchResult()" onblur="hideSearchResult()">
+                            <div id="find-product-ajax">
 
+                            </div>
                             <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
                         </form>
                         <!--====== End - Search Form ======-->
@@ -560,7 +563,8 @@
                                                         <div class="col-lg-9 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-0.jpg"
@@ -581,7 +585,8 @@
                                                         <div class="col-lg-6 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-1.jpg"
@@ -591,7 +596,8 @@
                                                         <div class="col-lg-6 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-2.jpg"
@@ -825,7 +831,8 @@
                                                         <div class="col-lg-9 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-3.jpg"
@@ -835,7 +842,8 @@
                                                         <div class="col-lg-3 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-4.jpg"
@@ -856,7 +864,8 @@
                                                         <div class="col-lg-4 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-5.jpg"
@@ -866,7 +875,8 @@
                                                         <div class="col-lg-4 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-6.jpg"
@@ -876,7 +886,8 @@
                                                         <div class="col-lg-4 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-7.jpg"
@@ -1102,7 +1113,8 @@
                                                         <div class="col-lg-6 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-8.jpg"
@@ -1112,7 +1124,8 @@
                                                         <div class="col-lg-6 mega-image">
                                                             <div class="mega-banner">
 
-                                                                <a class="u-d-block" href="shop-side-version-2.html">
+                                                                <a class="u-d-block"
+                                                                    href="shop-side-version-2.html">
 
                                                                     <img class="u-img-fluid u-d-block"
                                                                         src="images/banners/banner-mega-9.jpg"
@@ -1365,8 +1378,7 @@
                                                 <span id="cart_quantity_show"
                                                     class="total-item-round">{{ count(session()->get('cart')) }}</span>
                                             @else
-                                                <span id="cart_quantity_show"
-                                                    class="total-item-round">0</span>
+                                                <span id="cart_quantity_show" class="total-item-round">0</span>
                                             @endif
                                         </a>
                                         <!--====== Dropdown ======-->
@@ -1418,7 +1430,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <a class="mini-product__delete-link far fa-trash-alt" data-id="{{ $item['session_id'] }}"></a>
+                                                            <a class="mini-product__delete-link far fa-trash-alt"
+                                                                data-id="{{ $item['session_id'] }}"></a>
                                                         </div>
                                                         <!--====== End - Card for mini cart ======-->
                                                     @endforeach
@@ -1526,7 +1539,8 @@
                                     <ul>
                                         <li>
 
-                                            <a class="s-fb--color-hover" href="#"><i class="fab fa-facebook-f"></i></a>
+                                            <a class="s-fb--color-hover" href="#"><i
+                                                    class="fab fa-facebook-f"></i></a>
                                         </li>
                                         <li>
 
@@ -1755,9 +1769,10 @@
                                             </div>
                                         </div>
                                         <div class="u-s-m-b-15">
-                                            <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i
+                                            <div class="pd-detail__rating gl-rating-style"><i
                                                     class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                                    class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                                    class="fas fa-star-half-alt"></i>
 
                                                 <span class="pd-detail__review u-s-m-l-4">
 
@@ -1832,24 +1847,33 @@
                                                 @csrf
                                                 <div class="pd-detail-inline-2">
                                                     <div class="u-s-m-b-15">
-                
+
                                                         <!--====== Input Counter ======-->
                                                         <div class="input-counter">
-                
+
                                                             <span class="input-counter__minus fas fa-minus"></span>
-                
-                                                            <input class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}" type="text" name="product_quantity"
-                                                                data-min="1" data-max="1000">
-                
+
+                                                            <input
+                                                                class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}"
+                                                                type="text" name="product_quantity" data-min="1"
+                                                                data-max="1000">
+
                                                             <span class="input-counter__plus fas fa-plus"></span>
-                
+
                                                         </div>
                                                         <!--====== End - Input Counter ======-->
                                                     </div>
                                                     <div class="u-s-m-b-15">
-                                                        <input type="hidden" class="cart_product_id_{{ $product->product_id }}" value="{{ $product->product_id }}"/>
-                
-                                                        <button class="btn btn--e-brand-b-2 btn-add-cart" type="button" data-modal="modal" data-modal-id="#add-to-cart-{{$product->product_slug }}" data-tooltip="tooltip" data-placement="top" data-id_product="{{ $product->product_id }}" name="add_cart">Thêm vào giỏ hàng</button>
+                                                        <input type="hidden"
+                                                            class="cart_product_id_{{ $product->product_id }}"
+                                                            value="{{ $product->product_id }}" />
+
+                                                        <button class="btn btn--e-brand-b-2 btn-add-cart" type="button"
+                                                            data-modal="modal"
+                                                            data-modal-id="#add-to-cart-{{ $product->product_slug }}"
+                                                            data-tooltip="tooltip" data-placement="top"
+                                                            data-id_product="{{ $product->product_id }}"
+                                                            name="add_cart">Thêm vào giỏ hàng</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -1902,7 +1926,8 @@
                                         </div>
                                         <div class="success__img-wrap">
 
-                                            <img class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
+                                            <img class="u-img-fluid"
+                                                src="{{ asset($product->product_image_path) }}"
                                                 alt="{{ $product->product_name }}">
                                         </div>
                                         <div class="success__info-wrap">
@@ -1911,7 +1936,8 @@
 
                                             <span class="success__quantity"></span>
 
-                                            <span class="success__price">{{ number_format($product->product_price) }}
+                                            <span
+                                                class="success__price">{{ number_format($product->product_price) }}
                                                 VNĐ</span>
                                         </div>
                                     </div>
@@ -1978,17 +2004,49 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
     <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
     <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
-   <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <!-- Sweetalert2 -->
     <script src="{{ asset('frontend/js/sweetalert2@9.js') }}"></script>
     <!--====== AJAX Js ======-->
     <script src="{{ asset('frontend/js/ajax.js') }}"></script>
+
+    <!--====== Autocomplete Search ======-->
+    <script>
+        $("body").on("keyup", "#main-search", function() {
+            let keywords = $("#main-search").val();
+            let urlToRedirect = '/home/find';
+
+            if (keywords.length > 0) {
+                $.ajax({
+                    url: urlToRedirect,
+                    method: 'GET',
+                    data: {
+                        keywords: keywords,
+                    },
+                    success: function(response) {
+                        $('#find-product-ajax').html(response);
+                    }
+                });
+            } else
+                $('#find-product-ajax').html("");
+        })
+    </script>
+
+    <script>
+        function showSearchResult() {
+            $('#find-product-ajax').slideDown();
+        }
+
+        function hideSearchResult() {
+            $('#find-product-ajax').slideUp();
+        }
+    </script>
 
     @yield('scripts')
 

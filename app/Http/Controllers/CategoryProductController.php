@@ -63,7 +63,7 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        $categories = CategoryProduct::orderBy('category_parent', 'desc')->orderBy('category_name', 'asc')->paginate(5);
+        $categories = CategoryProduct::orderBy('category_parent', 'desc')->orderBy('category_name', 'asc')->get();
         $sub_categories = CategoryProduct::all();
 
         return view('admin.category.all_category_product', compact('categories', 'sub_categories'));

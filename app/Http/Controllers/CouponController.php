@@ -16,7 +16,7 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupons = Coupon::latest()->paginate(2);
+        $coupons = Coupon::latest()->get();
 
         return view('admin.coupon.all_coupon', compact('coupons'));
     }

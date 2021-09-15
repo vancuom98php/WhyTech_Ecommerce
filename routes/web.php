@@ -29,8 +29,12 @@ Route::group([
         'uses' => 'HomeController@show'
     ]);
     Route::get('/search', [
-        'as' => 'home.search',
-        'uses' => 'HomeController@search'
+        'as' => 'product.search',
+        'uses' => 'ProductController@search'
+    ]);
+    Route::get('/find', [
+        'as' => 'product.find',
+        'uses' => 'ProductController@find'
     ]);
 
     //Home - Category 

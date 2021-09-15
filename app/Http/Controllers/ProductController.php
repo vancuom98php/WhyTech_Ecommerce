@@ -18,7 +18,7 @@ use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Components\Recursive;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -105,7 +105,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
+        $products = Product::latest()->get();
 
         return view('admin.product.all_product', compact('products'));
     }
@@ -251,5 +251,49 @@ class ProductController extends Controller
         //--seo
 
         return view('pages.product.show_details', compact('product', 'related_products', 'all_products', 'galleries', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+    }
+
+    public function search(Request $request)
+    {
+        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
+        $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
+        $keywords = $request->keywords;
+
+        if (empty($keywords))
+            $products = Product::where('product_status', 1)->latest()->paginate(8);
+        else {
+            $products = Product::select('products.*')->where('product_status', 1)->where('product_name', 'like', "%$keywords%")
+                ->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orWhere('brand_name', 'like', "%$keywords%")
+                ->join('category_products', 'category_products.category_id', '=', 'products.category_id')->orWhere('category_name', 'like', "%$keywords%")
+                ->latest()->paginate(8);
+
+            if (!$products->total())
+                session()->flash('notification', 'Rất tiếc, sản phẩm bạn tìm kiếm hiện không được bán hoặc đã hết hàng. Vui lòng tìm kiếm sản phẩm khác. Xin cảm ơn!');
+        }
+
+        $all_products = Product::where('product_status', 1)->get();
+
+        //seo 
+        $meta_desc = "Chuyên bán thiết bị giải trí, phụ kiện điện tử, phụ kiện điện thoại, chơi game";
+        $meta_keywords = "thiết bị giải trí, phụ kiện, chơi game, game giải trí";
+        $url_canonical = $request->url();
+        $meta_title = "Kết quả tìm kiếm: $keywords | WhyTech";
+        //--seo
+
+        return view('pages.product.search', compact('categories', 'brands', 'products', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+    }
+
+    public function find(Request $request)
+    {
+        $keywords = $request->keywords;
+
+        $products = Product::select('products.*')->where('product_status', 1)->where('product_name', 'like', "%$keywords%")
+            ->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orWhere('brand_name', 'like', "%$keywords%")
+            ->join('category_products', 'category_products.category_id', '=', 'products.category_id')->orWhere('category_name', 'like', "%$keywords%")
+            ->get()->take(5);
+        
+        $categories = CategoryProduct::where('category_status', 1)->where('category_name', 'like', "%$keywords%")->get()->take(5);    
+
+        return view('pages.product.find', compact('products', 'categories'));
     }
 }
