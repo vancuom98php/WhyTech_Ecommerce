@@ -15,8 +15,13 @@
 
                                 <a href="{{ url('/') }}">Trang chủ</a>
                             </li>
-                            <li class="is-marked">
+                            @if($product->category->categoryParent != null)
+                                <li class="has-separator">
 
+                                    <a href="{{ route('home.category', ['category_product_slug' => $product->category->categoryParent->category_product_slug]) }}">{{ $product->category->categoryParent->category_name }}</a>
+                                </li>
+                            @endif
+                            <li class="is-marked">
                                 <a href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
                             </li>
                         </ul>

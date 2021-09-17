@@ -3,7 +3,7 @@
     <ul class="list-find-ajax" style="margin-top: 10px">
         @foreach ($categories as $category)
             <a href="{{ route('home.category', ['category_product_slug' => $category->category_product_slug]) }}">
-                <li class="suggest-category-item" class="find-ajax-item">
+                <li class="suggest-category-item">
                     {{ $category->category_name }}
                 </li>
             </a>
