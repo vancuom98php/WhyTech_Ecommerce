@@ -15,14 +15,16 @@
 
                                 <a href="{{ url('/') }}">Trang chủ</a>
                             </li>
-                            @if($product->category->categoryParent != null)
+                            @if ($product->category->categoryParent != null)
                                 <li class="has-separator">
 
-                                    <a href="{{ route('home.category', ['category_product_slug' => $product->category->categoryParent->category_product_slug]) }}">{{ $product->category->categoryParent->category_name }}</a>
+                                    <a
+                                        href="{{ route('home.category', ['category_product_slug' => $product->category->categoryParent->category_product_slug]) }}">{{ $product->category->categoryParent->category_name }}</a>
                                 </li>
                             @endif
                             <li class="is-marked">
-                                <a href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
+                                <a
+                                    href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
                             </li>
                         </ul>
                     </div>
@@ -34,13 +36,15 @@
                         <div class="slider-fouc pd-wrap">
                             <div id="pd-o-initiate">
                                 <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-                                    <img style="height: 445px" class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
+                                    <img style="height: 445px" class="u-img-fluid"
+                                        src="{{ asset($product->product_image_path) }}"
                                         data-zoom-image="{{ asset($product->product_image_path) }}"
                                         alt="{{ $product->product_name }}">
                                 </div>
-                                @foreach($galleries as $gallery)
+                                @foreach ($galleries as $gallery)
                                     <div class="pd-o-img-wrap" data-src="{{ asset($gallery->gallery_image) }}">
-                                        <img style="height: 445px" class="u-img-fluid" src="{{ asset($gallery->gallery_image) }}"
+                                        <img style="height: 445px" class="u-img-fluid"
+                                            src="{{ asset($gallery->gallery_image) }}"
                                             data-zoom-image="{{ asset($gallery->gallery_image) }}"
                                             alt="{{ $gallery->gallery_name }}">
                                     </div>
@@ -53,11 +57,15 @@
                             <div class="slider-fouc">
                                 <div id="pd-o-thumbnail">
                                     <div>
-                                        <img style="height: 120px" class="u-img-fluid" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}">
+                                        <img style="height: 120px" class="u-img-fluid"
+                                            src="{{ asset($product->product_image_path) }}"
+                                            alt="{{ $product->product_name }}">
                                     </div>
-                                    @foreach($galleries as $gallery)
+                                    @foreach ($galleries as $gallery)
                                         <div>
-                                            <img style="height: 120px" class="u-img-fluid" src="{{ asset($gallery->gallery_image) }}" alt="{{ $gallery->gallery_name }}">
+                                            <img style="height: 120px" class="u-img-fluid"
+                                                src="{{ asset($gallery->gallery_image) }}"
+                                                alt="{{ $gallery->gallery_name }}">
                                         </div>
                                     @endforeach
                                 </div>
@@ -83,13 +91,23 @@
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
-                            <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                    class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                    class="fas fa-star-half-alt"></i>
+                            <div class="pd-detail__rating gl-rating-style">
+                                @php
+                                    $ratingAvg = $product->comments->avg('rating');
+                                @endphp
+                                @for ($i = 0; $i < floor($ratingAvg); $i++)
+                                    <i class="fas fa-star"></i>
+                                @endfor
+                                @if ($ratingAvg - (int) $ratingAvg > 0 && $ratingAvg - (int) $ratingAvg <= 0.5)
+                                    <i class="fas fa-star-half-alt"></i>
+                                @elseif($ratingAvg - (int) $ratingAvg == 0)
+                                @else
+                                    <i class="fas fa-star"></i>
+                                @endif
 
                                 <span class="pd-detail__review u-s-m-l-4">
 
-                                    <a data-click-scroll="#view-review">19 Đánh giá</a></span>
+                                    <a data-click-scroll="#view-review">{{ $totalReview }} Đánh giá</a></span>
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
@@ -159,8 +177,9 @@
 
                                             <span class="input-counter__minus fas fa-minus"></span>
 
-                                            <input class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}" type="text" name="product_quantity"
-                                                data-min="1" data-max="1000">
+                                            <input
+                                                class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}"
+                                                type="text" name="product_quantity" data-min="1" data-max="1000">
 
                                             <span class="input-counter__plus fas fa-plus"></span>
 
@@ -168,9 +187,14 @@
                                         <!--====== End - Input Counter ======-->
                                     </div>
                                     <div class="u-s-m-b-15">
-                                        <input type="hidden" class="cart_product_id_{{ $product->product_id }}" value="{{ $product->product_id }}"/>
+                                        <input type="hidden" class="cart_product_id_{{ $product->product_id }}"
+                                            value="{{ $product->product_id }}" />
 
-                                        <button class="btn btn--e-brand-b-2 btn-add-cart" type="button" data-modal="modal" data-modal-id="#add-to-cart-{{$product->product_slug }}" data-tooltip="tooltip" data-placement="top" data-id_product="{{ $product->product_id }}" name="add_cart">Thêm vào giỏ hàng</button>
+                                        <button class="btn btn--e-brand-b-2 btn-add-cart" type="button" data-modal="modal"
+                                            data-modal-id="#add-to-cart-{{ $product->product_slug }}"
+                                            data-tooltip="tooltip" data-placement="top"
+                                            data-id_product="{{ $product->product_id }}" name="add_cart">Thêm vào giỏ
+                                            hàng</button>
                                     </div>
                                 </div>
                             </form>
@@ -214,13 +238,13 @@
                                 </li>
                                 <li class="nav-item">
 
-                                    <a class="nav-link" data-toggle="tab" href="#pd-tag">TỪ KHÓA</a>
+                                    <a class="nav-link" data-toggle="tab" href="#pd-tag">CHI TIẾT</a>
                                 </li>
                                 <li class="nav-item">
 
                                     <a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">ĐÁNH GIÁ
 
-                                        <span>(19)</span></a>
+                                        <span>({{ $totalReview }})</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -230,7 +254,7 @@
                             <div class="tab-pane fade show active" id="pd-desc">
                                 <div class="pd-tab__desc">
                                     <div class="u-s-m-b-15">
-                                       {!! $product->product_content !!}
+                                        {{ $product->product_desc }}
                                     </div>
                                     {{-- <div class="u-s-m-b-30"><iframe src="https://www.youtube.com/embed/qKqSBm07KZk"
                                             allowfullscreen></iframe></div> --}}
@@ -242,17 +266,9 @@
                             <!--====== Tab 2 ======-->
                             <div class="tab-pane" id="pd-tag">
                                 <div class="pd-tab__tag">
-                                    <h2 class="u-s-m-b-15">THÊM TỪ KHÓA</h2>
                                     <div class="u-s-m-b-15">
-                                        <form>
-
-                                            <input class="input-text input-text--primary-style" type="text">
-
-                                            <button class="btn btn--e-brand-b-2" type="submit">THÊM</button>
-                                        </form>
+                                        {!! $product->product_content !!}
                                     </div>
-
-                                    <span class="gl-text">Sử dụng dấu cách để phân tách các thẻ. Sử dụng dấu nháy đơn (') cho các cụm từ..</span>
                                 </div>
                             </div>
                             <!--====== End - Tab 2 ======-->
@@ -264,11 +280,19 @@
                                     <div class="u-s-m-b-30">
                                         <div class="pd-tab__rev-score">
                                             <div class="u-s-m-b-8">
-                                                <h2>19 Đánh giá - 4.6 (Chung)</h2>
+                                                <h2>{{ $totalReview }} Đánh giá - {{ $ratingAvg }} (Chung)</h2>
                                             </div>
-                                            <div class="gl-rating-style-2 u-s-m-b-8"><i class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                            <div class="gl-rating-style-2 u-s-m-b-8">
+                                                @for ($i = 0; $i < floor($ratingAvg); $i++)
+                                                    <i class="fas fa-star"></i>
+                                                @endfor
+                                                @if ($ratingAvg - (int) $ratingAvg > 0 && $ratingAvg - (int) $ratingAvg <= 0.5)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @elseif($ratingAvg - (int) $ratingAvg == 0)
+                                                @else
+                                                    <i class="fas fa-star"></i>
+                                                @endif
+                                            </div>
                                             <div class="u-s-m-b-8">
                                                 <h4>Chúng tôi muốn lắng nghe từ bạn!</h4>
                                             </div>
@@ -277,7 +301,10 @@
                                         </div>
                                     </div>
                                     <div class="u-s-m-b-30">
-                                        <form class="pd-tab__rev-f1">
+                                        <form class="pd-tab__rev-f1" method="POST">
+                                            @csrf
+                                            <input type="hidden" class="comment_product_id" name="comment_product_id"
+                                                value={{ $product->product_id }}>
                                             <div class="rev-f1__group">
                                                 <div class="u-s-m-b-15">
                                                     <h2>Các đánh giá cho {{ $product->product_name }}</h2>
@@ -291,75 +318,17 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- <div class="rev-f1__review">
-                                                <div class="review-o u-s-m-b-15">
-                                                    <div class="review-o__info u-s-m-b-8">
+                                            <div id="review_item" class="rev-f1__review">
 
-                                                        <span class="review-o__name">John Doe</span>
-
-                                                        <span class="review-o__date">27 Feb 2018 10:57:43</span>
-                                                    </div>
-                                                    <div class="review-o__rating gl-rating-style u-s-m-b-8"><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="far fa-star"></i>
-
-                                                        <span>(4)</span>
-                                                    </div>
-                                                    <p class="review-o__text">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s, when an unknown
-                                                        printer took a galley of type and scrambled it to make a type
-                                                        specimen book.</p>
-                                                </div>
-                                                <div class="review-o u-s-m-b-15">
-                                                    <div class="review-o__info u-s-m-b-8">
-
-                                                        <span class="review-o__name">John Doe</span>
-
-                                                        <span class="review-o__date">27 Feb 2018 10:57:43</span>
-                                                    </div>
-                                                    <div class="review-o__rating gl-rating-style u-s-m-b-8"><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="far fa-star"></i>
-
-                                                        <span>(4)</span>
-                                                    </div>
-                                                    <p class="review-o__text">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s, when an unknown
-                                                        printer took a galley of type and scrambled it to make a type
-                                                        specimen book.</p>
-                                                </div>
-                                                <div class="review-o u-s-m-b-15">
-                                                    <div class="review-o__info u-s-m-b-8">
-
-                                                        <span class="review-o__name">John Doe</span>
-
-                                                        <span class="review-o__date">27 Feb 2018 10:57:43</span>
-                                                    </div>
-                                                    <div class="review-o__rating gl-rating-style u-s-m-b-8"><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="far fa-star"></i>
-
-                                                        <span>(4)</span>
-                                                    </div>
-                                                    <p class="review-o__text">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s, when an unknown
-                                                        printer took a galley of type and scrambled it to make a type
-                                                        specimen book.</p>
-                                                </div>
-                                            </div> --}}
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="u-s-m-b-30">
-                                        <form class="pd-tab__rev-f2">
+                                        <form id="review_form" class="pd-tab__rev-f2" method="POST">
                                             <h2 class="u-s-m-b-15">Thêm đánh giá</h2>
 
-                                            <span class="gl-text u-s-m-b-15">Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *</span>
+                                            <span class="gl-text u-s-m-b-15">Số điện thoại của bạn sẽ không được công bố.
+                                                Các trường bắt buộc được đánh dấu *</span>
                                             <div class="u-s-m-b-30">
                                                 <div class="rev-f2__table-wrap gl-scroll">
                                                     <table class="rev-f2__table">
@@ -457,7 +426,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-1" name="rating">
+                                                                        <input type="radio" id="star-1" name="rating"
+                                                                            value="1">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -472,7 +442,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-1.5" name="rating">
+                                                                        <input type="radio" id="star-1.5" name="rating"
+                                                                            value="1.5">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -487,7 +458,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-2" name="rating">
+                                                                        <input type="radio" id="star-2" name="rating"
+                                                                            value="2">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -502,7 +474,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-2.5" name="rating">
+                                                                        <input type="radio" id="star-2.5" name="rating"
+                                                                            value="2.5">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -517,7 +490,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-3" name="rating">
+                                                                        <input type="radio" id="star-3" name="rating"
+                                                                            value="3">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -532,7 +506,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-3.5" name="rating">
+                                                                        <input type="radio" id="star-3.5" name="rating"
+                                                                            value="3.5">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -547,7 +522,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-4" name="rating">
+                                                                        <input type="radio" id="star-4" name="rating"
+                                                                            value="4">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -562,7 +538,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-4.5" name="rating">
+                                                                        <input type="radio" id="star-4.5" name="rating"
+                                                                            value="4.5">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -577,7 +554,8 @@
                                                                     <!--====== Radio Box ======-->
                                                                     <div class="radio-box">
 
-                                                                        <input type="radio" id="star-5" name="rating">
+                                                                        <input type="radio" id="star-5" name="rating"
+                                                                            value="5">
                                                                         <div
                                                                             class="radio-box__state radio-box__state--primary">
 
@@ -595,30 +573,33 @@
                                             <div class="rev-f2__group">
                                                 <div class="u-s-m-b-15">
 
-                                                    <label class="gl-label" for="reviewer-text">ĐÁNH GIÁ CỦA BẠN
-                                                        *</label><textarea class="text-area text-area--primary-style"
-                                                        id="reviewer-text"></textarea>
+                                                    <label class="gl-label" for="reviewer-text">ĐÁNH GIÁ CỦA
+                                                        BẠN</label>
+                                                    <textarea class="text-area text-area--primary-style comment_content"
+                                                        name="comment_content" id="reviewer-text"></textarea>
                                                 </div>
                                                 <div>
                                                     <p class="u-s-m-b-30">
 
-                                                        <label class="gl-label" for="reviewer-name">HỌ VÀ TÊN *</label>
+                                                        <label class="gl-label" for="reviewer-name">HỌ VÀ TÊN
+                                                            *</label>
 
-                                                        <input class="input-text input-text--primary-style" type="text"
-                                                            id="reviewer-name">
+                                                        <input class="input-text input-text--primary-style comment_name"
+                                                            type="text" name="comment_name" id="reviewer-name">
                                                     </p>
                                                     <p class="u-s-m-b-30">
 
-                                                        <label class="gl-label" for="reviewer-email">EMAIL *</label>
+                                                        <label class="gl-label" for="comment_phone">SỐ ĐIỆN THOẠI
+                                                            *</label>
 
-                                                        <input class="input-text input-text--primary-style" type="text"
-                                                            id="reviewer-email">
+                                                        <input class="input-text input-text--primary-style comment_phone"
+                                                            type="text" name="comment_phone" id="comment_phone">
                                                     </p>
                                                 </div>
                                             </div>
                                             <div>
-
-                                                <button class="btn btn--e-brand-shadow" type="submit">GỬI</button>
+                                                <input class="btn btn--e-brand-shadow submit_comment" type="button"
+                                                    value="GỬI ĐÁNH GIÁ">
                                             </div>
                                         </form>
                                     </div>
@@ -656,29 +637,41 @@
             <div class="container">
                 <div class="slider-fouc">
                     <div class="owl-carousel product-slider" data-item="4">
-                        @foreach($related_products as $product)
+                        @foreach ($related_products as $product)
                             <div class="u-s-m-b-30">
                                 <div class="product-o product-o--hover-on">
                                     <div class="product-o__wrap">
 
-                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
+                                        <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                            href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
 
-                                            <img class="aspect__img" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}"></a>
+                                            <img class="aspect__img" src="{{ asset($product->product_image_path) }}"
+                                                alt="{{ $product->product_name }}"></a>
                                         <div class="product-o__action-wrap">
                                             <ul class="product-o__action-list">
                                                 <li>
 
-                                                    <a data-modal="modal" data-modal-id="#{{ $product->product_slug }}" data-tooltip="tooltip"
-                                                        data-placement="top" title="Xem nhanh"><i
+                                                    <a data-modal="modal" data-modal-id="#{{ $product->product_slug }}"
+                                                        data-tooltip="tooltip" data-placement="top" title="Xem nhanh"><i
                                                             class="fas fa-search-plus"></i></a>
                                                 </li>
                                                 <li>
                                                     <form method="POST">
                                                         @csrf
-                                                        <input class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}" type="hidden" name="product_quantity" value="1"/>
-                                                        <input type="hidden" class="cart_product_id_{{ $product->product_id }}" value="{{ $product->product_id }}"/>
-                
-                                                        <button class="btn btn--e-brand btn-add-cart btn-add-cart-home" type="button" data-modal="modal" data-modal-id="#add-to-cart-{{$product->product_slug }}" data-tooltip="tooltip" data-placement="top" data-id_product="{{ $product->product_id }}" name="add_cart"><i class="fas fa-plus-circle fa-add-cart"></i></button>
+                                                        <input
+                                                            class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}"
+                                                            type="hidden" name="product_quantity" value="1" />
+                                                        <input type="hidden"
+                                                            class="cart_product_id_{{ $product->product_id }}"
+                                                            value="{{ $product->product_id }}" />
+
+                                                        <button class="btn btn--e-brand btn-add-cart btn-add-cart-home"
+                                                            type="button" data-modal="modal"
+                                                            data-modal-id="#add-to-cart-{{ $product->product_slug }}"
+                                                            data-tooltip="tooltip" data-placement="top"
+                                                            data-id_product="{{ $product->product_id }}"
+                                                            name="add_cart"><i
+                                                                class="fas fa-plus-circle fa-add-cart"></i></button>
                                                     </form>
                                                 </li>
                                                 <li>
@@ -698,16 +691,27 @@
 
                                     <span class="product-o__category">
 
-                                        <a href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ optional($product->category)->category_name }}</a></span>
+                                        <a
+                                            href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ optional($product->category)->category_name }}</a></span>
 
                                     <span class="product-o__name">
 
-                                        <a href="product-detail.html">{{ $product->product_name }}</a></span>
-                                    <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i>
+                                        <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a></span>
+                                    <div class="product-o__rating gl-rating-style">
+                                        @php
+                                            $ratingAvg = $product->comments->avg('rating');
+                                        @endphp
+                                        @for ($i = 0; $i < floor($ratingAvg); $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                        @if ($ratingAvg - (int) $ratingAvg > 0 && $ratingAvg - (int) $ratingAvg <= 0.5)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @elseif($ratingAvg - (int) $ratingAvg == 0)
+                                        @else
+                                            <i class="fas fa-star"></i>
+                                        @endif
 
-                                        <span class="product-o__review">(20)</span>
+                                        <span class="product-o__review">({{ $product->comments->count() }})</span>
                                     </div>
 
                                     <span class="product-o__price">{{ number_format($product->product_price) }} VNĐ

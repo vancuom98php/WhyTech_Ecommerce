@@ -239,7 +239,7 @@
                                         <span class="js-menu-toggle"></span>
                                         <div class="mega-menu">
                                             <div class="mega-menu-wrap">
-                                                <div class="mega-menu-list">
+                                                {{-- <div class="mega-menu-list">
                                                     <ul>
                                                         <li class="js-active">
 
@@ -304,9 +304,9 @@
                                                             <span class="js-menu-toggle"></span>
                                                         </li>
                                                     </ul>
-                                                </div>
+                                                </div> --}}
 
-                                                <!--====== Electronics ======-->
+                                                {{-- <!--====== Electronics ======-->
                                                 <div class="mega-menu-content js-active">
 
                                                     <!--====== Mega Menu Row ======-->
@@ -1162,7 +1162,7 @@
                                                 <!--====== No Sub Categories ======-->
                                                 <div class="mega-menu-content">
                                                     <h5>No Categories</h5>
-                                                </div>
+                                                </div> --}}
                                                 <!--====== End - No Sub Categories ======-->
                                             </div>
                                         </div>
@@ -1769,14 +1769,24 @@
                                             </div>
                                         </div>
                                         <div class="u-s-m-b-15">
-                                            <div class="pd-detail__rating gl-rating-style"><i
-                                                    class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                    class="fas fa-star-half-alt"></i>
+                                            <div class="pd-detail__rating gl-rating-style">
+                                                @php
+                                                    $ratingAvg = $product->comments->avg('rating');
+                                                @endphp
+                                                @for ($i = 0; $i < floor($ratingAvg); $i++)
+                                                    <i class="fas fa-star"></i>
+                                                @endfor
+                                                @if ($ratingAvg - (int) $ratingAvg > 0 && $ratingAvg - (int) $ratingAvg <= 0.5)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @elseif($ratingAvg - (int) $ratingAvg == 0)
+                                                @else
+                                                    <i class="fas fa-star"></i>
+                                                @endif
 
                                                 <span class="pd-detail__review u-s-m-l-4">
 
-                                                    <a href="product-detail.html">19 Đánh giá</a></span>
+                                                    <a href="product-detail.html">{{ $product->comments->where('comment_parent_comment', 0)->count() }}
+                                                        Đánh giá</a></span>
                                             </div>
                                         </div>
                                         <div class="u-s-m-b-15">

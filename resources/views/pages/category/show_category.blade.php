@@ -71,11 +71,22 @@
 
                                         <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a>
                                     </div>
-                                    <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i
-                                            class="far fa-star"></i><i class="far fa-star"></i>
+                                    <div class="product-m__rating gl-rating-style">
+                                        @php
+                                            $ratingAvg = $product->comments->avg('rating');
+                                        @endphp
+                                        @for ($i = 0; $i < floor($ratingAvg); $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                        @if ($ratingAvg - (int) $ratingAvg > 0 && $ratingAvg - (int) $ratingAvg <= 0.5)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @elseif($ratingAvg - (int) $ratingAvg == 0)
+                                        @else
+                                            <i class="fas fa-star"></i>
+                                        @endif
 
-                                        <span class="product-m__review">(19)</span>
+                                        <span
+                                            class="product-m__review">({{ $product->comments->where('comment_parent_comment', 0)->count() }})</span>
                                     </div>
                                     <div class="product-m__price">{{ number_format($product->product_price) }} VNĐ</div>
                                     <div class="product-m__hover">

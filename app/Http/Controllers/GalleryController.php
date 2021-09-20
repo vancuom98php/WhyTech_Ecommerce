@@ -98,7 +98,7 @@ class GalleryController extends Controller
                     <td>
                         <img width="70px" height="70px" src="' . asset($gallery->gallery_image) . '"
                         alt="' . $gallery->gallery_name . '">
-                        <input type="file" class="gallery_image" style="width:40%" data-gallery_id="' . $gallery->gallery_id . '" 
+                        <input type="file" class="gallery_image" style="width:70%" data-gallery_id="' . $gallery->gallery_id . '" 
                         id="image-' . $gallery->gallery_id . '" name="gallery_image" accept="image/*">
                     </td>
                     <td>

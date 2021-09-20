@@ -8123,3 +8123,20 @@ input::-ms-clear {
   margin: 5px 0px 0px 20px;
   font-size: 12px;
 }
+
+.show_comment {
+    margin: unset;
+}
+
+.show_reply_comment {
+    margin: 10px 0 0 10px;
+    display: flex;
+}
+
+.product-o__name > a {
+    width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
