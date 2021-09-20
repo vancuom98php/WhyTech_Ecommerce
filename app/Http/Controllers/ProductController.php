@@ -261,7 +261,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
+        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_order', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $keywords = $request->keywords;
 

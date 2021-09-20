@@ -63,7 +63,7 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        $categories = CategoryProduct::orderBy('category_parent', 'desc')->orderBy('category_name', 'asc')->get();
+        $categories = CategoryProduct::orderBy('category_parent', 'asc')->orderBy('category_order', 'asc')->get();
         $sub_categories = CategoryProduct::all();
 
         return view('admin.category.all_category_product', compact('categories', 'sub_categories'));
@@ -150,7 +150,7 @@ class CategoryProductController extends Controller
      */
     public function show_category_home($category_product_slug, Request $request)
     {
-        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
+        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_order', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $categoryBySlug = CategoryProduct::where('category_product_slug', $category_product_slug)->first();
 
@@ -172,5 +172,16 @@ class CategoryProductController extends Controller
         //--seo
 
         return view('pages.category.show_category', compact('categories', 'brands', 'productByCategorySlug', 'categoryBySlug', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+    }
+
+    public function sort(Request $request)
+    {
+        $Ids = $request->page_id_array;
+
+        foreach ($Ids as $key => $id) {
+            $category = CategoryProduct::find($id)->update([
+                'category_order' => $key,
+            ]);
+        }
     }
 }

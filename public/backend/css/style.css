@@ -3606,3 +3606,11 @@ div#graph11 {
 .comment_reply {
     display: none;
 }
+
+#category_order .ui-state-highlight {
+    padding: 24px;
+    background-color: #f9eeee;
+    border: 1px dotted #ccc;
+    cursor: move;
+    margin-top: 12px;
+}

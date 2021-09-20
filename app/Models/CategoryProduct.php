@@ -26,7 +26,8 @@ class CategoryProduct extends Model
         'category_parent',
         'category_desc',
         'meta_keywords',
-        'category_status'
+        'category_status',
+        'category_order'
     ];
 
     public function products()

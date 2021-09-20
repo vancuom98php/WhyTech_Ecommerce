@@ -38,7 +38,7 @@ class HomeController extends Controller
         $meta_title = "WhyTech | Thiết bị giải trí, phụ kiện điện tử, phụ kiện điện thoại, chơi game chính hãng";
         //--seo
 
-        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get();
+        $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_order', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $products = Product::where('product_status', 1)->latest()->paginate(12);
         $all_products = Product::where('product_status', 1)->get();

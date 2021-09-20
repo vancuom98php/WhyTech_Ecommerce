@@ -363,3 +363,30 @@ $('.btn-reply').on('click', function () {
         });
     }
 });
+
+// Category Order
+$(document).ready(function () {
+    $('#category_order').sortable({
+        placeholder: 'ui-state-highlight',
+        update: function (event, ui) {
+            let page_id_array = new Array();
+            let _token = $('input[name="_token"]').val();
+            let urlToRedirect = '/category-product/sort';
+
+            $('#category_order tr').each(function () {
+                page_id_array.push($(this).attr("id"));
+            });
+
+            $.ajax({
+                url: urlToRedirect,
+                method: 'POST',
+                data: {
+                    page_id_array: page_id_array,
+                    _token: _token
+                }, success: function (response) {
+                    alertify.success('Sắp xếp danh mục thành công');
+                }
+            })
+        }
+    });
+});

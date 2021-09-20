@@ -222,6 +222,10 @@ Route::group([
             'as' => 'category-product.delete',
             'uses' => 'CategoryProductController@delete'
         ]);
+        Route::post('/sort', [
+            'as' => 'category-product.sort',
+            'uses' => 'CategoryProductController@sort'
+        ]);
     });
 });
 
