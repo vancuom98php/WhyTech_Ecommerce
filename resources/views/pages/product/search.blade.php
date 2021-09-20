@@ -18,7 +18,8 @@
 
                         <span class="js-shop-grid-target is-active"><i class="fas fa-th"></i></span>
 
-                        <span class="js-shop-list-target"><i class="fas fa-list"></i></span></div>
+                        <span class="js-shop-list-target"><i class="fas fa-list"></i></span>
+                    </div>
                     <form>
                         <div class="tool-style__form-wrap">
                             <div class="u-s-m-b-8"><select class="select-box select-box--transparent-b-2">
@@ -41,41 +42,63 @@
             </div>
             <div class="shop-p__collection">
                 <div class="row is-grid-active">
-                    @foreach($products as $product)
+                    @foreach ($products as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product-m">
                                 <div class="product-m__thumb">
 
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
+                                    <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                        href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
 
-                                        <img class="aspect__img" src="{{ asset($product->product_image_path) }}" alt="{{ $product->product_name }}"></a>
+                                        <img class="aspect__img" src="{{ asset($product->product_image_path) }}"
+                                            alt="{{ $product->product_name }}"></a>
                                     <div class="product-m__quick-look">
 
                                         <a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look"
                                             data-tooltip="tooltip" data-placement="top" title="Xem nhanh"></a>
                                     </div>
-                                    <form class="product-m__add-cart" action="{{ route('cart.add') }}" method="POST">
+                                    <form class="product-m__add-cart" method="POST">
                                         @csrf
-                                        <input class="input-counter__text input-counter--text-primary-style quantity" type="hidden" name="product_quantity" value="1"/>
-                                        <input type="hidden" name="product_id_hidden" value="{{ $product->product_id }}"/>
+                                        <input
+                                            class="input-counter__text input-counter--text-primary-style quantity cart_product_qty_{{ $product->product_id }}"
+                                            type="hidden" name="product_quantity" value="1" />
+                                        <input type="hidden" class="cart_product_id_{{ $product->product_id }}"
+                                            value="{{ $product->product_id }}" />
 
-                                        <button class="btn btn--e-brand btn-add-cart" type="submit">Thêm vào giỏ hàng</button>
+                                        <button class="btn btn--e-brand btn-add-cart" type="button" data-modal="modal"
+                                            data-modal-id="#add-to-cart-{{ $product->product_slug }}"
+                                            data-tooltip="tooltip" data-placement="top"
+                                            data-id_product="{{ $product->product_id }}" name="add_cart"><i
+                                                class="fas fa-cart-plus"></i> Thêm vào giỏ hàng</button>
                                     </form>
                                 </div>
                                 <div class="product-m__content">
                                     <div class="product-m__category">
 
-                                        <a href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
+                                        <a
+                                            href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
                                     </div>
                                     <div class="product-m__name">
 
-                                        <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a>
+                                        <a
+                                            href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a>
                                     </div>
-                                    <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i
-                                            class="far fa-star"></i><i class="far fa-star"></i>
+                                    <div class="product-m__rating gl-rating-style">
+                                        @php
+                                            $ratingAvg = $product->comments->avg('rating');
+                                        @endphp
+                                        @for ($i = 0; $i < floor($ratingAvg); $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                        @if ($ratingAvg - (int) $ratingAvg > 0 && $ratingAvg - (int) $ratingAvg <= 0.5)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @elseif($ratingAvg - (int) $ratingAvg == 0)
+                                        @else
+                                            <i class="fas fa-star"></i>
+                                        @endif
 
-                                        <span class="product-m__review">(19)</span>
+                                        <span
+                                            class="product-m__review">({{ $product->comments->where('comment_parent_comment', 0)->count() }})</span>
                                     </div>
                                     <div class="product-m__price">{{ number_format($product->product_price) }} VNĐ</div>
                                     <div class="product-m__hover">

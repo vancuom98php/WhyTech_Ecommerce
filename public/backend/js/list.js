@@ -333,3 +333,33 @@ $(document).ready(function () {
         }
     }));
 });
+
+// Comment
+$('.btn-reply').on('click', function () {
+    let commentId = $(this).data('comment_id');
+    let commentContent = $('.comment_content_' + commentId).val();
+    let urlToRedirect = '/comment/reply';
+    let _token = $('input[name="_token"]').val();
+
+    if (commentContent == '') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Vui lòng nhập nội dung trả lời!',
+        });
+    } else {
+        $.ajax({
+            url: urlToRedirect,
+            method: 'POST',
+            data: {
+                commentId: commentId,
+                commentContent: commentContent,
+                _token: _token
+            },
+            success: function (response) {
+                $('.comment_content_' + commentId).val('');
+                location.reload();
+            }
+        });
+    }
+});

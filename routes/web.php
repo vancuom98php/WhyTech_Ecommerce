@@ -134,6 +134,37 @@ Route::group([
     ]);
 });
 
+// Review
+Route::group([
+    'prefix' => 'comment'
+], function () {
+    // Show comment on specified product
+    Route::post('/load', [
+        'as' => 'comment.load',
+        'uses' => 'ProductController@load_comment'
+    ]);
+    Route::post('/send', [
+        'as' => 'comment.send',
+        'uses' => 'ProductController@send_comment'
+    ]);
+    Route::group([
+        'middleware' => ['auth', 'auth.role.admin']
+    ], function () {
+        Route::get('/all', [
+            'as' => 'comment.all',
+            'uses' => 'ProductController@show_comment'
+        ]);
+        Route::post('/reply', [
+            'as' => 'comment.reply',
+            'uses' => 'ProductController@reply_comment'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'comment.delete',
+            'uses' => 'ProductController@delete_comment'
+        ]);
+    });
+});
+
 /**
  * Admin pages
  */

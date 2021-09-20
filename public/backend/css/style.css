@@ -3597,3 +3597,12 @@ div#graph11 {
 .product-gallery {
     font-size: 20px;
 }
+
+.reply-icon {
+    color: #ff5469;
+    cursor: pointer;
+}
+
+.comment_reply {
+    display: none;
+}

@@ -22,7 +22,7 @@ class HomeController extends Controller
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_name', 'asc')->get()->take(5);
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $products = Product::where('product_status', 1)->latest()->get()->take(8);
-        $top_products = Product::where('product_status', 1)->latest()->get()->take(4);
+        $top_products = Product::where('product_status', 1)->orderBy('product_sold', 'desc')->latest()->get()->take(4);
         $all_products = Product::where('product_status', 1)->get();
         $sliders = Slider::where('slider_status', 1)->orderBy('slider_id', 'desc')->get()->take(3);
 

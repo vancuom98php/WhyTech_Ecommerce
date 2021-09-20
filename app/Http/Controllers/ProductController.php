@@ -10,6 +10,8 @@ use App\Models\CategoryProduct;
 use App\Models\Brand;
 use App\Models\Tag;
 use App\Models\ProductTag;
+use App\Models\Comment;
+use App\Models\Admin;
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Str;
@@ -19,6 +21,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Components\Recursive;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -242,6 +246,8 @@ class ProductController extends Controller
         $related_products = Product::where('category_id', $product->category->category_id)->whereNotIn('product_id', [$product->product_id])->orderBy('category_id', 'desc')->get();
         $all_products = Product::where('product_status', 1)->get();
         $galleries = Gallery::where('product_id', $product->product_id)->get();
+        $totalReview = $product->comments->where('comment_parent_comment', 0)->count();
+        $ratingAvg = $product->comments->avg('rating');
 
         //seo 
         $meta_desc = $product->product_desc;
@@ -250,7 +256,7 @@ class ProductController extends Controller
         $meta_title = "WhyTech | " . $product->product_name;
         //--seo
 
-        return view('pages.product.show_details', compact('product', 'related_products', 'all_products', 'galleries', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
+        return view('pages.product.show_details', compact('product', 'related_products', 'all_products', 'galleries', 'totalReview', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }
 
     public function search(Request $request)
@@ -291,9 +297,101 @@ class ProductController extends Controller
             ->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orWhere('brand_name', 'like', "%$keywords%")
             ->join('category_products', 'category_products.category_id', '=', 'products.category_id')->orWhere('category_name', 'like', "%$keywords%")
             ->get()->take(5);
-        
-        $categories = CategoryProduct::where('category_status', 1)->where('category_name', 'like', "%$keywords%")->get()->take(5);    
+
+        $categories = CategoryProduct::where('category_status', 1)->where('category_name', 'like', "%$keywords%")->get()->take(5);
 
         return view('pages.product.find', compact('products', 'categories'));
+    }
+
+    public function load_comment(Request $request)
+    {
+        $productId = $request->productId;
+        $comments = Comment::where('product_id', $productId)->where('comment_parent_comment', 0)->orderBy('comment_date', 'desc')->get();
+        $output = '';
+
+        foreach ($comments as $comment) {
+            $output .= '
+            <div class="review-o u-s-m-b-15 show_comment">
+                <div class="review-o__info u-s-m-b-8">
+
+                    <span class="review-o__name">' . $comment->comment_name . '</span>
+
+                    <span class="review-o__date">' . $comment->comment_date . '</span>
+                </div>
+                <div class="review-o__rating gl-rating-style u-s-m-b-8">';
+
+            $ratings = $comment->rating;
+
+            for ($i = 0; $i < (int)$ratings; $i++) {
+                $output .= '
+                    <i class="fas fa-star"></i>
+                ';
+            }
+
+            if (($ratings - (int)$ratings) > 0) {
+                $output .= '
+                <i class="fas fa-star-half-alt"></i>
+            ';
+            }
+
+            $output .= '</div>
+                <p class="review-o__text">' . $comment->comment_content . '</p>
+                ';
+            if ($comment->commentChildren->count() > 0) {
+                foreach ($comment->commentChildren as $commentChildren)
+                    $output .= '
+                <div class="review-o__info u-s-m-b-8 show_reply_comment">
+                    <img width="30px" height="25px" src="' . asset('frontend/images/logo/admin.png') . '">
+                    <p class="review-o__text" style="color: #ff4500; font-weight: bold;">' . $commentChildren->comment_name . ':&nbsp;</p>
+                    <p class="review-o__text">' . $commentChildren->comment_content . '</p>
+                </div>
+                ';
+            }
+            $output .= '</div>';
+        }
+
+        return $output;
+    }
+
+    public function send_comment(Request $request)
+    {
+        $productId = $request->productId;
+        $commentName = $request->commentName;
+        $commentPhone = $request->commentPhone;
+        $commentContent = $request->commentContent;
+        $rating = $request->rating;
+
+        $comment = Comment::create([
+            'comment_content' => $commentContent,
+            'rating' => $rating,
+            'comment_name' => $commentName,
+            'comment_phone' => $commentPhone,
+            'comment_date' => Carbon::now(),
+            'product_id' => $productId,
+            'comment_parent_comment' => 0,
+        ]);
+    }
+
+    public function show_comment()
+    {
+        $comments = Comment::orderBy('product_id', 'asc')->where('comment_parent_comment', 0)->orderBy('comment_date', 'desc')->get();
+
+        return view('admin.comment.all_comment', compact('comments'));
+    }
+
+    public function reply_comment(Request $request)
+    {
+        $commentContent = $request->commentContent;
+        $commentParent = $request->commentId;
+        $productId = Comment::find($commentParent)->product->product_id;
+
+        $comment = Comment::create([
+            'comment_content' => $commentContent,
+            'comment_name' => (Admin::find(Auth::id())->roles->pluck('role_name'))[0],
+            'comment_phone' => Auth::user()->admin_phone,
+            'comment_date' => Carbon::now(),
+            'product_id' => $productId,
+            'comment_parent_comment' => $commentParent,
+        ]);
     }
 }

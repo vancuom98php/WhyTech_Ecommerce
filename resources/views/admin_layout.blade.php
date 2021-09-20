@@ -410,6 +410,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </ul>
                         </li>
 
+                        @hasAnyRoles(['admin', 'author'])
+                        <li>
+                            <a href=" {{ route('comment.all') }}">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>Bình luận</span>
+                            </a>
+                        </li>
+                        @endhasAnyRoles
+
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fab fa-slideshare"></i>

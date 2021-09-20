@@ -234,4 +234,95 @@ $(document).ready(function () {
     });
 });
 
+// Review
+$(document).ready(function () {
+    loadComment();
 
+    function loadComment() {
+        let productId = $('.comment_product_id').val();
+        let urlToRedirect = '/comment/load';
+        let _token = $('input[name="_token"]').val();
+        $.ajax({
+            url: urlToRedirect,
+            method: 'POST',
+            data: {
+                productId: productId,
+                _token: _token
+            },
+            success: function (response) {
+                $("#review_item").html(response);
+            }
+        });
+    }
+
+    function validatePhone(txtPhone) {
+        var a = document.getElementById(txtPhone).value;
+        var filter = /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/;
+        if (filter.test(a)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    $('.submit_comment').on('click', function () {
+        let commentName = $('.comment_name').val();
+        let commentPhone = $('.comment_phone').val();
+        let commentContent = $('.comment_content').val();
+        let rating = ($('input[name=rating]:checked', '#review_form').val());
+        let productId = $('.comment_product_id').val();
+        let urlToRedirect = '/comment/send';
+        let _token = $('input[name="_token"]').val();
+
+        if (!commentName) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi...',
+                text: 'Vui lòng nhập họ tên của bạn trước khi bình luận!',
+            })
+        } else if (!commentPhone) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi...',
+                text: 'Vui lòng nhập số điện thoại của bạn trước khi bình luận!',
+            })
+        } else if (!validatePhone('comment_phone')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi...',
+                text: 'Số điện thoại không đúng, vui lòng kiểm tra lại!',
+            })
+        } else if (!commentContent && !rating) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi...',
+                text: 'Vui lòng nhập đánh giá sao hoặc nhập nội dung bình luận!',
+            })
+        } else {
+            $.ajax({
+                url: urlToRedirect,
+                method: 'POST',
+                data: {
+                    productId: productId,
+                    commentName: commentName,
+                    commentPhone: commentPhone,
+                    commentContent: commentContent,
+                    rating: rating,
+                    _token: _token
+                },
+                success: function (response) {
+                    Swal.fire(
+                        'Thành công!',
+                        'Cảm ơn bạn đã đánh giá sản phẩm, chúng tôi sẽ sớm khắc phục nếu có sai sót!',
+                        'success'
+                    );
+                    loadComment();
+                    $('.comment_name').val('');
+                    $('.comment_phone').val('');
+                    $('.comment_content').val('');
+                }
+            });
+        }
+    })
+});
