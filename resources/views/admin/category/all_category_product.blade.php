@@ -37,49 +37,51 @@
                             <th scope="col" width="50px"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="category_order">
                         @foreach ($categories as $category)
-                            <tr>
+                            <tr id="{{ $category->category_id }}">
                                 <td>
                                     <label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td>{{ $category->category_name }}</td>
                                 <td><span class="text-ellipsis">
-                                    @if($category->category_parent == 0)
-                                        --------
-                                    @else
-                                        @foreach($sub_categories as $sub_category)
-                                            @if($sub_category->category_id == $category->category_parent)
-                                                {{ $sub_category->category_name }}
+                                        @if ($category->category_parent == 0)
+                                            --------
+                                        @else
+                                            @foreach ($sub_categories as $sub_category)
+                                                @if ($sub_category->category_id == $category->category_parent)
+                                                    {{ $sub_category->category_name }}
                                                 @break
                                             @endif
                                         @endforeach
-                                    @endif
-                                    </span>
-                                </td>
-                                <td><span class="text-ellipsis">{{ $category->category_desc }}</span></td>
-                                <td><span class="text-ellipsis">{{ $category->products->merge($category->childrenProducts)->count() }}</span></td>
-                                <td><span class="text-ellipsis">{{ $category->updated_at->format('d-m-Y') }}</span></td>
-                                <td><span class="text-ellipsis">
-                                        @if ($category->category_status == 0)
-                                            <a
-                                                href="{{ route('category-product.inactive', ['id' => $category->category_id]) }}"><i
-                                                    class="fa-category fa fa-eye-slash"></i></a>
-                                        @else
-                                            <a
-                                                href="{{ route('category-product.active', ['id' => $category->category_id]) }}"><i
-                                                    class="fa-category fa fa-eye"></i></a>
-                                        @endif
-                                    </span></td>
-                                <td>
-                                    <a href="{{ route('category-product.edit', ['id' => $category->category_id]) }}" class="active category-action" ui-toggle-class="">
-                                        <i class="fa fa-pencil-square-o text-success text-active"></i>
-                                    </a>
-                                    <a href="{{ route('category-product.delete', ['id' => $category->category_id]) }}" class="active category-action confirm_delete_category" ui-toggle-class="">
-                                        <i class="fas fa-trash-alt text-danger text"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        @endif
+                        </span>
+                        </td>
+                        <td><span class="text-ellipsis">{{ $category->category_desc }}</span></td>
+                        <td><span
+                                class="text-ellipsis">{{ $category->products->merge($category->childrenProducts)->count() }}</span>
+                        </td>
+                        <td><span class="text-ellipsis">{{ $category->updated_at->format('d-m-Y') }}</span></td>
+                        <td><span class="text-ellipsis">
+                                @if ($category->category_status == 0)
+                                    <a href="{{ route('category-product.inactive', ['id' => $category->category_id]) }}"><i
+                                            class="fa-category fa fa-eye-slash"></i></a>
+                                @else
+                                    <a href="{{ route('category-product.active', ['id' => $category->category_id]) }}"><i
+                                            class="fa-category fa fa-eye"></i></a>
+                                @endif
+                            </span></td>
+                        <td>
+                            <a href="{{ route('category-product.edit', ['id' => $category->category_id]) }}"
+                                class="active category-action" ui-toggle-class="">
+                                <i class="fa fa-pencil-square-o text-success text-active"></i>
+                            </a>
+                            <a href="{{ route('category-product.delete', ['id' => $category->category_id]) }}"
+                                class="active category-action confirm_delete_category" ui-toggle-class="">
+                                <i class="fas fa-trash-alt text-danger text"></i>
+                            </a>
+                        </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -92,11 +94,14 @@
 @section('scripts')
 
     <script src="{{ asset('backend/js/sweetalert2@9.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+        integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="{{ asset('backend/js/list.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
-    
+
 @endsection
