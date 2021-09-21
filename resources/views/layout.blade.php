@@ -1281,7 +1281,7 @@
                                             </li>
                                             <li>
 
-                                                <a href="wishlist.html">Yêu thích</a>
+                                                <a href="">Yêu thích</a>
                                             </li>
                                             <li>
                                                 @if (session()->has('customer_id'))
@@ -1365,14 +1365,22 @@
 
                                         <a href="{{ url('/') }}"><i class="fas fa-home u-c-brand"></i></a>
                                     </li>
-                                    <li>
+                                    <li class="has-dropdown">
 
-                                        <a href="wishlist.html"><i class="far fa-heart"></i></a>
+                                        <a><i class="far fa-heart"></i>
+                                            <span id="wishlist_quantity" style="top: 21%;"
+                                                class="total-item-round"></span>
+                                        </a>
+                                        <span class="js-menu-toggle"></span>
+                                        <div class="mini-cart" id="change-item-wishlist">
+
+                                        </div>
+
                                     </li>
                                     <li class="has-dropdown">
 
                                         <a href="{{ route('cart.show') }}" class="mini-cart-shop-link"><i
-                                                class="fas fa-shopping-basket"></i></i>
+                                                class="fas fa-shopping-basket"></i>
 
                                             @if (session()->has('cart') && count(session()->get('cart')) > 0)
                                                 <span id="cart_quantity_show"
@@ -1727,7 +1735,7 @@
                                             <a href="shop-side-version-2.html">DSLR Cameras</a></li> --}}
                                             <li class="is-marked">
 
-                                                <a
+                                                <a id="wishlist_categoryurl_{{ $product->product_id }}"
                                                     href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
                                             </li>
                                         </ul>
@@ -1741,7 +1749,7 @@
                                             <div id="js-product-detail-modal">
                                                 <div>
 
-                                                    <img class="u-img-fluid"
+                                                    <img id="wishlist_productimage_{{ $product->product_id }}" class="u-img-fluid"
                                                         src="{{ asset($product->product_image_path) }}"
                                                         alt="{{ $product->product_name }}">
                                                 </div>
@@ -1756,7 +1764,9 @@
                                     <div class="pd-detail">
                                         <div>
 
-                                            <span class="pd-detail__name">{{ $product->product_name }}</span>
+                                            <a id="wishlist_producturl_{{ $product->product_id }}"
+                                                href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}"
+                                                class="pd-detail__name">{{ $product->product_name }}</a>
                                         </div>
                                         <div>
                                             <div class="pd-detail__inline">
@@ -1807,9 +1817,20 @@
                                                 <span class="pd-detail__click-wrap"><i
                                                         class="far fa-heart u-s-m-r-6"></i>
 
-                                                    <a href="signin.html">Thêm vào danh sách yêu thích</a>
+                                                    <input type="hidden"
+                                                        id="wishlist_productname_{{ $product->product_id }}"
+                                                        value="{{ $product->product_name }}">
+                                                    <input type="hidden"
+                                                        id="wishlist_productprice_{{ $product->product_id }}"
+                                                        value="{{ number_format($product->product_price) }} VNĐ">
+                                                    <input type="hidden"
+                                                        id="wishlist_category_{{ $product->product_id }}"
+                                                        value="{{ $product->category->category_name }}">
 
-                                                    <span class="pd-detail__click-count">(222)</span></span>
+                                                    <a onclick="add_wishlist(this.id)"
+                                                        id="{{ $product->product_id }}">Thêm vào danh sách yêu
+                                                        thích</a>
+
                                             </div>
                                         </div>
                                         <div class="u-s-m-b-15">
@@ -2046,6 +2067,120 @@
             } else
                 $('#find-product-ajax').html("");
         })
+    </script>
+
+    <script type="text/javascript">
+        function view() {
+            output = '';
+
+            if (localStorage.getItem('data') != null) {
+                let data = JSON.parse(localStorage.getItem('data'));
+                data.reverse();
+
+                if (data.length > 0) {
+                    output += '<div class="mini-product-container gl-scroll u-s-m-b-15">';
+
+                    for (i = 0; i < data.length; i++) {
+
+                        let name = data[i].name;
+                        let price = data[i].price;
+                        let image = data[i].image;
+                        let url = data[i].url;
+                        let category = data[i].category;
+                        let category_url = data[i].category_url;
+                        let index = data.length - 1 - i;
+
+                        output +=
+                            '<div class="card-mini-product"><div class="mini-product"><div class="mini-product__image-wrapper">';
+                        output += '<a class="mini-product__link" href="' + url + '">';
+                        output += '<img class="u-img-fluid" src="' + image + '" alt="' + name + '"></a>';
+                        output += '</div><div class="mini-product__info-wrapper"><span class="mini-product__category">';
+                        output += '<a href="' + category_url + '">' + category +
+                            '</a></span><span class="mini-product__name">';
+                        output += '<a href="' + url + '">' + name + '</a></span>';
+                        output += '<span class="mini-product__price">' + price + '</span></div></div>';
+                        output += '<a class="mini-product__delete-link far fa-trash-alt" id="' + index +
+                            '" onclick="delete_wishlist(this.id)"></a></div>';
+                    }
+                    output += '</div>';
+
+                } else {
+                    output +=
+                        '<div class="card-mini-product"><div class="mini-product"><img src="{{ asset('frontend/images/empty_wishlist.png') }}" alt="Empty wishlist" width="100%"></div></div>';
+                }
+
+                $('#wishlist_quantity').text(data.length);
+            } else {
+                output +=
+                    '<div class="card-mini-product"><div class="mini-product"><img src="{{ asset('frontend/images/empty_wishlist.png') }}" alt="Empty wishlist" width="100%"></div></div>';
+                $('#wishlist_quantity').text(0);
+            }
+
+            $("#change-item-wishlist").empty();
+            $("#change-item-wishlist").append(output);
+        }
+
+        view();
+
+        function add_wishlist(clicked_id) {
+
+            let id = clicked_id;
+            let name = document.getElementById('wishlist_productname_' + id).value;
+            let price = document.getElementById('wishlist_productprice_' + id).value;
+            let image = document.getElementById('wishlist_productimage_' + id).src;
+            let url = document.getElementById('wishlist_producturl_' + id).href;
+            let category = document.getElementById('wishlist_category_' + id).value;
+            let category_url = document.getElementById('wishlist_categoryurl_' + id).href;
+
+            let newItem = {
+                'url': url,
+                'id': id,
+                'name': name,
+                'price': price,
+                'image': image,
+                'category': category,
+                'category_url': category_url
+            }
+
+            if (localStorage.getItem('data') == null) {
+                localStorage.setItem('data', '[]');
+            }
+
+            let old_data = JSON.parse(localStorage.getItem('data'));
+
+            let matches = $.grep(old_data, function(obj) {
+                return obj.id == id;
+            })
+
+            if (matches.length) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi...',
+                    text: 'Sản phẩm này đã có trong danh sách yêu thích, bạn không thể thêm!',
+                });
+            } else {
+                old_data.push(newItem);
+                Swal.fire(
+                    'Xác nhận!',
+                    'Đã thêm sản phẩm này vào danh sách yêu thích!',
+                    'success'
+                );
+            }
+
+            localStorage.setItem('data', JSON.stringify(old_data));
+
+            view();
+        }
+
+        function delete_wishlist(clicked_id) {
+            let id = clicked_id;
+            let data = JSON.parse(localStorage.getItem('data'));
+
+            data.splice(id, 1);
+            localStorage.setItem('data', JSON.stringify(data));
+
+            view();
+        }
     </script>
 
     {{-- <script>

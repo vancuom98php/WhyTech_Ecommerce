@@ -23,7 +23,7 @@
                                 </li>
                             @endif
                             <li class="is-marked">
-                                <a
+                                <a id="wishlist_categoryurl_{{ $product->product_id }}"
                                     href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ $product->category->category_name }}</a>
                             </li>
                         </ul>
@@ -36,8 +36,8 @@
                         <div class="slider-fouc pd-wrap">
                             <div id="pd-o-initiate">
                                 <div class="pd-o-img-wrap" data-src="{{ asset($product->product_image_path) }}">
-                                    <img style="height: 445px" class="u-img-fluid"
-                                        src="{{ asset($product->product_image_path) }}"
+                                    <img id="wishlist_productimage_{{ $product->product_id }}" style="height: 445px"
+                                        class="u-img-fluid" src="{{ asset($product->product_image_path) }}"
                                         data-zoom-image="{{ asset($product->product_image_path) }}"
                                         alt="{{ $product->product_name }}">
                                 </div>
@@ -80,7 +80,9 @@
                     <div class="pd-detail">
                         <div>
 
-                            <span class="pd-detail__name">{{ $product->product_name }}</span>
+                            <a id="wishlist_producturl_{{ $product->product_id }}"
+                                href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}"
+                                class="pd-detail__name">{{ $product->product_name }}</a>
                         </div>
                         <div>
                             <div class="pd-detail__inline">
@@ -127,9 +129,16 @@
 
                                 <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
 
-                                    <a href="signin.html">Thêm vào danh sách yêu thích</a>
+                                    <input type="hidden" id="wishlist_productname_{{ $product->product_id }}"
+                                        value="{{ $product->product_name }}">
+                                    <input type="hidden" id="wishlist_productprice_{{ $product->product_id }}"
+                                        value="{{ number_format($product->product_price) }} VNĐ">
+                                    <input type="hidden" id="wishlist_category_{{ $product->product_id }}"
+                                        value="{{ $product->category->category_name }}">
 
-                                    {{-- <span class="pd-detail__click-count">(222)</span></span> --}}
+                                    <a id="{{ $product->product_id }}" onclick="add_wishlist(this.id)">Thêm vào danh sách
+                                        yêu thích</a>
+
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
@@ -645,7 +654,8 @@
                                         <a class="aspect aspect--bg-grey aspect--square u-d-block"
                                             href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
 
-                                            <img class="aspect__img" src="{{ asset($product->product_image_path) }}"
+                                            <img id="wishlist_productimage_{{ $product->product_id }}"
+                                                class="aspect__img" src="{{ asset($product->product_image_path) }}"
                                                 alt="{{ $product->product_name }}"></a>
                                         <div class="product-o__action-wrap">
                                             <ul class="product-o__action-list">
@@ -675,9 +685,18 @@
                                                     </form>
                                                 </li>
                                                 <li>
+                                                    <input type="hidden"
+                                                        id="wishlist_productname_{{ $product->product_id }}"
+                                                        value="{{ $product->product_name }}">
+                                                    <input type="hidden"
+                                                        id="wishlist_productprice_{{ $product->product_id }}"
+                                                        value="{{ number_format($product->product_price) }} VNĐ">
+                                                    <input type="hidden"
+                                                        id="wishlist_category_{{ $product->product_id }}"
+                                                        value="{{ $product->category->category_name }}">
 
-                                                    <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                        title="Thêm danh sách yêu thích"><i class="fas fa-heart"></i></a>
+                                                    <a data-tooltip="tooltip" data-placement="top" id="{{ $product->product_id }}"
+                                                        onclick="add_wishlist(this.id)" title="Thêm danh sách yêu thích"><i class="fas fa-heart"></i></a>
                                                 </li>
                                                 <li>
 
@@ -691,12 +710,13 @@
 
                                     <span class="product-o__category">
 
-                                        <a
+                                        <a id="wishlist_categoryurl_{{ $product->product_id }}"
                                             href="{{ route('home.category', ['category_product_slug' => $product->category->category_product_slug]) }}">{{ optional($product->category)->category_name }}</a></span>
 
                                     <span class="product-o__name">
 
-                                        <a href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a></span>
+                                        <a id="wishlist_producturl_{{ $product->product_id }}"
+                                            href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a></span>
                                     <div class="product-o__rating gl-rating-style">
                                         @php
                                             $ratingAvg = $product->comments->avg('rating');
