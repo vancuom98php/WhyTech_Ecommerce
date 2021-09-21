@@ -133,10 +133,10 @@
                                             <div class="product-o product-o--hover-on product-o--radius">
                                                 <div class="product-o__wrap">
 
-                                                    <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                        href="product-detail.html">
+                                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="">
 
-                                                        <img class="aspect__img"
+                                                        <img id="wishlist_productimage_{{ $product->product_id }}"
+                                                            class="aspect__img"
                                                             src="{{ asset($product->product_image_path) }}" alt=""></a>
                                                     <div class="product-o__action-wrap">
                                                         <ul class="product-o__action-list">
@@ -168,15 +168,25 @@
                                                                 </form>
                                                             </li>
                                                             <li>
+                                                                <input type="hidden"
+                                                                    id="wishlist_productname_{{ $product->product_id }}"
+                                                                    value="{{ $product->product_name }}">
+                                                                <input type="hidden"
+                                                                    id="wishlist_productprice_{{ $product->product_id }}"
+                                                                    value="{{ number_format($product->product_price) }} VNĐ">
+                                                                <input type="hidden"
+                                                                    id="wishlist_category_{{ $product->product_id }}"
+                                                                    value="{{ $product->category->category_name }}">
 
-                                                                <a href="signin.html" data-tooltip="tooltip"
-                                                                    data-placement="top" title="Thêm danh sách yêu thích"><i
+                                                                <a data-tooltip="tooltip" id="{{ $product->product_id }}"
+                                                                    onclick="add_wishlist(this.id)" data-placement="top"
+                                                                    title="Thêm danh sách yêu thích"><i
                                                                         class="fas fa-heart"></i></a>
                                                             </li>
                                                             <li>
 
-                                                                <a href="signin.html" data-tooltip="tooltip"
-                                                                    data-placement="top" title="Liên hệ khi giảm giá"><i
+                                                                <a data-tooltip="tooltip" data-placement="top"
+                                                                    title="Liên hệ khi giảm giá"><i
                                                                         class="fas fa-envelope"></i></a>
                                                             </li>
                                                         </ul>
@@ -185,12 +195,12 @@
 
                                                 <span class="product-o__category">
 
-                                                    <a
+                                                    <a id="wishlist_categoryurl_{{ $product->product_id }}"
                                                         href="{{ route('home.category', ['category_product_slug' => $category->category_product_slug]) }}">{{ $category->category_name }}</a></span>
 
                                                 <span class="product-o__name">
 
-                                                    <a
+                                                    <a id="wishlist_producturl_{{ $product->product_id }}"
                                                         href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a></span>
                                                 <div class="product-o__rating gl-rating-style">
                                                     @php
@@ -267,7 +277,7 @@
                         <div class="product-o product-o--radius product-o--hover-off u-h-100">
                             <div class="product-o__wrap">
 
-                                <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+                                <a class="aspect aspect--bg-grey aspect--square u-d-block" href="">
 
                                     <img class="aspect__img"
                                         src="{{ asset('frontend/images/product/electronic/product11.jpg') }}" alt=""></a>
@@ -291,12 +301,12 @@
                                         </li>
                                         <li>
 
-                                            <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                title="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                                            <a data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i
+                                                    class="fas fa-heart"></i></a>
                                         </li>
                                         <li>
 
-                                            <a href="signin.html" data-tooltip="tooltip" data-placement="top"
+                                            <a data-tooltip="tooltip" data-placement="top"
                                                 title="Email me When the price drops"><i class="fas fa-envelope"></i></a>
                                         </li>
                                     </ul>
@@ -309,7 +319,7 @@
 
                             <span class="product-o__name">
 
-                                <a href="product-detail.html">DJI Phantom Drone 4k</a></span>
+                                <a href="">DJI Phantom Drone 4k</a></span>
                             <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -326,7 +336,7 @@
                         <div class="product-o product-o--radius product-o--hover-off u-h-100">
                             <div class="product-o__wrap">
 
-                                <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+                                <a class="aspect aspect--bg-grey aspect--square u-d-block" href="">
 
                                     <img class="aspect__img"
                                         src="{{ asset('frontend/images/product/electronic/product12.jpg') }}" alt=""></a>
@@ -350,12 +360,12 @@
                                         </li>
                                         <li>
 
-                                            <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                title="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                                            <a data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i
+                                                    class="fas fa-heart"></i></a>
                                         </li>
                                         <li>
 
-                                            <a href="signin.html" data-tooltip="tooltip" data-placement="top"
+                                            <a data-tooltip="tooltip" data-placement="top"
                                                 title="Email me When the price drops"><i class="fas fa-envelope"></i></a>
                                         </li>
                                     </ul>
@@ -368,7 +378,7 @@
 
                             <span class="product-o__name">
 
-                                <a href="product-detail.html">DJI Phantom Drone 2k</a></span>
+                                <a href="">DJI Phantom Drone 2k</a></span>
                             <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -420,7 +430,8 @@
                                         <a class="aspect aspect--bg-grey aspect--square u-d-block"
                                             href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
 
-                                            <img class="aspect__img" src="{{ asset($product->product_image_path) }}"
+                                            <img id="wishlist_productimage_{{ $product->product_id }}"
+                                                class="aspect__img" src="{{ asset($product->product_image_path) }}"
                                                 alt="{{ $product->product_name }}"></a>
                                         <div class="product-o__action-wrap">
                                             <ul class="product-o__action-list">
@@ -450,14 +461,23 @@
                                                     </form>
                                                 </li>
                                                 <li>
+                                                    <input type="hidden"
+                                                        id="wishlist_productname_{{ $product->product_id }}"
+                                                        value="{{ $product->product_name }}">
+                                                    <input type="hidden"
+                                                        id="wishlist_productprice_{{ $product->product_id }}"
+                                                        value="{{ number_format($product->product_price) }} VNĐ">
+                                                    <input type="hidden"
+                                                        id="wishlist_category_{{ $product->product_id }}"
+                                                        value="{{ $product->category->category_name }}">
 
-                                                    <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                        title="Thêm vào danh sách yêu thích"><i
-                                                            class="fas fa-heart"></i></a>
+                                                    <a data-tooltip="tooltip" data-placement="top"
+                                                        id="{{ $product->product_id }}"
+                                                        title="Thêm vào danh sách yêu thích"
+                                                        onclick="add_wishlist(this.id)"><i class="fas fa-heart"></i></a>
                                                 </li>
                                                 <li>
-
-                                                    <a href="signin.html" data-tooltip="tooltip" data-placement="top"
+                                                    <a data-tooltip="tooltip" data-placement="top"
                                                         title="Email cho tôi khi giảm giá"><i
                                                             class="fas fa-envelope"></i></a>
                                                 </li>
@@ -467,12 +487,12 @@
 
                                     <span class="product-o__category">
 
-                                        <a
+                                        <a id="wishlist_categoryurl_{{ $product->product_id }}"
                                             href="{{ route('home.category', ['category_product_slug' => $category->category_product_slug]) }}">{{ $product->category->category_name }}</a></span>
 
                                     <span class="product-o__name">
 
-                                        <a
+                                        <a id="wishlist_producturl_{{ $product->product_id }}"
                                             href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a></span>
                                     <div class="product-o__rating gl-rating-style">
                                         @php
@@ -580,7 +600,8 @@
                                     <a class="aspect aspect--bg-grey aspect--square u-d-block"
                                         href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
 
-                                        <img class="aspect__img" src="{{ asset($product->product_image_path) }}"
+                                        <img id="wishlist_productimage_{{ $product->product_id }}"
+                                            class="aspect__img" src="{{ asset($product->product_image_path) }}"
                                             alt="{{ $product->product_name }}"></a>
                                     <div class="product-o__action-wrap">
                                         <ul class="product-o__action-list">
@@ -609,13 +630,19 @@
                                                 </form>
                                             </li>
                                             <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Thêm vào danh sách yêu thích"><i class="fas fa-heart"></i></a>
+                                                <input type="hidden" id="wishlist_productname_{{ $product->product_id }}"
+                                                    value="{{ $product->product_name }}">
+                                                <input type="hidden"
+                                                    id="wishlist_productprice_{{ $product->product_id }}"
+                                                    value="{{ number_format($product->product_price) }} VNĐ">
+                                                <input type="hidden" id="wishlist_category_{{ $product->product_id }}"
+                                                    value="{{ $product->category->category_name }}">
+                                                <a data-tooltip="tooltip" data-placement="top" id="{{ $product->product_id }}"
+                                                    title="Thêm vào danh sách yêu thích" onclick="add_wishlist(this.id)"><i class="fas fa-heart"></i></a>
                                             </li>
                                             <li>
 
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
+                                                <a data-tooltip="tooltip" data-placement="top"
                                                     title="Email cho tôi khi giảm giá"><i class="fas fa-envelope"></i></a>
                                             </li>
                                         </ul>
@@ -624,12 +651,12 @@
 
                                 <span class="product-o__category">
 
-                                    <a
+                                    <a id="wishlist_categoryurl_{{ $product->product_id }}"
                                         href="{{ route('home.category', ['category_product_slug' => $category->category_product_slug]) }}">{{ $product->category->category_name }}</a></span>
 
                                 <span class="product-o__name">
 
-                                    <a
+                                    <a id="wishlist_producturl_{{ $product->product_id }}"
                                         href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">{{ $product->product_name }}</a></span>
                                 <div class="product-o__rating gl-rating-style">
                                     @php
@@ -766,7 +793,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product23.jpg"
                                                     alt=""></a>
@@ -779,7 +806,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 15 Ram 16GB</a></span>
+                                                <a href="">Razor Gear 15 Ram 16GB</a></span>
 
                                             <span class="product-l__price">$125.00</span>
                                         </div>
@@ -790,7 +817,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product24.jpg"
                                                     alt=""></a>
@@ -803,7 +830,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 13 Ram 16GB</a></span>
+                                                <a href="">Razor Gear 13 Ram 16GB</a></span>
 
                                             <span class="product-l__price">$125.00</span>
                                         </div>
@@ -814,7 +841,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product25.jpg"
                                                     alt=""></a>
@@ -827,7 +854,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 15 Ram 8GB</a></span>
+                                                <a href="">Razor Gear 15 Ram 8GB</a></span>
 
                                             <span class="product-l__price">$125.00</span>
                                         </div>
@@ -846,7 +873,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product26.jpg"
                                                     alt=""></a>
@@ -859,7 +886,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 10 Ram 16GB</a></span>
+                                                <a href="">Razor Gear 10 Ram 16GB</a></span>
 
                                             <span class="product-l__price">$125.00
 
@@ -872,7 +899,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product27.jpg"
                                                     alt=""></a>
@@ -885,7 +912,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 15 Ram 8GB</a></span>
+                                                <a href="">Razor Gear 15 Ram 8GB</a></span>
 
                                             <span class="product-l__price">$125.00
 
@@ -898,7 +925,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product28.jpg"
                                                     alt=""></a>
@@ -911,7 +938,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 15 Ultra Ram
+                                                <a href="">Razor Gear 15 Ultra Ram
                                                     16GB</a></span>
 
                                             <span class="product-l__price">$125.00
@@ -933,7 +960,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product29.jpg"
                                                     alt=""></a>
@@ -950,7 +977,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 20 Ultra Ram
+                                                <a href="">Razor Gear 20 Ultra Ram
                                                     16GB</a></span>
 
                                             <span class="product-l__price">$125.00</span>
@@ -962,7 +989,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product30.jpg"
                                                     alt=""></a>
@@ -979,7 +1006,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 11 Ultra Ram
+                                                <a href="">Razor Gear 11 Ultra Ram
                                                     16GB</a></span>
 
                                             <span class="product-l__price">$125.00</span>
@@ -991,7 +1018,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                href="">
 
                                                 <img class="aspect__img" src="images/product/electronic/product31.jpg"
                                                     alt=""></a>
@@ -1008,7 +1035,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a href="product-detail.html">Razor Gear 10 Ultra Ram
+                                                <a href="">Razor Gear 10 Ultra Ram
                                                     16GB</a></span>
 
                                             <span class="product-l__price">$125.00</span>
