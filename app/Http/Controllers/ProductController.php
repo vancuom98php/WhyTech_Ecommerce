@@ -266,12 +266,20 @@ class ProductController extends Controller
         $keywords = $request->keywords;
 
         if (empty($keywords))
-            $products = Product::where('product_status', 1)->latest()->paginate(8);
+            $product = Product::where('product_status', 1);
         else {
-            $products = Product::select('products.*')->where('product_status', 1)->where('product_name', 'like', "%$keywords%")
+            $product = Product::select('products.*')->where('product_status', 1)->where('product_name', 'like', "%$keywords%")
                 ->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orWhere('brand_name', 'like', "%$keywords%")
-                ->join('category_products', 'category_products.category_id', '=', 'products.category_id')->orWhere('category_name', 'like', "%$keywords%")
-                ->latest()->paginate(8);
+                ->join('category_products', 'category_products.category_id', '=', 'products.category_id')->orWhere('category_name', 'like', "%$keywords%");
+
+            if (isset($_GET['price_min']) && $_GET['price_max'])
+                $product = $product->whereBetween('product_price', [$_GET['price_min'], $_GET['price_max']]);
+
+            if (isset($_GET['sort_by'])) {
+                $sort_by = $_GET['sort_by'];
+                $products =  $this->SortProduct($product, $sort_by);
+            } else
+                $products = $product->latest()->paginate(9);
 
             if (!$products->total())
                 session()->flash('notification', 'Rất tiếc, sản phẩm bạn tìm kiếm hiện không được bán hoặc đã hết hàng. Vui lòng tìm kiếm sản phẩm khác. Xin cảm ơn!');

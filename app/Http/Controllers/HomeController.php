@@ -7,9 +7,12 @@ use App\Models\CategoryProduct;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Traits\SortProductTrait;
 
 class HomeController extends Controller
 {
+    use SortProductTrait;
+
     public function index(Request $request)
     {
         //seo 
@@ -40,8 +43,17 @@ class HomeController extends Controller
 
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_order', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
-        $products = Product::where('product_status', 1)->latest()->paginate(12);
         $all_products = Product::where('product_status', 1)->get();
+        $product = Product::where('product_status', 1);
+
+        if(isset($_GET['price_min']) && $_GET['price_max'])
+            $product = $product->whereBetween('product_price', [$_GET['price_min'], $_GET['price_max']]);
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            $products =  $this->SortProduct($product, $sort_by);
+        } else
+            $products = $product->latest()->paginate(9);
 
         return view('pages.shop', compact('categories', 'brands', 'products', 'all_products', 'meta_desc', 'meta_keywords', 'url_canonical', 'meta_title'));
     }

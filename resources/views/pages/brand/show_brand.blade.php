@@ -20,22 +20,25 @@
 
                         <span class="js-shop-list-target"><i class="fas fa-list"></i></span>
                     </div>
-                    <form>
-                        <div class="tool-style__form-wrap">
-                            <div class="u-s-m-b-8"><select class="select-box select-box--transparent-b-2">
-                                    <option>Hiện: 8</option>
-                                    <option selected>Hiện: 12</option>
-                                    <option>Hiện: 16</option>
-                                    <option>Hiện: 28</option>
-                                </select></div>
-                            <div class="u-s-m-b-8"><select class="select-box select-box--transparent-b-2">
-                                    <option selected>Sắp xếp: Mới nhất</option>
-                                    <option>Sắp xếp: Cũ nhất</option>
-                                    <option>Sắp xếp: Bán chạy nhất</option>
-                                    <option>Sắp xếp: Đánh giá cao nhất</option>
-                                    <option>Sắp xếp: Giá thấp nhất</option>
-                                    <option>Sắp xếp: Cao nhất</option>
-                                </select></div>
+                    <form method="post">
+                        @csrf
+                        <div class="u-s-m-b-8">
+                            <select name="sort" id="sort" class="select-box select-box--transparent-b-2">
+                                @php
+                                    $options = [
+                                        'new' => 'Mới nhất',
+                                        'old' => 'Cũ nhất',
+                                        'az' => 'A-Z',
+                                        'za' => 'Z-A',
+                                        'inc' => 'Giá tăng dần',
+                                        'desc' => 'Giá giảm dần',
+                                    ];
+                                @endphp
+                                @foreach ($options as $key => $value)
+                                    <option value="{{ Request::url() }}?sort_by={{ $key }}"
+                                        @if (isset($_GET['sort_by']) && $_GET['sort_by'] == $key) selected @endif>Sắp xếp: {{ $value }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </form>
                 </div>
@@ -51,8 +54,8 @@
                                         class="aspect aspect--bg-grey aspect--square u-d-block"
                                         href="{{ route('product.detail', ['product_slug' => $product->product_slug]) }}">
 
-                                        <img id="wishlist_productimage_{{ $product->product_id }}"
-                                            class="aspect__img" src="{{ asset($product->product_image_path) }}"
+                                        <img id="wishlist_productimage_{{ $product->product_id }}" class="aspect__img"
+                                            src="{{ asset($product->product_image_path) }}"
                                             alt="{{ $product->product_name }}"></a>
                                     <div class="product-m__quick-look">
 
@@ -126,33 +129,9 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
-            <div class="u-s-p-y-60">
-
-                <!--====== Pagination ======-->
                 <ul class="shop-p__pagination">
-                    <li class="is-active">
-
-                        <a href="shop-side-version-2.html">1</a>
-                    </li>
-                    <li>
-
-                        <a href="shop-side-version-2.html">2</a>
-                    </li>
-                    <li>
-
-                        <a href="shop-side-version-2.html">3</a>
-                    </li>
-                    <li>
-
-                        <a href="shop-side-version-2.html">4</a>
-                    </li>
-                    <li>
-
-                        <a class="fas fa-angle-right" href="shop-side-version-2.html"></a>
-                    </li>
+                    {{ $productByBrandSlug->links() }}
                 </ul>
-                <!--====== End - Pagination ======-->
             </div>
         </div>
     </div>

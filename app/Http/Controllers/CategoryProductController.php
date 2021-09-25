@@ -11,9 +11,12 @@ use App\Http\Requests\AddCategoryProductRequest;
 use App\Http\Requests\UpdateCategoryProductRequest;
 use Illuminate\Support\Str;
 use App\Components\Recursive;
+use App\Traits\SortProductTrait;
 
 class CategoryProductController extends Controller
 {
+    use SortProductTrait;
+
     public function getCategory($category_parent)
     {
         $categories = CategoryProduct::where('category_status', 1)->get();
@@ -154,12 +157,30 @@ class CategoryProductController extends Controller
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $categoryBySlug = CategoryProduct::where('category_product_slug', $category_product_slug)->first();
 
-        if ($categoryBySlug->category_parent != 0)
-            $productByCategorySlug = Product::select('products.*')->where('product_status', 1)->join('category_products', 'category_products.category_id', '=', 'products.category_id')
-                ->where('category_product_slug', $category_product_slug)->latest()->paginate(4);
-        else {
+        if ($categoryBySlug->category_parent != 0) {
+            $productByCategorySlugs = Product::select('products.*')->where('product_status', 1)->join('category_products', 'category_products.category_id', '=', 'products.category_id')
+                ->where('category_product_slug', $category_product_slug);
+
+            if (isset($_GET['price_min']) && $_GET['price_max'])
+                $productByCategorySlugs = $productByCategorySlugs->whereBetween('product_price', [$_GET['price_min'], $_GET['price_max']]);
+
+            if (isset($_GET['sort_by'])) {
+                $sort_by = $_GET['sort_by'];
+                $productByCategorySlug =  $this->SortProduct($productByCategorySlugs, $sort_by);
+            } else
+                $productByCategorySlug =  $productByCategorySlugs->latest()->paginate(9);
+        } else {
             $categoryBySlug = CategoryProduct::with(['products', 'childrenProducts'])->where('category_product_slug', $category_product_slug)->first();
-            $productByCategorySlug = $categoryBySlug->products->merge($categoryBySlug->childrenProducts);
+            $productByCategorySlugs = $categoryBySlug->products->merge($categoryBySlug->childrenProducts);
+
+            if (isset($_GET['price_min']) && $_GET['price_max'])
+                $productByCategorySlugs = $productByCategorySlugs->whereBetween('product_price', [$_GET['price_min'], $_GET['price_max']]);
+
+            if (isset($_GET['sort_by'])) {
+                $sort_by = $_GET['sort_by'];
+                $productByCategorySlug = $this->SortProductByCategory($productByCategorySlugs, $sort_by);
+            } else
+                $productByCategorySlug = $productByCategorySlugs->sortByDesc('created_at')->paginate(9);
         }
 
         $all_products = Product::where('product_status', 1)->get();

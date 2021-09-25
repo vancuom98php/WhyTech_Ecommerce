@@ -78,114 +78,6 @@
                         <div class="u-s-m-b-30">
                             <div class="shop-w shop-w--style">
                                 <div class="shop-w__intro-wrap">
-                                    <h1 class="shop-w__h">ĐÁNH GIÁ</h1>
-
-                                    <span class="fas fa-minus shop-w__toggle" data-target="#s-rating"
-                                        data-toggle="collapse"></span>
-                                </div>
-                                <div class="shop-w__wrap collapse show" id="s-rating">
-                                    <ul class="shop-w__list gl-scroll">
-                                        <li>
-                                            <div class="rating__check">
-
-                                                <input type="checkbox">
-                                                <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i
-                                                        class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                        class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                            </div>
-
-                                            <span class="shop-w__total-text">(2)</span>
-                                        </li>
-                                        <li>
-                                            <div class="rating__check">
-
-                                                <input type="checkbox">
-                                                <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i
-                                                        class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                        class="fas fa-star"></i><i class="far fa-star"></i>
-
-                                                    <span>& Up</span>
-                                                </div>
-                                            </div>
-
-                                            <span class="shop-w__total-text">(8)</span>
-                                        </li>
-                                        <li>
-                                            <div class="rating__check">
-
-                                                <input type="checkbox">
-                                                <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i
-                                                        class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                        class="far fa-star"></i><i class="far fa-star"></i>
-
-                                                    <span>& Up</span>
-                                                </div>
-                                            </div>
-
-                                            <span class="shop-w__total-text">(10)</span>
-                                        </li>
-                                        <li>
-                                            <div class="rating__check">
-
-                                                <input type="checkbox">
-                                                <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i
-                                                        class="fas fa-star"></i><i class="far fa-star"></i><i
-                                                        class="far fa-star"></i><i class="far fa-star"></i>
-
-                                                    <span>& Up</span>
-                                                </div>
-                                            </div>
-
-                                            <span class="shop-w__total-text">(12)</span>
-                                        </li>
-                                        <li>
-                                            <div class="rating__check">
-
-                                                <input type="checkbox">
-                                                <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i
-                                                        class="far fa-star"></i><i class="far fa-star"></i><i
-                                                        class="far fa-star"></i><i class="far fa-star"></i>
-
-                                                    <span>& Up</span>
-                                                </div>
-                                            </div>
-
-                                            <span class="shop-w__total-text">(1)</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="shop-w shop-w--style">
-                                <div class="shop-w__intro-wrap">
-                                    <h1 class="shop-w__h">VẬN CHUYỂN</h1>
-
-                                    <span class="fas fa-minus shop-w__toggle" data-target="#s-shipping"
-                                        data-toggle="collapse"></span>
-                                </div>
-                                <div class="shop-w__wrap collapse show" id="s-shipping">
-                                    <ul class="shop-w__list gl-scroll">
-                                        <li>
-
-                                            <!--====== Check Box ======-->
-                                            <div class="check-box">
-
-                                                <input type="checkbox" id="free-shipping">
-                                                <div class="check-box__state check-box__state--primary">
-
-                                                    <label class="check-box__label" for="free-shipping">Miễn phí</label>
-                                                </div>
-                                            </div>
-                                            <!--====== End - Check Box ======-->
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="shop-w shop-w--style">
-                                <div class="shop-w__intro-wrap">
                                     <h1 class="shop-w__h">GIÁ</h1>
 
                                     <span class="fas fa-minus shop-w__toggle" data-target="#s-price"
@@ -198,18 +90,19 @@
 
                                                 <label for="price-min"></label>
 
-                                                <input class="input-text input-text--primary-style" type="text"
-                                                    id="price-min" placeholder="Min">
+                                                <input name="price_min" class="input-text input-text--primary-style"
+                                                    type="number" min="10000" id="price-min"
+                                                    placeholder="<?= isset($_GET['price_min']) ? $_GET['price_min'] : 'Min' ?>">
                                             </div>
                                             <div>
 
                                                 <label for="price-max"></label>
 
-                                                <input class="input-text input-text--primary-style" type="text"
-                                                    id="price-max" placeholder="Max">
+                                                <input name="price_max" class="input-text input-text--primary-style"
+                                                    type="number" max="100000000" id="price-max"
+                                                    placeholder="<?= isset($_GET['price_max']) ? $_GET['price_max'] : 'Max' ?>">
                                             </div>
                                             <div>
-
                                                 <button
                                                     class="btn btn--icon fas fa-angle-right btn--e-transparent-platinum-b-2"
                                                     type="submit"></button>
