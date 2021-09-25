@@ -10,9 +10,12 @@ use App\Models\CategoryProduct;
 use App\Http\Requests\AddBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use Illuminate\Support\Str;
+use App\Traits\SortProductTrait;
 
 class BrandController extends Controller
 {
+    use SortProductTrait;
+
     /**
      * Add brands
      * @return \Illuminate\Http\Response
@@ -127,14 +130,24 @@ class BrandController extends Controller
      *  Home function page
      * @param  \Illuminate\Http\Request  $request
      */
-    public function show_brand_home($brand_slug, Request $request) {
+    public function show_brand_home($brand_slug, Request $request)
+    {
         $categories = CategoryProduct::where('category_parent', 0)->where('category_status', 1)->orderBy('category_order', 'asc')->get();
         $brands = Brand::where('brand_status', 1)->orderBy('brand_name', 'asc')->get();
         $brandBySlug = Brand::where('brand_slug', $brand_slug)->first();
 
-        $productByBrandSlug = Product::select('products.*')->where('product_status', 1)->join('brands', 'brands.brand_id', '=', 'products.brand_id')
-            ->where('brand_slug', $brand_slug)->latest()->paginate(4);
         $all_products = Product::where('product_status', 1)->get();
+        $productByBrandSlugs = Product::select('products.*')->where('product_status', 1)->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('brand_slug', $brand_slug);
+
+            if (isset($_GET['price_min']) && $_GET['price_max'])
+            $productByBrandSlugs = $productByBrandSlugs->whereBetween('product_price', [$_GET['price_min'], $_GET['price_max']]);    
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            $productByBrandSlug =  $this->SortProduct($productByBrandSlugs, $sort_by);
+        } else
+            $productByBrandSlug = $productByBrandSlugs->latest()->paginate(9);
 
         //seo 
         $meta_desc = $brandBySlug->brand_desc;

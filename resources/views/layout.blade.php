@@ -2183,7 +2183,7 @@
         }
     </script>
 
-    {{-- <script>
+    <script>
         function showSearchResult() {
             $('#find-product-ajax').slideDown();
         }
@@ -2191,7 +2191,7 @@
         function hideSearchResult() {
             $('#find-product-ajax').slideUp();
         }
-    </script> --}}
+    </script>
 
     @yield('scripts')
 

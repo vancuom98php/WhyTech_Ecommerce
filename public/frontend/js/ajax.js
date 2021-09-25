@@ -19,7 +19,6 @@ $('.btn-add-cart').on('click', function (event) {
         $("#change-item-cart").html(response);
         $("#cart_quantity_show").text($("#total-quantity-cart").val());
     });
-
 });
 
 // Xóa sản phẩm trong mini cart
@@ -324,5 +323,18 @@ $(document).ready(function () {
                 }
             });
         }
+    })
+});
+
+// Sort Products
+$(document).ready(function () {
+    $('#sort').on('change', function () {
+        let url = $(this).val();
+
+        if (url) {
+            window.location = url;
+        }
+
+        return false;
     })
 });

@@ -29,7 +29,7 @@
                                 </label>
                             </th>
                             <th scope="col" width="200px">Tên sản phẩm</th>
-                            <th scope="col" width="140px">Giá</th>
+                            <th scope="col" width="140px">Giá (VNĐ)</th>
                             <th scope="col">Hình ảnh</th>
                             <th scope="col">Thư viện</th>
                             <th scope="col">Số lượng tồn</th>
@@ -48,7 +48,7 @@
                                     <label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td>{{ $product->product_name }}</td>
-                                <td><span class="text-ellipsis">{{ number_format($product->product_price) }} VNĐ</span>
+                                <td><span class="text-ellipsis">{{ number_format($product->product_price) }}</span>
                                 </td>
                                 <td><img class="product_image_50_50" src="{{ $product->product_image_path }}"
                                         alt="{{ $product->product_image_name }}"></td>

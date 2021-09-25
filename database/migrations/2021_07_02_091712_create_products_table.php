@@ -20,15 +20,14 @@ class CreateProductsTable extends Migration
             $table->increments('product_id');
             $table->string('product_name', 255);
             $table->text('product_tags')->nullable();
-            $table->string('product_quantity', 50);
-            $table->string('product_sold', 50)->nullable();
+            $table->unsignedInteger('product_quantity');
+            $table->unsignedInteger('product_sold')->nullable();
             $table->string('product_slug', 255);
             $table->unsignedInteger('category_id')->index('products_category_id_foreign');
             $table->unsignedInteger('brand_id')->index('products_brand_id_foreign');
             $table->text('product_desc');
             $table->text('product_content');
             $table->unsignedInteger('product_price');
-            $table->string('price_cost', 100);
             $table->string('product_image', 255);
             $table->string('product_file', 100)->nullable();
             $table->string('product_views', 100)->nullable();
