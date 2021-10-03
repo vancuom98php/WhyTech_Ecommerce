@@ -28,8 +28,9 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th scope="col" width="200px">Tên sản phẩm</th>
-                            <th scope="col" width="140px">Giá (VNĐ)</th>
+                            <th scope="col" width="150px">Tên sản phẩm</th>
+                            <th scope="col" width="140px">Giá bán (VNĐ)</th>
+                            <th scope="col" width="140px">Giá gốc (VNĐ)</th>
                             <th scope="col">Hình ảnh</th>
                             <th scope="col">Thư viện</th>
                             <th scope="col">Số lượng tồn</th>
@@ -49,6 +50,8 @@
                                 </td>
                                 <td>{{ $product->product_name }}</td>
                                 <td><span class="text-ellipsis">{{ number_format($product->product_price) }}</span>
+                                </td>
+                                <td><span class="text-ellipsis">{{ number_format($product->product_cost) }}</span>
                                 </td>
                                 <td><img class="product_image_50_50" src="{{ $product->product_image_path }}"
                                         alt="{{ $product->product_image_name }}"></td>

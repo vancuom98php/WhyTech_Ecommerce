@@ -45,7 +45,18 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="add_category_label" for="product_price">Giá sản phẩm (VNĐ)</label>
+                                    <label class="add_category_label" for="product_cost">Giá gốc của sản phẩm (VNĐ)</label>
+                                    <input type="text" name="product_cost"
+                                        class="form-control input-add @error('product_cost') is-invalid @enderror"
+                                        id="product_cost" placeholder="Nhập tên sản phẩm" value="{{ old('product_cost') }}">
+                                    @error('product_cost')
+                                        <div class="invalid-feedback-category-product" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="add_category_label" for="product_price">Giá bán của sản phẩm (VNĐ)</label>
                                     <input type="text" name="product_price"
                                         class="form-control input-add @error('product_price') is-invalid @enderror"
                                         id="product_price" placeholder="Nhập tên sản phẩm" value="{{ old('product_price') }}">

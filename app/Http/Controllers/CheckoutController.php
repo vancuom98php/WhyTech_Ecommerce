@@ -21,7 +21,7 @@ use App\Http\Requests\AddShippingRequest;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
+use Carbon\Carbon;
 
 class CheckoutController extends Controller
 {
@@ -252,6 +252,7 @@ class CheckoutController extends Controller
                     'order_coupon' => $order_coupon,
                     'order_feeship' => session()->get('shipping_feeship'),
                     'order_code' => $order_code,
+                    'order_date' => Carbon::now()->format('Y-m-d')
                 ]);
 
                 // Insert to order details

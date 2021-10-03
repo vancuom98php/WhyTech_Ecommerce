@@ -26,6 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('order_total', 100);
             $table->string('order_coupon', 50)->nullable();
             $table->string('order_feeship', 50);
+            $table->date('order_date')->nullable();
             $table->timestamps();
         });
     }

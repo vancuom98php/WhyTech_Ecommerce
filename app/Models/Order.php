@@ -28,6 +28,7 @@ class Order extends Model
         'order_coupon',
         'order_feeship',
         'order_code',
+        'order_date',
     ];
 
     public function customer()

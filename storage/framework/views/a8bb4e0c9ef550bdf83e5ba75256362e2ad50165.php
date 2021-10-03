@@ -40,6 +40,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- alertify -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <!-- //alertify -->
+    <!-- Ui -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- //Ui -->
     <!-- datatable -->
     <link rel="stylesheet" href="<?php echo e(asset('backend/css/dataTables.css')); ?>" type="text/css" />
     <!-- //datatable -->
@@ -49,7 +52,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="<?php echo e(asset('backend/js/jquery3.0.6.min.js')); ?>"></script>
     <script src="<?php echo e(asset('backend/js/raphael-min.js')); ?>"></script>
     <script src="<?php echo e(asset('backend/js/morris.js')); ?>"></script>
-    
+
 </head>
 
 <body>
@@ -290,22 +293,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <section id="main-content">
             <section class="wrapper">
                 <?php echo $__env->yieldContent('admin_content'); ?>
-                <!-- //market-->
-                
-                <!-- //market-->
-                
-                
-                <!-- calendar -->
-                
-                <!-- //calendar -->
-                
-
-                <!--notification end-->
-                
-                <!-- tasks -->
-                
-                <!-- //tasks -->
-                
             </section>
             <!-- footer -->
             <div class="footer">
@@ -318,6 +305,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </section>
         <!--main content end-->
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="<?php echo e(asset('backend/js/bootstrap.js')); ?>"></script>
     <script src="<?php echo e(asset('backend/js/jquery.dcjqaccordion.2.7.js')); ?>"></script>
     <script src="<?php echo e(asset('backend/js/scripts.js')); ?>"></script>
@@ -430,37 +418,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script type="text/javascript" src="<?php echo e(asset('backend/js/monthly.js')); ?>"></script>
     <!-- alertify -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-    <script type="text/javascript">
-        $(window).load(function() {
-
-            $('#mycalendar').monthly({
-                mode: 'event',
-
-            });
-
-            $('#mycalendar2').monthly({
-                mode: 'picker',
-                target: '#mytarget',
-                setWidth: '250px',
-                startHidden: true,
-                showTrigger: '#mytarget',
-                stylePast: true,
-                disablePast: true
-            });
-
-            switch (window.location.protocol) {
-                case 'http:':
-                case 'https:':
-                    // running on a server, should be good.
-                    break;
-                case 'file:':
-                    alert('Just a heads-up, events will not work when run locally.');
-            }
-
-        });
-    </script>
-    <!-- //calendar -->
-
     <!-- Alertify -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <!-- CSS -->

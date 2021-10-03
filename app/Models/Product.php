@@ -29,9 +29,11 @@ class Product extends Model
         'product_desc',
         'product_content',
         'product_price',
+        'product_cost',
         'product_image_name',
         'product_image_path',
-        'product_status',
+        'product_views',
+        'product_status'
     ];
 
     public function tags()

@@ -96,27 +96,6 @@
             <div class="panel-heading dashboard-heading">
                 Chi tiết đơn hàng
             </div>
-            <div class="row w3-res-tb">
-                <div class="col-sm-5 m-b-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="0">Bulk action</option>
-                        <option value="1">Delete selected</option>
-                        <option value="2">Bulk edit</option>
-                        <option value="3">Export</option>
-                    </select>
-                    <button class="btn btn-sm btn-default">Apply</button>
-                </div>
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                     <thead>
@@ -185,7 +164,7 @@
                             </select>
                             <input type="hidden" name="order_status_before" id="order_status_before" value="0">
                         </form>
-                    @elseif($order->order_status == 1)
+                        @elseif($order->order_status == 1)
                         <form action="" method="post">
                             @csrf
                             <select name="order_status" class="form-control input-sm m-bot15 order_details">
@@ -194,7 +173,7 @@
                             </select>
                             <input type="hidden" name="order_status_before" id="order_status_before" value="1">
                         </form>
-                    @else
+                        @else
                         <form action="" method="post">
                             @csrf
                             <select name="order_status" class="form-control input-sm m-bot15 order_details">

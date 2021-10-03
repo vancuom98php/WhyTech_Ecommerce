@@ -28,9 +28,10 @@ class CreateProductsTable extends Migration
             $table->text('product_desc');
             $table->text('product_content');
             $table->unsignedInteger('product_price');
+            $table->unsignedInteger('product_cost');
             $table->string('product_image', 255);
             $table->string('product_file', 100)->nullable();
-            $table->string('product_views', 100)->nullable();
+            $table->unsignedInteger('product_views')->nullable();
             $table->unsignedInteger('product_status');
             $table->timestamps();
         });
