@@ -26,6 +26,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'product_name' => 'bail|required|max:255',
             'product_price' => 'bail|required|numeric',
+            'product_cost' => 'bail|required|numeric',
             'product_quantity' => 'bail|required|numeric',
             'product_desc' => 'bail|required|max:512|min:5',
             'product_content' => 'bail|required',
@@ -38,8 +39,10 @@ class UpdateProductRequest extends FormRequest
         return [
             'product_name.required' => 'Tên không được phép để trống',
             'product_name.max' => 'Tên không được phép quá 255 kí tự',
-            'product_price.required' => 'Giá sản phẩm không được để trống',
-            'product_price.numeric' => 'Giá sản phẩm phải là số',
+            'product_price.required' => 'Giá bán không được để trống',
+            'product_price.numeric' => 'Giá bán phải là số',
+            'product_cost.required' => 'Giá gốc không được để trống',
+            'product_cost.numeric' => 'Giá gốc phải là số',
             'product_quantity.required' => 'Số lượng không được để trống',
             'product_quantity.numeric' => 'Số lượng phải là số cụ thể',
             'product_desc.required' => 'Mô tả không được phép để trống',

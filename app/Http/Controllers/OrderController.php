@@ -11,8 +11,10 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Statistical;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -23,7 +25,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->paginate(5);
+        $orders = Order::latest()->paginate(10);
 
         return view('admin.order.manage_order', compact('orders'));
     }
@@ -283,10 +285,15 @@ class OrderController extends Controller
         $order = Order::find($data['order_id']);
 
         $order->update([
-            'order_status' => $data['order_status']
+            'order_status' => $data['order_status'],
         ]);
 
         if ($data['order_status'] == 1) {
+            $total_order = 1;
+            $sales = 0;
+            $profit = 0;
+            $quantity = 0;
+
             foreach ($order->order_details as $order_details) {
                 $product = Product::find($order_details->product_id);
 
@@ -297,20 +304,64 @@ class OrderController extends Controller
                     'product_quantity' => $newQuantity,
                     'product_sold' => $newSold,
                 ]);
+
+                $quantity += $order_details->product_sales_quantity;
+                $sales += $order_details->product_sales_quantity * $product->product_price;
+                $profit += $sales - $product->product_cost * $order_details->product_sales_quantity;
+            }
+
+            // Update Statistical after handle order
+            $statistical = Statistical::where('order_date', $order->order_date)->first();
+
+            if ($statistical) {
+                $statisticalDataUpdate = [
+                    'sales' => $sales + $statistical->sales,
+                    'profit' => $profit + $statistical->profit,
+                    'quantity' => $quantity + $statistical->quantity,
+                    'total_order' => $total_order + $statistical->total_order
+                ];
+                $statistical->update($statisticalDataUpdate);
+            } else {
+                $newStatistical = Statistical::create([
+                    'order_date' => $order->order_date,
+                    'sales' => $sales,
+                    'profit' => $profit,
+                    'quantity' => $quantity,
+                    'total_order' => $total_order
+                ]);
             }
         }
 
         if ($data['order_status'] == 2 && $data['order_status_before'] == 1) {
+            $total_order = 1;
+            $sales = 0;
+            $profit = 0;
+            $quantity = 0;
+
             foreach ($order->order_details as $order_details) {
                 $product = Product::find($order_details->product_id);
 
                 $newQuantity = $product->product_quantity + $order_details->product_sales_quantity;
                 $newSold = $product->product_sold - $order_details->product_sales_quantity;
 
+                $quantity += $order_details->product_sales_quantity;
+                $sales += $order_details->product_sales_quantity * $product->product_price;
+                $profit += $sales - $product->product_cost * $order_details->product_sales_quantity;
+
                 $product->update([
                     'product_quantity' => $newQuantity,
                     'product_sold' => $newSold,
                 ]);
+
+                $statistical = Statistical::where('order_date', $order->order_date)->first();
+
+                $statisticalDataUpdate = [
+                    'sales' => $statistical->sales - $sales,
+                    'profit' =>  $statistical->profit - $profit,
+                    'quantity' => $statistical->quantity - $quantity,
+                    'total_order' =>  $statistical->total_order - $total_order
+                ];
+                $statistical->update($statisticalDataUpdate);
             }
         }
     }

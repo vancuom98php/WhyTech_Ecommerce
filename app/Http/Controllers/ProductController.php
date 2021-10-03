@@ -64,6 +64,7 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'product_slug' => Str::slug($request->product_name, '-'),
                 'product_price' => $request->product_price,
+                'product_cost' => $request->product_cost,
                 'product_quantity' => $request->product_quantity,
                 'product_sold' => 0,
                 'product_desc' => $request->product_desc,
@@ -172,6 +173,7 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'product_slug' => Str::slug($request->product_name, '-'),
                 'product_price' => $request->product_price,
+                'product_cost' => $request->product_cost,
                 'product_quantity' => $request->product_quantity,
                 'product_desc' => $request->product_desc,
                 'product_content' => $request->product_content,
@@ -243,6 +245,9 @@ class ProductController extends Controller
     public function show_details_product($product_slug, Request $request)
     {
         $product = Product::where('product_slug', $product_slug)->first();
+        $product->update([
+            'product_views' => $product->product_views + 1,
+        ]);
         $related_products = Product::where('category_id', $product->category->category_id)->whereNotIn('product_id', [$product->product_id])->orderBy('category_id', 'desc')->get();
         $all_products = Product::where('product_status', 1)->get();
         $galleries = Gallery::where('product_id', $product->product_id)->get();

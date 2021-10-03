@@ -172,7 +172,23 @@ Route::group(['prefix' => 'admin'], function () {
     Auth::routes();
 });
 
-Route::get('/dashboard', 'AdminController@show_dashboard')->name('dashboard');
+// Dashboard
+Route::group([
+    'prefix' => 'dashboard',
+], function () {
+    Route::get('/', [
+        'as' => 'dashboard',
+        'uses' => 'AdminController@show_dashboard',
+    ]);
+    Route::post('/filter-by-date', [
+        'as' => 'dashboard.filter_by_date',
+        'uses' => 'AdminController@filter_by_date',
+    ]);
+    Route::post('/filter-by-month', [
+        'as' => 'dashboard.filter_by_month',
+        'uses' => 'AdminController@filter_by_month',
+    ]);
+});
 
 // Google login
 Route::get('admin/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('admin.google');
